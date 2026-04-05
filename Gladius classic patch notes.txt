@@ -1,0 +1,32 @@
+﻿v0.1.1 2/5/2025
+* General changes:
+   * Reworked damage over time system
+* New additions:
+   * Added legendary upgrade: Necromantic Pendant
+   * Added cursed upgrade: Chaos
+   * Added rare upgrade: Soul Pendant
+   * Added common upgrade: Heart of Gold
+   * Axe weapon is now fully implemented
+   * Hammer weapon is now fully implemented
+   * Sickle weapon is now fully implemented
+   * Added particle effects
+   * Added an option to spend gold to refresh the upgrade shop
+   * Added an option to continue the run after the end of the demo
+   * Added text pop ups for damage numbers, level up notifs, etc.
+   * Didn’t add the ability to die
+* Balance changes:
+   * Bravado player stats increase nerfed: 30% -> 20%
+   * Gold gained from fodder enemies nerfed: 5 -> 4
+   * Gold gained from elite enemies nerfed: 10 -> 8
+   * Gold gained from boss enemies buffed: 25 -> 50
+   * Bleed debuff DOT buffed: 1% hp/sec -> 2% hp/sec
+   * Flame Essence explosion radius buffed: 55 -> 65
+   * Storm Essence lightning field damage nerfed: 200% -> 70%
+   * Charged Strike charge rate is now affected by attack speed upgrades
+   * Charged Strike maximum charge buffed: 150% -> 200%
+* Bug fixes:
+   * Fixed an issue where the event buttons on the roadmap would sometimes have the wrong opacity
+   * Fixed an issue where the Bravado upgrade would increase attack speed too much
+   * Fixed an issue where the game would continue on top of the end of demo screen
+   * Fixed an issue where charging your weapon with Charged Strike would not increase damage
+   * Fixed an issue where skeletons could not attack
