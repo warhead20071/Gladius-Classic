@@ -1,1 +1,1 @@
-I decided to release this as a demo. All sprites are placeholders. As a thank you for taking the time to read this, I'll let you in on a secret. You can input the konami code anywhere to activate developer cheats. You can find them in the pause menu. Have fun.
+I decided to release this as a demo. This version of the game is very unfinished. All sprites are placeholders. As a thank you for taking the time to read this, I'll let you in on a secret. You can input the konami code anywhere to activate developer cheats. You can find them in the pause menu. Have fun.
