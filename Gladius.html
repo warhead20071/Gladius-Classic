@@ -654,144 +654,144 @@
     </div>
 
     <script>
-    const gameCanvas = document.getElementById("gameCanvas");
-    const ctx = gameCanvas.getContext("2d");
-	const shop = document.getElementById("shop");
-	const buyButton = document.getElementById("buyButton");
-	const upgradeShopOptions = [ document.getElementById("upgradeOption1"), document.getElementById("upgradeOption2"), document.getElementById("upgradeOption3"), document.getElementById("refreshButton") ];
-	const upgradeShopDescriptions = [ document.getElementById("upgradeName"), document.getElementById("upgradeRarity"), document.getElementById("upgradeType"), document.getElementById("upgradeDescription") ];
-	const weaponShopOptions = [ document.getElementById("sword"), document.getElementById("axe"), document.getElementById("hammer"), document.getElementById("sickle"), document.getElementById("bow"), document.getElementById("spear"), document.getElementById("daggers") ];
-	const weaponShopDescriptions = [ document.getElementById("weaponName"), document.getElementById("weaponPrice"), document.getElementById("weaponDamage"), document.getElementById("weaponAtkCol"), document.getElementById("weaponLength"), document.getElementById("weaponDescription") ];
-	const spellShopOptions = [ document.getElementById("tomeOfPyromancy"), document.getElementById("tomeOfElectromancy"), document.getElementById("tomeOfGeomancy"), document.getElementById("tomeOfAquamancy"), document.getElementById("tomeOfCosmomancy"), document.getElementById("tomeOfPlant") ];
-	const spellShopDescriptions = [ document.getElementById("bookName"), document.getElementById("bookLevel"), document.getElementById("bookCost"), document.getElementById("bookDescription") ];
-	const roadMapMenu = document.getElementById("roadMap");
-	const pauseMenu = document.getElementById("pauseMenu");
-	const spellMenu = document.getElementById("spellMenu");
-	var spellMenuPage = 1;
-	const storyEvent = document.getElementById("storyEvent");
-	const eventStory = document.getElementById("eventStory");
-	var storyEventType = 1;
-	const announcement = document.getElementById("announcement");
-	const countdown = document.getElementById("countdown");
-	const settingsMenu = document.getElementById("settingsMenu");
-	const devCheatsMenu = document.getElementById("devCheats");
-	const hud = document.getElementById("hud");
-	const exitButton = document.getElementById("exitButton");
-	const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, exacerbate: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
-	//const sprites = {
-	    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
-	    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
-	    //stunStars: { sprite: document.getElementById("stunStars"), animations: [ { y: 0, width: 125, height: 90, frames: 2 } ] },
-	//};
-    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
-	const weapons = [
-	    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: false, description: 'A well rounded weapon. Great for all situations.', id: 0 },
-	    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
-	    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
-	    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
-	    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
-	    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
-	    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
-	];
-	var selectedWeapon = 0;
-	const spells = [
-	    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
-	    { name: 'Tome of Electromancy', id: 1, level: 1, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '300% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '1000% base damage (ball), 150% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
-	];
-	selectedSpellTome = 0;
-    var stage = 1;
-	const director = { enemyLevel: 1, waves: 1, currentWave: 1, enemiesPerWave: 6, waveTimer: 0, eliteLimit: 0, type: 1 };
-	const enemyQueue = [];
-	const roadMap =  { leftPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, middlePath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, rightPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, mysteriousArtifact: 0 };
-    const enemies = [];
-	const playerHitboxes = [];
-	const playerProjectiles = [];
-	const enemyProjectiles = [];
-	const enemyHitboxes = [];
-	const particles = [];
-	const inGameText = [];
-	const platforms = [
-	    { x: 100, y: 300, width: 150, height: 25, type: 'normal' },
-	    { x: 562, y: 300, width: 150, height: 25, type: 'normal' },
-	    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
-	    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
-	];
-	const keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
-	if (typeOf(Storage) !== undefined) {
+	window.onload = (event) => {
+	    const gameCanvas = document.getElementById("gameCanvas");
+	    const ctx = gameCanvas.getContext("2d");
+		const shop = document.getElementById("shop");
+		const buyButton = document.getElementById("buyButton");
+		const upgradeShopOptions = [ document.getElementById("upgradeOption1"), document.getElementById("upgradeOption2"), document.getElementById("upgradeOption3"), document.getElementById("refreshButton") ];
+		const upgradeShopDescriptions = [ document.getElementById("upgradeName"), document.getElementById("upgradeRarity"), document.getElementById("upgradeType"), document.getElementById("upgradeDescription") ];
+		const weaponShopOptions = [ document.getElementById("sword"), document.getElementById("axe"), document.getElementById("hammer"), document.getElementById("sickle"), document.getElementById("bow"), document.getElementById("spear"), document.getElementById("daggers") ];
+		const weaponShopDescriptions = [ document.getElementById("weaponName"), document.getElementById("weaponPrice"), document.getElementById("weaponDamage"), document.getElementById("weaponAtkCol"), document.getElementById("weaponLength"), document.getElementById("weaponDescription") ];
+		const spellShopOptions = [ document.getElementById("tomeOfPyromancy"), document.getElementById("tomeOfElectromancy"), document.getElementById("tomeOfGeomancy"), document.getElementById("tomeOfAquamancy"), document.getElementById("tomeOfCosmomancy"), document.getElementById("tomeOfPlant") ];
+		const spellShopDescriptions = [ document.getElementById("bookName"), document.getElementById("bookLevel"), document.getElementById("bookCost"), document.getElementById("bookDescription") ];
+		const roadMapMenu = document.getElementById("roadMap");
+		const pauseMenu = document.getElementById("pauseMenu");
+		const spellMenu = document.getElementById("spellMenu");
+		var spellMenuPage = 1;
+		const storyEvent = document.getElementById("storyEvent");
+		const eventStory = document.getElementById("eventStory");
+		var storyEventType = 1;
+		const announcement = document.getElementById("announcement");
+		const countdown = document.getElementById("countdown");
+		const settingsMenu = document.getElementById("settingsMenu");
+		const devCheatsMenu = document.getElementById("devCheats");
+		const hud = document.getElementById("hud");
+		const exitButton = document.getElementById("exitButton");
+		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, exacerbate: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
+		//const sprites = {
+		    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
+		    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
+		    //stunStars: { sprite: document.getElementById("stunStars"), animations: [ { y: 0, width: 125, height: 90, frames: 2 } ] },
+		//};
+	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
+		const weapons = [
+		    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: false, description: 'A well rounded weapon. Great for all situations.', id: 0 },
+		    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
+		    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
+		    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
+		    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
+		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
+		    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
+		];
+		var selectedWeapon = 0;
+		const spells = [
+		    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
+		    { name: 'Tome of Electromancy', id: 1, level: 1, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '300% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '1000% base damage (ball), 150% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
+		];
+		selectedSpellTome = 0;
+	    var stage = 1;
+		const director = { enemyLevel: 1, waves: 1, currentWave: 1, enemiesPerWave: 6, waveTimer: 0, eliteLimit: 0, type: 1 };
+		const enemyQueue = [];
+		const roadMap =  { leftPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, middlePath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, rightPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, mysteriousArtifact: 0 };
+	    const enemies = [];
+		const playerHitboxes = [];
+		const playerProjectiles = [];
+		const enemyProjectiles = [];
+		const enemyHitboxes = [];
+		const particles = [];
+		const inGameText = [];
+		const platforms = [
+		    { x: 100, y: 300, width: 150, height: 25, type: 'normal' },
+		    { x: 562, y: 300, width: 150, height: 25, type: 'normal' },
+		    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
+		    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
+		];
+		const keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		if (localStorage.getItem("visited") !== null) {
 			keys = localStorage.getItem("keybinds");
 		} else {
 			localStorage.setItem("visited", "true");
 			localStorage.setItem("keyBinds", JSON.stringify(keys));
 		}
-	}
-	var chapter = 1;
-    var mouse = { x: 0, y: 0 };
-    var gameStarted = false;
-	var gamePaused = 0;
-	var timer = 120;
-	const gravity = 0.5;
-	const airDecel = 0.7;
-	const groundDecel = 0.4;
-	var countdownRunning = false;
-	var mouseDown = false;
-	var chargeTime = 0;
-	var regenTick = 0;
-	var stormTick = 0;
-	var ogreGazeCd  = 0;
-	var totemCd = 0;
-	var cloudDuration = 0;
-	// template { type: '', name: '', special: false, rarity: '', price: , description: '' },
-    const upgrades = [
-        { type: 'sharpness', name: 'Sharpness', special: false, rarity: 'Common', price: 25, description: '+20% Weapon Damage/stack.' },
-	    { type: 'arcaneCrystal', name: 'Arcane Crystal', special: false, rarity: 'Common', price: 25, description: '+20% Magic Damage/stack.' },
-	    { type: 'sigilOfPower', name: 'Sigil of Power', special: false, rarity: 'Common', price: 25, description: '+10% Total Damage/stack.' },
-        { type: 'vitality', name: 'Vitality', special: false, rarity: 'Common', price: 25, description: '+25 HP/stack.' },
-        { type: 'reforge', name: 'Reforge', special: false, rarity: 'Common', price: 25, description: '+10% Weapon Size/stack.' },
-        { type: 'quickSlash', name: 'Quick Slash', special: false, rarity: 'Common', price: 25, description: '-10% Attack Cooldown/stack.' },
-        { type: 'recovery', name: 'Recovery', special: false, rarity: 'Common', price: 25, description: '+20% Regen/stack.' },
-	    { type: 'strength', name: 'Strength', special: false, rarity: 'Common', price: 25, description: '+10% Knockback/stack.' },
-	    { type: 'burningBlade', name: 'Burning Blade', special: false, rarity: 'Common', price: 25, description: '10% chance (+10%/stack) on hit to apply burn to an enemy. Each burn stack deals 50% base damage/sec for 5 seconds. Duration refreshes when applying new burn stacks.' },
-	    { type: 'heartOfGold', name: 'Heart of Gold', special: true, rarity: 'Common', price: 25, description: 'Gain +5% HP regen for every 10 gold you have.' },
-	    { type: 'starInAJar', name: 'Star in a Jar', special: false, rarity: 'Common', price: 25, description: '+20 Max Mana/stack.' },
-
-	    { type: 'deathNova', name: 'Death Nova', special: false, rarity: 'Rare', price: 50, description: 'Enemies explode on death dealing 125% base damage (+25%/stack) in a 60 unit radius (+10m/stack).' },
-	    { type: 'magicMissile', name: 'Magic Missile', special: false, rarity: 'Rare', price: 50, description: '10% chance on hit to fire a magic missile that deals 300% total damage (+300%/stack).' },
-	    { type: 'chargedStrike', name: 'Charged Strike', special: true, rarity: 'Rare', price: 50, description: 'Hold left click to charge your next attack.' },
-	    { type: 'outrage', name: 'Outrage', special: false, rarity: 'Rare', price: 50, description: 'Release a 300% base damage (+150%/stack) blast whenever you take damage.' },
-	    { type: 'soulPendant', name: 'Soul Pendant', special: false, rarity: 'Rare', price: 50, description: 'When killing an enemy, steal their life force to heal yourself for 10% (+10%/stack) of their max HP.' },
-	    { type: 'airDodge', name: 'Air Dodge', special: true, rarity: 'Rare', price: 50, description: 'Allows you to dodge in any direction while in the air.' },
-
-	    { type: 'fragileStrength', name: 'Fragile Strength', special: false, rarity: 'Cursed', price: 50, description: 'Double your base damage, but halve your HP.' },
-	    { type: 'bravado', name: 'Bravado', special: false, rarity: 'Cursed', price: 50, description: 'Increase all stats by 25%. Enemies gain +3 levels.' },
-	    { type: 'chaos', name: 'Chaos', special: true, rarity: 'Cursed', price: 50, description: 'All damage dealt is distributed evenly amongst all enemies on screen.' },
-
-	    { type: 'bulwark', name: 'Bulwark', special: false, rarity: 'Legendary', price: 100, description: 'Limits the amount of damage you can take in one hit to 50 (-10%/stack).' },
-	    { type: 'luckyArrow', name: 'Lucky Arrow', special: false, rarity: 'Legendary', price: 100, description: 'Every 3 swings, fire a lucky arrow that deals 125% base damage (+25%/stack) and is 3x as likely to activate on-hit effects.' },
-	    { type: 'exacerbate', name: 'Exacerbate', special: false, rarity: 'Legendary', price: 100, description: 'When applying a debuff to an enemy, increase the number of stacks applied by 2 (+2/stack).' },
-	    { type: 'flameEssence', name: 'Flame Essence', special: true, rarity: 'Legendary', price: 100, description: 'Burn effects are 4x stronger. Burning enemies explode on death, applying 5 burn stacks to each enemy caught in the blast. 1 of the 6 arcane powers.' },
-	    { type: 'stormEssence', name: 'Storm Essence', special: true, rarity: 'Legendary', price: 100, description: 'You are surrounded by a lightning field that deals 100% base damage/sec and chains lightning to nearby enemies. 1 of the 6 arcane powers.' },
-	    { type: 'earthEssence', name: 'Earth Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
-	    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 swings, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
-	    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'Your main attack becomes dimensional slash. Cut through time and space to slash at your mouse cursor. 1 of the 6 arcane powers.' },
-	    { type: 'natureEssence', name: 'Nature Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
-
-	    { type: 'mysteriousArtifact', name: 'Mysterious Artifact', special: true, rarity: 'Special', price: 0, description: 'A strange medallion that resonates with mysterious energy.' },
-
-	    { type: 'ogreEye', name: 'Ogre Eye', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Ogre Gaze. Press ${keys.ability1.key} to gaze with the ogre eye causing affected enemies to slow down and take 25% (+25%/stack) more damage from all sources. Ability has a 10 second cooldown.` },
-	    { type: 'totemOfNecromancy', name: 'Totem of Necromancy', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Totem of Necromancy. Press ${keys.ability2.key} to drop a totem that periodically activates on-kill effects. The totem lasts for 10 seconds (+5/stack) and has a 30 second cooldown.` },
-	    // { type: 'assassinCloak', name: 'Assassin Cloak', special: false, rarity: 'Boss', price: 0, description: 'TBD' },
-	    // { type: 'dreamStone', name: 'Dream Stone', special: 'true', rarity: 'Boss', price: 0, description: 'Your dreams become reality. Unlocks a new game mode.' }
-    ];
-    var currentUpgrades = [];
-	var selectedUpgrade = 0;
-	var upgradeShopTier = 1;
-	var refreshes = 0;
-	var currentMenu = 'none';
-	var secretCodeInput = [];
-	var devCheats = false;
-	var choosingKeyBind = 0;
-	var hasVisitedWizard = false;
+		var chapter = 1;
+	    var mouse = { x: 0, y: 0 };
+	    var gameStarted = false;
+		var gamePaused = 0;
+		var timer = 120;
+		const gravity = 0.5;
+		const airDecel = 0.7;
+		const groundDecel = 0.4;
+		var countdownRunning = false;
+		var mouseDown = false;
+		var chargeTime = 0;
+		var regenTick = 0;
+		var stormTick = 0;
+		var ogreGazeCd  = 0;
+		var totemCd = 0;
+		var cloudDuration = 0;
+		// template { type: '', name: '', special: false, rarity: '', price: , description: '' },
+	    const upgrades = [
+	        { type: 'sharpness', name: 'Sharpness', special: false, rarity: 'Common', price: 25, description: '+20% Weapon Damage/stack.' },
+		    { type: 'arcaneCrystal', name: 'Arcane Crystal', special: false, rarity: 'Common', price: 25, description: '+20% Magic Damage/stack.' },
+		    { type: 'sigilOfPower', name: 'Sigil of Power', special: false, rarity: 'Common', price: 25, description: '+10% Total Damage/stack.' },
+	        { type: 'vitality', name: 'Vitality', special: false, rarity: 'Common', price: 25, description: '+25 HP/stack.' },
+	        { type: 'reforge', name: 'Reforge', special: false, rarity: 'Common', price: 25, description: '+10% Weapon Size/stack.' },
+	        { type: 'quickSlash', name: 'Quick Slash', special: false, rarity: 'Common', price: 25, description: '-10% Attack Cooldown/stack.' },
+	        { type: 'recovery', name: 'Recovery', special: false, rarity: 'Common', price: 25, description: '+20% Regen/stack.' },
+		    { type: 'strength', name: 'Strength', special: false, rarity: 'Common', price: 25, description: '+10% Knockback/stack.' },
+		    { type: 'burningBlade', name: 'Burning Blade', special: false, rarity: 'Common', price: 25, description: '10% chance (+10%/stack) on hit to apply burn to an enemy. Each burn stack deals 50% base damage/sec for 5 seconds. Duration refreshes when applying new burn stacks.' },
+		    { type: 'heartOfGold', name: 'Heart of Gold', special: true, rarity: 'Common', price: 25, description: 'Gain +5% HP regen for every 10 gold you have.' },
+		    { type: 'starInAJar', name: 'Star in a Jar', special: false, rarity: 'Common', price: 25, description: '+20 Max Mana/stack.' },
+	
+		    { type: 'deathNova', name: 'Death Nova', special: false, rarity: 'Rare', price: 50, description: 'Enemies explode on death dealing 125% base damage (+25%/stack) in a 60 unit radius (+10m/stack).' },
+		    { type: 'magicMissile', name: 'Magic Missile', special: false, rarity: 'Rare', price: 50, description: '10% chance on hit to fire a magic missile that deals 300% total damage (+300%/stack).' },
+		    { type: 'chargedStrike', name: 'Charged Strike', special: true, rarity: 'Rare', price: 50, description: 'Hold left click to charge your next attack.' },
+		    { type: 'outrage', name: 'Outrage', special: false, rarity: 'Rare', price: 50, description: 'Release a 300% base damage (+150%/stack) blast whenever you take damage.' },
+		    { type: 'soulPendant', name: 'Soul Pendant', special: false, rarity: 'Rare', price: 50, description: 'When killing an enemy, steal their life force to heal yourself for 10% (+10%/stack) of their max HP.' },
+		    { type: 'airDodge', name: 'Air Dodge', special: true, rarity: 'Rare', price: 50, description: 'Allows you to dodge in any direction while in the air.' },
+	
+		    { type: 'fragileStrength', name: 'Fragile Strength', special: false, rarity: 'Cursed', price: 50, description: 'Double your base damage, but halve your HP.' },
+		    { type: 'bravado', name: 'Bravado', special: false, rarity: 'Cursed', price: 50, description: 'Increase all stats by 25%. Enemies gain +3 levels.' },
+		    { type: 'chaos', name: 'Chaos', special: true, rarity: 'Cursed', price: 50, description: 'All damage dealt is distributed evenly amongst all enemies on screen.' },
+	
+		    { type: 'bulwark', name: 'Bulwark', special: false, rarity: 'Legendary', price: 100, description: 'Limits the amount of damage you can take in one hit to 50 (-10%/stack).' },
+		    { type: 'luckyArrow', name: 'Lucky Arrow', special: false, rarity: 'Legendary', price: 100, description: 'Every 3 swings, fire a lucky arrow that deals 125% base damage (+25%/stack) and is 3x as likely to activate on-hit effects.' },
+		    { type: 'exacerbate', name: 'Exacerbate', special: false, rarity: 'Legendary', price: 100, description: 'When applying a debuff to an enemy, increase the number of stacks applied by 2 (+2/stack).' },
+		    { type: 'flameEssence', name: 'Flame Essence', special: true, rarity: 'Legendary', price: 100, description: 'Burn effects are 4x stronger. Burning enemies explode on death, applying 5 burn stacks to each enemy caught in the blast. 1 of the 6 arcane powers.' },
+		    { type: 'stormEssence', name: 'Storm Essence', special: true, rarity: 'Legendary', price: 100, description: 'You are surrounded by a lightning field that deals 100% base damage/sec and chains lightning to nearby enemies. 1 of the 6 arcane powers.' },
+		    { type: 'earthEssence', name: 'Earth Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
+		    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 swings, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
+		    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'Your main attack becomes dimensional slash. Cut through time and space to slash at your mouse cursor. 1 of the 6 arcane powers.' },
+		    { type: 'natureEssence', name: 'Nature Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
+	
+		    { type: 'mysteriousArtifact', name: 'Mysterious Artifact', special: true, rarity: 'Special', price: 0, description: 'A strange medallion that resonates with mysterious energy.' },
+	
+		    { type: 'ogreEye', name: 'Ogre Eye', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Ogre Gaze. Press ${keys.ability1.key} to gaze with the ogre eye causing affected enemies to slow down and take 25% (+25%/stack) more damage from all sources. Ability has a 10 second cooldown.` },
+		    { type: 'totemOfNecromancy', name: 'Totem of Necromancy', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Totem of Necromancy. Press ${keys.ability2.key} to drop a totem that periodically activates on-kill effects. The totem lasts for 10 seconds (+5/stack) and has a 30 second cooldown.` },
+		    // { type: 'assassinCloak', name: 'Assassin Cloak', special: false, rarity: 'Boss', price: 0, description: 'TBD' },
+		    // { type: 'dreamStone', name: 'Dream Stone', special: 'true', rarity: 'Boss', price: 0, description: 'Your dreams become reality. Unlocks a new game mode.' }
+	    ];
+	    var currentUpgrades = [];
+		var selectedUpgrade = 0;
+		var upgradeShopTier = 1;
+		var refreshes = 0;
+		var currentMenu = 'none';
+		var secretCodeInput = [];
+		var devCheats = false;
+		var choosingKeyBind = 0;
+		var hasVisitedWizard = false;
+	};
 
     function startGame() {
         document.getElementById("mainMenu").style.display = "none";
