@@ -666,7 +666,7 @@
 			localStorage.setItem("keyBinds", JSON.stringify(keys)); // store default key binds
 		}
 	};
-		console.log(keys);
+		var keys = JSON.parse(localStorage.getItem("keyBinds");
 	    const gameCanvas = document.getElementById("gameCanvas");
 	    const ctx = gameCanvas.getContext("2d");
 		const shop = document.getElementById("shop");
