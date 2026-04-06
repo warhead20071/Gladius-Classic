@@ -796,7 +796,7 @@
 		var secretCodeInput = [];
 		var devCheats = false;
 		var choosingKeyBind = 0;
-		var hasVisitedWizard = false;
+		var canSetKeyBind = true;
 	//};
 
     function startGame() {
@@ -4867,7 +4867,7 @@
 	}
 
 	function setKeyBind(control) {
-	    if (choosingKeyBind > 0) {
+	    if (choosingKeyBind > 0 || !canSetKeyBind) {
 			return;
 	    }
 	    choosingKeyBind = control;
@@ -5043,11 +5043,8 @@
 			}
 	    }
 
-		if (e.key === ' ' && !choosingKeyBind) {
-			choosingKeyBind = 0;
-			return;
-		}
-
+		
+		
 	    switch (choosingKeyBind) {
 			case 1:
 				keys.up.key = e.key;
@@ -5095,6 +5092,12 @@
 				choosingKeyBind = 0;
 				break;
 	    }
+		if (e.key === ' ') {
+			canSetKeyBind = false;
+			setTimeout(() => {
+				canSetKeyBind = true;
+			}, 250);
+		}
 
 	    let konamiCode = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a' ];
 	    secretCodeInput.push(e.key);
