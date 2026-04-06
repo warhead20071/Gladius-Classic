@@ -657,11 +657,11 @@
 	window.onload = (event) => {
 		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		if (localStorage.getItem("visited") !== null) {
-			keys = JSON.parse(localStorage.getItem("keybinds"));
-			console.log(JSON.parse(localStorage.getItem("keybinds")));
+			keys = JSON.parse(localStorage.getItem("keyBinds"));
+			console.log(JSON.parse(localStorage.getItem("keyBinds")));
 		} else {
 			localStorage.setItem("visited", "true");
-			localStorage.setItem("keybinds", JSON.stringify(keys));
+			localStorage.setItem("keyBinds", JSON.stringify(keys));
 		}
 		alert("it worked");
 	};
