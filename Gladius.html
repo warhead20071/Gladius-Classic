@@ -5037,6 +5037,10 @@
 			}
 	    }
 
+		if (e.key === ' ' && !choosingKeyBind) {
+			return;
+		}
+
 	    switch (choosingKeyBind) {
 			case 1:
 				keys.up.key = e.key;
