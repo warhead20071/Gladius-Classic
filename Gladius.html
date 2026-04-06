@@ -163,13 +163,14 @@
         font-size: 30px;
         position: absolute;
         top: 50%;
-        left: 35%;
+        left: 50%;
+		text-align: center;
 	}
 	#announcement {
         font-size: 40px;
         position: absolute;
         top: 50%;
-        left: 35%;
+        left: 50%;
 	    text-align: center;
 	}
 	.leftPath {
@@ -462,7 +463,10 @@
             <button id="start" onclick="startGame()">Play</button>
             <button id="settings" onclick="showSettingsMenu(0)">Settings</button>
 	    	<div id="tips" align="center">WASD to move. Left click to attack. Space to jump. Shift to dodge. P to pause.</div>
-	    	<a id="feedbackForm" href="https://forms.gle/Mris31ch8vPY6LW87" align="center" target="_blank">Feedback Form</a>
+	    	<div align="center"> 
+				<a href="" target="_blank">Youtube </a>
+				<a href="https://github.com/warhead20071" target="_blank">Github</a>
+			</div>
         </div>
 
 		<div id="shop" class="menu">
@@ -584,7 +588,7 @@
 				</div>
 			</div>
 			<div id="spellTomeRightPage" class="spellTomeRightPage">
-				<div id="spellPicture"></div>
+				<div id="spellPicture">Picture not found</div>
 				<div id="howToCast"></div>
 			</div>
 		</div>
@@ -629,12 +633,13 @@
 				<button id="ability2BindButton" class="keyBindButtons" onclick="setKeyBind(9)">Ability 2</button>
 				<div id="ability2KeyBind" class="keyBinds"></div>
 			</div>
+
+			<button onclick="saveSettings()">Save Settings</button>
 		</div>
 
 		<div id="demoEnd" class="menu">
 			<h2>End of Demo</h2>
 			<div id="endScreenTip">Reload the page to play again, or click exit to continue the run. There are no bosses past chapter 2</div>
-			<a href="https://forms.gle/Mris31ch8vPY6LW87" target="_blank">Click here to provide feedback</a>
 		</div>
 
 		<div id="gameOver" class="menu">
@@ -711,7 +716,15 @@
 	    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
 	    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
 	];
-    const keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+	const keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+	if (typeOf(Storage) !== undefined) {
+		if (localStorage.getItem("visited") !== null) {
+			keys = localStorage.getItem("keybinds");
+		} else {
+			localStorage.setItem("visited", "true");
+			localStorage.setItem("keyBinds", JSON.stringify(keys));
+		}
+	}
 	var chapter = 1;
     var mouse = { x: 0, y: 0 };
     var gameStarted = false;
@@ -4878,6 +4891,11 @@
 				document.getElementById("ability2KeyBind").innerText = '...';
 				break;
 	    }
+	}
+
+	function saveSettings() {
+		localStorage.setItem("keybinds", JSON.stringify(keys));
+		alert("Settings saved");
 	}
 
 	function exit() {
