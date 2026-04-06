@@ -654,7 +654,7 @@
     </div>
 
     <script>
-	window.onload = (event) => {
+	window.onload = (event) => { alert("it worked") };
 	    const gameCanvas = document.getElementById("gameCanvas");
 	    const ctx = gameCanvas.getContext("2d");
 		const shop = document.getElementById("shop");
@@ -791,7 +791,7 @@
 		var devCheats = false;
 		var choosingKeyBind = 0;
 		var hasVisitedWizard = false;
-	};
+	//};
 
     function startGame() {
         document.getElementById("mainMenu").style.display = "none";
