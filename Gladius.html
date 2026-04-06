@@ -633,6 +633,7 @@
 				<div id="ability1KeyBind" class="keyBinds"></div>
 				<button id="ability2BindButton" class="keyBindButtons" onclick="setKeyBind(9)">Ability 2</button>
 				<div id="ability2KeyBind" class="keyBinds"></div>
+				<button id="resetKeyBinds" class="keyBindButtons" onclick="resetKeyBinds()">Reset Keybinds</button>
 			</div>
 
 
@@ -657,7 +658,6 @@
 	window.onload = (event) => {
 		//default key binds
 		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
-		console.log(keys);
 		const storedKeyBinds = localStorage.getItem("keyBinds");
 		if (storedKeyBinds) { // if keybinds in local storage
 			keys = JSON.parse(storedKeyBinds); // set key binds to stored keybinds
@@ -666,6 +666,7 @@
 			localStorage.setItem("keyBinds", JSON.stringify(keys)); // store default key binds
 		}
 	};
+		const defaultKeys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		var keys = JSON.parse(localStorage.getItem("keyBinds"));
 	    const gameCanvas = document.getElementById("gameCanvas");
 	    const ctx = gameCanvas.getContext("2d");
@@ -4899,6 +4900,10 @@
 				document.getElementById("ability2KeyBind").innerText = '...';
 				break;
 	    }
+	}
+
+	function resetKeyBinds() {
+		keys = defaultKeyBinds;
 	}
 
 	function saveSettings() {
