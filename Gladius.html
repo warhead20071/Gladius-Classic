@@ -650,11 +650,19 @@
 		    	<div id="upgradesPurchased" class="gameStats"></div>
 			</div>
 		</div>
-
     </div>
 
     <script>
-	window.onload = (event) => { alert("it worked") };
+	window.onload = (event) => {
+		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		if (localStorage.getItem("visited") !== null) {
+			keys = JSON.parse(localStorage.getItem("keybinds"));
+		} else {
+			localStorage.setItem("visited", "true");
+			localStorage.setItem("keyBinds", JSON.stringify(keys));
+		}
+		alert("it worked");
+	};
 	    const gameCanvas = document.getElementById("gameCanvas");
 	    const ctx = gameCanvas.getContext("2d");
 		const shop = document.getElementById("shop");
@@ -717,13 +725,7 @@
 		    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
 		    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
 		];
-		const keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
-		if (localStorage.getItem("visited") !== null) {
-			keys = localStorage.getItem("keybinds");
-		} else {
-			localStorage.setItem("visited", "true");
-			localStorage.setItem("keyBinds", JSON.stringify(keys));
-		}
+
 		var chapter = 1;
 	    var mouse = { x: 0, y: 0 };
 	    var gameStarted = false;
