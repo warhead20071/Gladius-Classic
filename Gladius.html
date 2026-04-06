@@ -3,7 +3,7 @@
 <head>
     <title>Gladius Classic</title>
     <style>
-        html, body { 
+    html, body { 
 	    margin: 0;
 	    width: 100%;
 	    height: 100%;
@@ -32,7 +32,7 @@
 	}
 	.stats {
 	    margin-left: 20px;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
 	    font-size: 20px;
 	}
 	.gameStatsDisplay {
@@ -723,13 +723,12 @@
 		const enemyHitboxes = [];
 		const particles = [];
 		const inGameText = [];
-		const platforms = [
+		var platforms = [
 		    { x: 100, y: 300, width: 150, height: 25, type: 'normal' },
 		    { x: 562, y: 300, width: 150, height: 25, type: 'normal' },
 		    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
 		    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
 		];
-
 		var chapter = 1;
 	    var mouse = { x: 0, y: 0 };
 	    var gameStarted = false;
@@ -4446,6 +4445,9 @@
 	    }
 
 		player.upgrades[upgrade.type]++;
+		if (upgrade.type === 'bravado') {
+			director.enemyLevel += 3;
+		}
 	    if (upgrade.special) {
 			upgrades.splice(upgrades.indexOf(upgrade), 1);
 	    }
@@ -4901,7 +4903,7 @@
 
 	function saveSettings() {
 		localStorage.setItem("keyBinds", JSON.stringify(keys));
-		alert("Settings saved");
+		alert("Settings saved to local storage");
 	}
 
 	function exit() {
