@@ -611,6 +611,7 @@
 			<div class="settingsOptions">
 				<h2>Settings</h2>
 				<button id="controls" class="settingsOption" onclick="showSettingsMenu(1)">Controls</button>
+				<button class="settingsOption" onclick="saveSettings()">Save Settings</button>
 			</div>
 
 			<div id="controlsMenu" class="controlsMenu">
@@ -634,7 +635,7 @@
 				<div id="ability2KeyBind" class="keyBinds"></div>
 			</div>
 
-			<button onclick="saveSettings()">Save Settings</button>
+
 		</div>
 
 		<div id="demoEnd" class="menu">
@@ -657,9 +658,10 @@
 		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		if (localStorage.getItem("visited") !== null) {
 			keys = JSON.parse(localStorage.getItem("keybinds"));
+			console.log(JSON.parse(localStorage.getItem("keybinds")));
 		} else {
 			localStorage.setItem("visited", "true");
-			localStorage.setItem("keyBinds", JSON.stringify(keys));
+			localStorage.setItem("keybinds", JSON.stringify(keys));
 		}
 		alert("it worked");
 	};
