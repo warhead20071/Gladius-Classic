@@ -699,7 +699,7 @@
 		//};
 	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
 		const weapons = [
-		    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: false, description: 'A well rounded weapon. Great for all situations.', id: 0 },
+		    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: true, description: 'A well rounded weapon. Great for all situations.', id: 0 },
 		    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
 		    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
 		    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
@@ -932,7 +932,7 @@
 				upgradeShopTier = 3;
 			}
 			document.getElementById("demoEnd").style.display = "none";
-			showUpgradeMenu();
+			openShop(1);
 			return;
 	    }
 	    if (director.type == 2) {
@@ -1487,7 +1487,7 @@
 			if (director.waveTimer == 1680 && enemies.length > 0) {
 				announcement.innerText = '';
 			}
-			console.log(enemies);
+			//console.log(enemies);
 
 			enemies.forEach((enemy, index) => {
 				const dx = player.x - enemy.x;
@@ -2243,6 +2243,11 @@
 					}
 					if (player.upgrades.soulPendant > 0) {
 						firePlayerProjectile(projectile.x, projectile.y, 10 * (0.1 + (0.1 * player.upgrades.soulPendant)), 0, 7);
+					}
+				}
+				if (projectile.id == 8) {
+					if (projectile.tags.homing) {
+						projectile.tags.homing = false;
 					}
 				}
 
@@ -3975,16 +3980,16 @@
 				shots: 0,
 				stagger: 0,
 				debuffs: {
-				activeDebuffs: 0,
-				DOTTick: 0,
-				burn: 0,
-				burnDuration: 0,
-				bleed: 0,
-				bleedDuration: 0,
-				fear: 0,
-				fearDuration: 0,
-				stun: 0,
-				stunDuration: 0,
+					activeDebuffs: 0,
+					DOTTick: 0,
+					burn: 0,
+					burnDuration: 0,
+					bleed: 0,
+					bleedDuration: 0,
+					fear: 0,
+					fearDuration: 0,
+					stun: 0,
+					stunDuration: 0,
 				immune: {
 					burn: false,
 					bleed: false,
@@ -4733,6 +4738,9 @@
 	}
 
 	function showSpellMenu(page) {
+		if (page == 0 || page == spells[player.spellTome].level + 2) {
+			return;
+		}
 	    pauseMenu.style.display = "none";
 	    hud.style.display = "none";
 	    exitButton.style.display = "block";
