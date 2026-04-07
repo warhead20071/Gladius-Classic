@@ -32,7 +32,7 @@
 	}
 	.stats {
 	    margin-left: 20px;
-        margin-bottom: 25px;
+        margin-bottom: 40px;
 	    font-size: 20px;
 	}
 	.gameStatsDisplay {
@@ -1324,7 +1324,7 @@
 	function resume() {
 	    gamePaused = 0;
 	    if (currentMenu === 'upgradeMenu' || currentMenu === 'weaponMenu' || currentMenu === 'spellShop') {
-			shop.style.display = "block";
+			shop.style.display = "flex";
 			exitButton.style.display = "block";
 	    } else if (currentMenu === 'roadMap') {
 			roadMapMenu.style.display = "block";
@@ -4374,6 +4374,7 @@
             document.getElementById("upgradeOption2").style.display = "none";
             document.getElementById("upgradeOption3").style.display = "none";
 	    	document.getElementById("refreshButton").style.display = "none";
+			document.getElementById("upgradeOption1").style.display = "block";
 			document.getElementById("upgradeOption1").innerText = currentUpgrades[0].name;
 	    	setButtonColor(document.getElementById("upgradeOption1"), currentUpgrades[0].rarity);
 	    }
