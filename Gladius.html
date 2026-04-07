@@ -1186,7 +1186,7 @@
 		return 3; // weapon shop
 	    } else if (random < 0.35) {
 		return 5; // wizard shop
-	    } else if (random < 0.650) {
+	    } else if (random < 0.5) {
 		return 2; // upgrade shop
 	    } else {
 		return 1; // fight
@@ -2107,15 +2107,15 @@
 						}
 						if (!enemy.debuffs.immune.burn) {
 							if (hitbox.id == 13 || hitbox.id == 15) {
-								enemy.debuffs.burn += 1 + (player.upgrades.exacerbate * 2);
+								enemy.debuffs.burn += 1 + (player.upgrades.rustyDagger * 2);
 								enemy.debuffs.burnDuration = 10;
 							}
 							if (hitbox.id == 4) {
-								enemy.debuffs.burn += 5 + (player.upgrades.exacerbate * 2);
+								enemy.debuffs.burn += 5 + (player.upgrades.rustyDagger * 2);
 								enemy.debuffs.burnDuration = 10;
 							}
 							if (Math.random() < 0.1 * player.upgrades.burningBlade * hitbox.procCoef && !enemy.debuffs.immune.burn) {
-								enemy.debuffs.burn += 1 + (player.upgrades.exacerbate * 2);
+								enemy.debuffs.burn += 1 + (player.upgrades.rustyDagger * 2);
 								enemy.debuffs.burnDuration = 10;
 							}
 						}
@@ -2138,7 +2138,7 @@
 							enemy.debuffs.bleedDuration = 20;
 						}
 						if (hitbox.id == 12 && !enemy.debuffs.immune.fear) {
-							enemy.debuffs.fear = 1 * player.upgrades.ogreEye + (2 * player.upgrades.exacerbate);
+							enemy.debuffs.fear = 1 * player.upgrades.ogreEye + (2 * player.upgrades.rustyDagger);
 							enemy.debuffs.fearDuration = 20;
 						}
 						if (hitbox.id == 17 || hitbox.id == 19) {
@@ -2277,7 +2277,7 @@
 							firePlayerProjectile(player.x, player.y, damage, 0, 1);
 						}
 						if (Math.random() < 0.1 * player.upgrades.burningBlade * projectile.procCoef && !enemy.debuffs.immune.burn) {
-							enemy.debuffs.burn += 1 + (player.upgrades.exacerbate * 2);
+							enemy.debuffs.burn += 1 + (player.upgrades.rustyDagger * 2);
 							enemy.debuffs.burnDuration = 10;
 						}
 						if (player.upgrades.aquaticEssence > 0 && projectile.procCoef > 0) {
