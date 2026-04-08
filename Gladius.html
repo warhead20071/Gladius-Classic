@@ -32,7 +32,7 @@
 	}
 	.stats {
 	    margin-left: 20px;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
 	    font-size: 20px;
 	}
 	.gameStatsDisplay {
@@ -441,12 +441,12 @@
 <body>
     <div id="gameContainer">
 		<div id="hud">
-			<div id="hpDisplay" class="stats">v0.4.0</div>
+			<div id="hpDisplay">v0.4.0</div>
 			<div id="chapterDisplay"></div>
 			<div id="stageDisplay"></div>
-			<div id="lvlDisplay" class="stats"></div>
-			<div id="goldDisplay" class="stats"></div>
-			<div id="manaDisplay" class="stats"></div>
+			<div id="lvlDisplay"></div>
+			<div id="goldDisplay"></div>
+			<div id="manaDisplay"></div>
 			<div id="enemyLevelDisplay"></div>
 			<div id="weaponDisplay">Game by Warhead</div>
 			<div id="abilityCooldowns" class="abilityCooldowns">
@@ -748,17 +748,17 @@
 		var cloudDuration = 0;
 		// template { type: '', name: '', special: false, rarity: '', price: , description: '' },
 	    const upgrades = [
-	        { type: 'sharpness', name: 'Sharpness', special: false, rarity: 'Common', price: 25, description: '+20% Weapon Damage/stack.' },
-		    { type: 'arcaneCrystal', name: 'Arcane Crystal', special: false, rarity: 'Common', price: 25, description: '+20% Magic Damage/stack.' },
-		    { type: 'sigilOfPower', name: 'Sigil of Power', special: false, rarity: 'Common', price: 25, description: '+10% Total Damage/stack.' },
-	        { type: 'vitality', name: 'Vitality', special: false, rarity: 'Common', price: 25, description: '+25 HP/stack.' },
-	        { type: 'reforge', name: 'Reforge', special: false, rarity: 'Common', price: 25, description: '+10% Weapon Size/stack.' },
-	        { type: 'quickSlash', name: 'Quick Slash', special: false, rarity: 'Common', price: 25, description: '-10% Attack Cooldown/stack.' },
-	        { type: 'recovery', name: 'Recovery', special: false, rarity: 'Common', price: 25, description: '+20% Regen/stack.' },
-		    { type: 'strength', name: 'Strength', special: false, rarity: 'Common', price: 25, description: '+10% Knockback/stack.' },
-		    { type: 'burningBlade', name: 'Burning Blade', special: false, rarity: 'Common', price: 25, description: '10% chance (+10%/stack) on hit to apply burn to an enemy. Each burn stack deals 50% base damage/sec for 5 seconds. Duration refreshes when applying new burn stacks.' },
-		    { type: 'heartOfGold', name: 'Heart of Gold', special: true, rarity: 'Common', price: 25, description: 'Gain +5% HP regen for every 10 gold you have.' },
-		    { type: 'starInAJar', name: 'Star in a Jar', special: false, rarity: 'Common', price: 25, description: '+20 Max Mana/stack.' },
+	        { type: 'sharpness', name: 'Sharpness', special: false, rarity: 'Common', price: 20, description: '+20% Weapon Damage/stack.' },
+		    { type: 'arcaneCrystal', name: 'Arcane Crystal', special: false, rarity: 'Common', price: 20, description: '+20% Magic Damage/stack.' },
+		    { type: 'sigilOfPower', name: 'Sigil of Power', special: false, rarity: 'Common', price: 20, description: '+10% Total Damage/stack.' },
+	        { type: 'vitality', name: 'Vitality', special: false, rarity: 'Common', price: 20, description: '+25 HP/stack.' },
+	        { type: 'reforge', name: 'Reforge', special: false, rarity: 'Common', price: 20, description: '+10% Weapon Size/stack.' },
+	        { type: 'quickSlash', name: 'Quick Slash', special: false, rarity: 'Common', price: 20, description: '-10% Attack Cooldown/stack.' },
+	        { type: 'recovery', name: 'Recovery', special: false, rarity: 'Common', price: 20, description: '+20% Regen/stack.' },
+		    { type: 'strength', name: 'Strength', special: false, rarity: 'Common', price: 20, description: '+10% Knockback/stack.' },
+		    { type: 'burningBlade', name: 'Burning Blade', special: false, rarity: 'Common', price: 20, description: '10% chance (+10%/stack) on hit to apply burn to an enemy. Each burn stack deals 50% base damage/sec for 5 seconds. Duration refreshes when applying new burn stacks.' },
+		    { type: 'heartOfGold', name: 'Heart of Gold', special: true, rarity: 'Common', price: 20, description: 'Gain +5% HP regen for every 10 gold you have.' },
+		    { type: 'starInAJar', name: 'Star in a Jar', special: false, rarity: 'Common', price: 20, description: '+20 Max Mana/stack.' },
 	
 		    { type: 'deathNova', name: 'Death Nova', special: false, rarity: 'Rare', price: 50, description: 'Enemies explode on death dealing 125% base damage (+25%/stack) in a 60 unit radius (+10u/stack).' },
 		    { type: 'magicMissile', name: 'Magic Missile', special: false, rarity: 'Rare', price: 50, description: '10% chance on hit to fire a magic missile that deals 300% total damage (+300%/stack).' },
@@ -794,10 +794,9 @@
 		var refreshes = 0;
 		var currentMenu = 'none';
 		var secretCodeInput = [];
-		var devCheats = false;
+		var devCheats = true;
 		var choosingKeyBind = 0;
 		var canSetKeyBind = true;
-	//};
 
     function startGame() {
         document.getElementById("mainMenu").style.display = "none";
@@ -813,7 +812,7 @@
 	    	timer--;
 	    }
 	    setTimeout(() => {
-		requestAnimationFrame(runTimer);
+			requestAnimationFrame(runTimer);
 	    }, 14);
 	}
 
@@ -1719,15 +1718,15 @@
 						}
 						if (enemy.delay < 90) {
 							enemy.jumpTarget = player.x;
-							spawnText(player.x, 1155, '!!!', 'orange', 5);
+							//spawnText(player.x, 1155, '!!!', 'orange', 5);
 						} else if (enemy.delay < 120) {
 							enemy.x = enemy.jumpTarget;
-							spawnText(enemy.jumpTarget, 1155, '!!!', 'red', 5);
+							//spawnText(enemy.jumpTarget, 1155, '!!!', 'red', 5);
 						}
 						if (enemy.delay >= 120) {
 							enemy.yVel = 150;
 							if (enemy.grounded) {
-								createEnemyHitbox(enemy.x, enemy.y + (enemy.height / 2), enemy.damage, 3);
+								//createEnemyHitbox(enemy.x, enemy.y + (enemy.height / 2), enemy.damage, 3);
 								for (let i = -Math.PI / 8; i >= -7 * Math.PI / 8; i -= Math.PI / 16) {
 									fireEnemyProjectile(enemy.x, enemy.y + (enemy.height / 2), i, enemy.damage / 2, 3);
 								}
@@ -1736,7 +1735,6 @@
 								enemy.delay = 0;
 							}
 						}
-					
 					}
 
 					if (enemy.action === 'frenzy' && enemy.attackCooldown < 1) {
@@ -4471,8 +4469,8 @@
     }
 
 	function refreshUpgrades() {
-	    if (player.gold >= 25 * (refreshes + 1) && refreshes < 5) {
-			player.gold -= 25 * (refreshes + 1);
+	    if (player.gold >= 20 * (refreshes + 1) && refreshes < 5) {
+			player.gold -= 20 * (refreshes + 1);
 			refreshes++;
 			updateStats();
 
@@ -4506,7 +4504,7 @@
 	    });
 	    if (refreshes < 5) {
 	    	document.getElementById("upgradeName").innerText = 'Reroll Shop';
-			document.getElementById("upgradeRarity").innerText = (25 * (refreshes + 1)) + ' gold';
+			document.getElementById("upgradeRarity").innerText = (20 * (refreshes + 1)) + ' gold';
 			document.getElementById("upgradeType").style.display = "none";
 			document.getElementById("upgradeDescription").innerText = 'Reroll any unpurchased upgrades up to 5 times.';
 			buyButton.style.display = "block";
