@@ -1725,6 +1725,10 @@
 						}
 						if (enemy.delay >= 120) {
 							enemy.yVel = 100;
+							if (enemy.yVel < 1) {
+								enemy.yVel = 0;
+								enemy.grounded = true;
+							}
 							if (enemy.grounded) {
 								//createEnemyHitbox(enemy.x, enemy.y + (enemy.height / 2), enemy.damage, 3);
 								for (let i = -Math.PI / 8; i >= -7 * Math.PI / 8; i -= Math.PI / 16) {
