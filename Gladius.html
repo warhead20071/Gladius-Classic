@@ -884,10 +884,10 @@
 					timer = 120;
 					if (director.type == 1) {
 						player.gold += 25 + (stage * 10);
-						spawnText(player.x - 13, player.y - (player.height / 2), (25 + (stage * 10)) + ' Gold', 'gold', 60);
+						spawnText(player.x - 13, player.y - (player.height / 2), (25 + (stage * 10)) + ' Gold', 'gold', 60, 20);
 					} else {
 						player.gold += 75 + (stage * 10);
-						spawnText(player.x - 13, player.y - (player.height / 2), (50 + (stage * 10)) + ' Gold', 'gold', 60);
+						spawnText(player.x - 13, player.y - (player.height / 2), (50 + (stage * 10)) + ' Gold', 'gold', 60, 20);
 					}
 				}
 				announcement.innerText = 'Victory';
@@ -1715,12 +1715,12 @@
 						if (enemy.delay == 30) {
 							enemy.yVel = -175;
 						}
-						if (enemy.delay < 90) {
+						if (enemy.delay > 30 && enemy.delay < 90) {
 							enemy.jumpTarget = player.x;
-							spawnText(player.x, 450, '!!!', 'orange', 5);
+							spawnText(player.x, 450, '!!!', 'orange', 1, 60);
 						} else if (enemy.delay < 120) {
 							enemy.x = enemy.jumpTarget;
-							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 5);
+							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 1, 60);
 						}
 						if (enemy.delay == 120) {
 							enemy.yVel = 100;
@@ -1949,7 +1949,7 @@
 							createHitbox(enemy.x, enemy.y, damage, 0, 11);
 						} else {
 							enemy.hp -= damage;
-							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'orange', 15);
+							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'orange', 15, 20);
 						}
 						player.damageDealt += Math.round(damage);
 						enemy.debuffs.burnDuration--;
@@ -1960,7 +1960,7 @@
 							createHitbox(enemy.x, enemy.y, damage, 0, 11);
 						} else {
 							enemy.hp -= damage;
-							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'red', 15);
+							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'red', 15, 20);
 						}
 						player.damageDealt += Math.round(damage);
 						enemy.debuffs.bleedDuration--;
@@ -2091,7 +2091,7 @@
 						} else {
 							enemy.hp -= damage;
 							if (damage != 0 && enemy.type !== 'Undead') {
-								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15);
+								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15, 20);
 							}
 						}
 						player.damageDealt += Math.round(damage);
@@ -2228,7 +2228,7 @@
 					projectile.vy = (player.y - projectile.y) * projectile.speed / dist;
 					if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, player.x, player.y, player.width, player.height)) {
 						player.hp += projectile.damage;
-						spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'green', 15);
+						spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'green', 15, 20);
 						playerProjectiles.splice(index, 1);
 					}
 				}
@@ -2271,7 +2271,7 @@
 						} else {
 							enemy.hp -= damage;
 							if (damage !=  0) {
-								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15);
+								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15, 20);
 							}
 						}
 						player.damageDealt += Math.round(damage);
@@ -2332,7 +2332,7 @@
 
 				if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, player.x, player.y, player.width, player.height) && player.iFrames < 1 && !player.invincible) {
 					player.hp -= projectile.damage;
-					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'red', 15);
+					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'red', 15, 20);
 					if (player.upgrades.outrage > 0) {
 						createHitbox(player.x, player.y, 0, 0, 2);
 					}
@@ -2351,7 +2351,7 @@
 
 				if (collisionDetection(hitbox.x, hitbox.y, hitbox.width, hitbox.height, player.x, player.y, player.width, player.height) && player.iFrames < 1 && !player.invincible && !hitbox.hitPlayer) {
 					player.hp -= hitbox.damage;
-					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(hitbox.damage), 'red', 15);
+					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(hitbox.damage), 'red', 15, 20);
 					hitbox.hitPlayer = true;
 					if (player.upgrades.outrage > 0) {
 						createHitbox(player.x, player.y, 0, 0, 2);
@@ -3713,13 +3713,14 @@
 	    }
 	}
 
-	function spawnText(x, y, txt, color, dur) {
+	function spawnText(x, y, txt, color, dur, size) {
 	    const text = {
 			x: x,
 			y: y,
 			text: txt,
 			color: color,
-			duration: dur
+			duration: dur,
+			size: size
 	    };
 	    inGameText.push(text);
 	}
@@ -3904,7 +3905,7 @@
 
 		inGameText.forEach(text => {
 			ctx.fillStyle = text.color;
-			ctx.font = "20px serif";
+			ctx.font = text.size + "px serif";
 			ctx.fillText(text.text, text.x, text.y);
 		});
     }
@@ -4255,7 +4256,7 @@
 			player.lvl++;
 			player.exp -= player.expReq;
 			player.expReq = Math.round(player.expReq * 1.25);
-			spawnText(player.x, player.y - (player.height / 2), 'Level Up', 'blue', 30);
+			spawnText(player.x, player.y - (player.height / 2), 'Level Up', 'blue', 30, 20);
 	    }
 
 	    player.weaponDamage = currentWeapon.baseDamage * (1 + (0.2 * player.upgrades.sharpness)) * (1 + (0.25 * player.upgrades.bravado));
@@ -4274,6 +4275,7 @@
 
         if (player.hp > player.maxHp) player.hp = player.maxHp;
         if (player.mana > player.maxMana) player.mana = player.maxMana;
+		player.mana = Math.round(player.mana);
 
         document.getElementById("hpDisplay").innerText = `HP: ${Math.round(player.hp) + '/' + Math.round(player.maxHp)}`;
 	    document.getElementById("lvlDisplay").innerText = 'LVL: ' + player.lvl;
@@ -4748,6 +4750,7 @@
 	    hud.style.display = "none";
 	    exitButton.style.display = "block";
 	    spellMenu.style.display = "flex";
+		hideUpgradesDisplay();
 	    spellMenuPage = page;
 	    if (spellMenuPage == 1) {
 			spellMenuPage = 1;
@@ -4762,28 +4765,28 @@
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].neutral.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].neutral.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].neutral.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].neutral.description;
 	    }
 	    if (spellMenuPage == 3 && spells[player.spellTome].level >= 2) {
 			document.getElementById("spellName").innerText = spells[player.spellTome].side.spell;
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].side.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].side.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.left.key} or ${keys.right.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].side.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].side.description;
 	    }
 	    if (spellMenuPage == 4 && spells[player.spellTome].level >= 3) {
 			document.getElementById("spellName").innerText = spells[player.spellTome].up.spell;
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].up.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].up.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.up.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].up.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].up.description;
 	    }
 	    if (spellMenuPage == 5 && spells[player.spellTome].level >= 4) {
 			document.getElementById("spellName").innerText = spells[player.spellTome].down.spell;
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].down.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].side.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.down.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].down.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].down.description;
 	    }
 	    if (spellMenuPage == 6 && spells[player.spellTome].level >= 5 || spellMenuPage == 7 && spells[player.spellTome].level >= 5) {
 			spellMenuPage = 6;
@@ -4791,7 +4794,7 @@
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].ultimate.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].ultimate.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.up.key} + ${keys.down.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].ultimate.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].ultimate.description;
 	    }
 	}
 
