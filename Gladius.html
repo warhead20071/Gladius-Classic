@@ -1357,7 +1357,7 @@
 				if (platform.type === 'cloud') {
 					cloudDuration--;
 					if (cloudDuration % 120 == 0) {
-						createHitbox(platform.x + (platform.width / 2), platform.y + playform.height, player.damage * player.magicDamage, 0, 17);
+						createHitbox(platform.x + (platform.width / 2), platform.y + platform.height, player.damage * player.magicDamage, 0, 17);
 					}
 					if (cloudDuration == 0) {
 						platforms.splice(index, 1);
@@ -2934,7 +2934,7 @@
 				knockbackX: 5,
 				knockbackY: 10,
 				angle: 0,
-				duration: 5,
+				duration: 6,
 				procCoef: 1,
 				pierce: 999,
 				id: id,
@@ -3433,12 +3433,16 @@
 	    }
 
 	    if (player.spellTome == 1) {
-			if (player.animationFrame == 2) {
-				player.yVel = -4;
-			}
-			if (player.animationFrame == 6) {
-				platforms.push({ x: player.x - 75, y: player.y + 25, width: 150, height: 25, type: 'cloud' });
-				cloudDuration = 600;
+			if (platforms.filter(platform => platform.type === 'cloud').length == 0) {
+				if (player.animationFrame == 2) {
+					player.yVel = -4;
+				}
+				if (player.animationFrame == 6) {
+					platforms.push({ x: player.x - 75, y: player.y + 25, width: 150, height: 25, type: 'cloud' });
+					cloudDuration = 600;
+					player.casting = 'none';
+				}
+			} else {
 				player.casting = 'none';
 			}
 	    }
