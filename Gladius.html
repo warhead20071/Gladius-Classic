@@ -657,7 +657,7 @@
     <script>
 	window.onload = (event) => {
 		//default key binds
-		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'e', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		const storedKeyBinds = localStorage.getItem("keyBinds");
 		if (storedKeyBinds) { // if keybinds in local storage
 			keys = JSON.parse(storedKeyBinds); // set key binds to stored keybinds
@@ -666,7 +666,7 @@
 			localStorage.setItem("keyBinds", JSON.stringify(keys)); // store default key binds
 		}
 	};
-		const defaultKeys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		const defaultKeys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'e', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		var keys = JSON.parse(localStorage.getItem("keyBinds"));
 	    const gameCanvas = document.getElementById("gameCanvas");
 	    const ctx = gameCanvas.getContext("2d");
@@ -2334,7 +2334,7 @@
 					player.hp -= projectile.damage;
 					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'red', 15, 20);
 					if (player.upgrades.outrage > 0) {
-						createHitbox(player.x, player.y, 0, 0, 2);
+						createHitbox(player.x, player.y, player.damage, 0, 2);
 					}
 					enemyProjectiles.splice(index, 1);
 				}
@@ -3404,7 +3404,7 @@
 
 	    if (player.spellTome == 1) {
 			player.delay++;
-			if (player.delay == 180) {
+			if (player.delay == 60) {
 				player.statusEffects.thunderBlade.stacks = 1;
 				player.statusEffects.thunderBlade.duration = 600;
 				player.casting = 'none';
@@ -4565,7 +4565,7 @@
 	    });
 	    selectedWeapon = weapons[index];
 	    document.getElementById("weaponName").innerText = selectedWeapon.name + ' Lvl ' + selectedWeapon.level;
-	    document.getElementById("weaponPrice").innerText = 'Price: ' + (150 * (1 + selectedWeapon.level)) + ' Gold';
+	    document.getElementById("weaponPrice").innerText = 'Price: ' + (50 + (50 * (1 + selectedWeapon.level))) + ' Gold';
 	    document.getElementById("weaponDamage").innerText = 'Base DMG: ' + ((selectedWeapon.baseDamage + (selectedWeapon.baseDamage * 0.2 * selectedWeapon.level)) * 100) + '%';
 	    document.getElementById("weaponAtkCol").innerText = 'Base Cooldown: ' + ((selectedWeapon.baseAttackCooldown * Math.pow(0.9, selectedWeapon.level)) / 1000) + ' sec';
 	    document.getElementById("weaponLength").innerText = 'Base Size: ' + (selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level));
@@ -4588,8 +4588,8 @@
 
 	function buyWeapon() {
 	    if (currentWeapon.name === selectedWeapon.name) {
-			if (player.gold >= (selectedWeapon.level + 1) * 150 && selectedWeapon.level < 3) {
-				player.gold -= 150 * (selectedWeapon.level + 1);
+			if (player.gold >= 50 + ((50 * selectedWeapon.level + 1)) && selectedWeapon.level < 3) {
+				player.gold -= 50 + (50 * (selectedWeapon.level + 1));
 				selectedWeapon.level++;
 				currentWeapon.baseDamage = selectedWeapon.baseDamage + (selectedWeapon.baseDamage * 0.2 * (selectedWeapon.level + 1));
 				currentWeapon.baseAttackCooldown = selectedWeapon.baseAttackCooldown * Math.pow(0.9, (selectedWeapon.level + 1));
@@ -4609,8 +4609,8 @@
 				currentWeapon.id = selectedWeapon.id;
 				updateStats();
 			} else {
-				if (player.gold >= 150) {
-					player.gold -= 150;
+				if (player.gold >= 100) {
+					player.gold -= 100;
 					currentWeapon.name = selectedWeapon.name;
 					currentWeapon.baseDamage = selectedWeapon.baseDamage + (selectedWeapon.baseDamage * 0.2 * (selectedWeapon.level + 1));
 					currentWeapon.baseAttackCooldown = selectedWeapon.baseAttackCooldown * Math.pow(0.9, (selectedWeapon.level + 1));
@@ -4644,7 +4644,7 @@
 	    });
 	    document.getElementById("bookName").innerText = selectedSpellTome.name;
 	    document.getElementById("bookLevel").innerText = 'Level ' + selectedSpellTome.level;
-	    document.getElementById("bookCost").innerText = 'Cost: ' + (100 + (50 * selectedSpellTome.level)) + ' Gold';
+	    document.getElementById("bookCost").innerText = 'Cost: ' + (50 + (50 * selectedSpellTome.level)) + ' Gold';
 	    document.getElementById("bookDescription").innerText = selectedSpellTome.description;
 	    if (player.spellTome == selectedSpellTome.id) {
 			if (selectedSpellTome.level < 5) {
@@ -4663,8 +4663,8 @@
 
 	function buySpellTome() {
 	    if (player.spellTome == selectedSpellTome.id) {
-			if (player.gold >= 100 + (50 * selectedSpellTome.level) && selectedSpellTome.level < 5) {
-				player.gold -= 100 + (50 * selectedSpellTome.level);
+			if (player.gold >= 50 + (50 * selectedSpellTome.level) && selectedSpellTome.level < 5) {
+				player.gold -= 50 + (50 * selectedSpellTome.level);
 				selectedSpellTome.level++;
 				showSpellDescription(selectedSpellTome.id);
 				updateStats();
@@ -4675,8 +4675,8 @@
 				showSpellDescription(selectedSpellTome.id);
 				updateStats();
 			} else {
-				if (player.gold >= 150) {
-					player.gold -= 150;
+				if (player.gold >= 100) {
+					player.gold -= 100;
 					player.spellTome = selectedSpellTome.id;
 					selectedSpellTome.owned = true;
 					showSpellDescription(selectedSpellTome.id);
