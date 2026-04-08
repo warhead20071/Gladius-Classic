@@ -114,7 +114,7 @@
 	    flex-direction: column-reverse;
 	    align-content: flex-end;
         position: absolute;
-        top: 60%;
+        bottom: 95%;
         left: 2.5%;
     }
     .menu {
@@ -1717,12 +1717,12 @@
 						}
 						if (enemy.delay < 90) {
 							enemy.jumpTarget = player.x;
-							//spawnText(player.x, 1155, '!!!', 'orange', 5);
+							spawnText(player.x, 450, '!!!', 'orange', 5);
 						} else if (enemy.delay < 120) {
 							enemy.x = enemy.jumpTarget;
-							//spawnText(enemy.jumpTarget, 1155, '!!!', 'red', 5);
+							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 5);
 						}
-						if (enemy.delay = 120) {
+						if (enemy.delay == 120) {
 							enemy.yVel = 100;
 						}
 						if (enemy.delay > 120) {
@@ -3910,7 +3910,7 @@
     }
 
 	function setWave() {
-	    director.enemiesPerWave = 4;
+	    director.enemiesPerWave = 5;
 	    if (director.type == 2) {
 			if (chapter == 1) {
 				queueEnemy('ogre');
@@ -3920,7 +3920,7 @@
 					queueEnemy('undead');
 				}
 			}	
-			director.waves = 0;
+			director.waves = 1;
 	    } else {
 	    	for (let i = 0; i < 5 + (stage * 2); i++) {
 	    	    if (Math.random() < 0.1 && enemyQueue.filter(enemy => enemy.rank === 'elite').length < director.eliteLimit) {
@@ -3931,7 +3931,7 @@
 		    		queueEnemy('goblin');
 	    	    }
 	    	}
-		director.waves = Math.ceil(enemyQueue.length / director.enemiesPerWave);
+			director.waves = Math.ceil(enemyQueue.length / director.enemiesPerWave);
 	    }
 	}
 
@@ -4254,7 +4254,7 @@
 	    if (player.exp >= player.expReq) {
 			player.lvl++;
 			player.exp -= player.expReq;
-			player.expReq = Math.round(player.expReq * 1.5);
+			player.expReq = Math.round(player.expReq * 1.25);
 			spawnText(player.x, player.y - (player.height / 2), 'Level Up', 'blue', 30);
 	    }
 
