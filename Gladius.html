@@ -3761,6 +3761,10 @@
 		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		//ctx.drawImage(sprites.player.sprite, player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		ctx.globalAlpha = 1;
+		if (player.statusEffects.thunderBlade.stacks > 0) {
+			ctx.fillStyle = 'cyan';
+			ctx.fillRect(player.x - 4, player.y - player.height, 8, 10);
+		}
 
 		enemies.forEach(enemy => {
 			if (enemy.action === 'reanimating') {
