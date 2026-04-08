@@ -772,12 +772,12 @@
 		    { type: 'chaos', name: 'Chaos', special: true, rarity: 'Cursed', price: 50, description: 'All damage dealt is distributed evenly amongst all enemies on screen.' },
 	
 		    { type: 'bulwark', name: 'Bulwark', special: false, rarity: 'Legendary', price: 100, description: 'Limits the amount of damage you can take in one hit to 50 (-10%/stack).' },
-		    { type: 'luckyArrow', name: 'Lucky Arrow', special: false, rarity: 'Legendary', price: 100, description: 'Every 3 swings, fire a lucky arrow that deals 125% base damage (+25%/stack) and is 3x as likely to activate on-hit effects.' },
+		    { type: 'luckyArrow', name: 'Lucky Arrow', special: false, rarity: 'Legendary', price: 100, description: 'Every 3 attacks, fire a lucky arrow that deals 125% base damage (+25%/stack) and is 3x as likely to activate on-hit effects.' },
 		    { type: 'rustyDagger', name: 'Rusty Dagger', special: false, rarity: 'Legendary', price: 100, description: 'When applying a debuff to an enemy, increase the number of stacks applied by 2 (+2/stack).' },
 		    { type: 'flameEssence', name: 'Flame Essence', special: true, rarity: 'Legendary', price: 100, description: 'Burn effects are 4x stronger. Burning enemies explode on death, applying 5 burn stacks to each enemy caught in the blast. 1 of the 6 arcane powers.' },
 		    { type: 'stormEssence', name: 'Storm Essence', special: true, rarity: 'Legendary', price: 100, description: 'You are surrounded by a lightning field that deals 100% base damage/sec and chains lightning to nearby enemies. 1 of the 6 arcane powers.' },
 		    { type: 'earthEssence', name: 'Earth Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
-		    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 swings, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
+		    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 attacks, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
 		    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'Your main attack becomes dimensional slash. Cut through time and space to slash at your mouse cursor. 1 of the 6 arcane powers.' },
 		    { type: 'natureEssence', name: 'Nature Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
 	
@@ -1174,21 +1174,21 @@
 
 	function getRandomEvent() {
 	    let random = Math.random();
-	    if (random < 0.025 && roadMap.mysteriousArtifact == 0) {
-		if (roadMap.mysteriousArtifact == 0) {
-		    roadMap.mysteriousArtifact = 1;
-		    return 4; // mysterious artifact
-		} else {
-		    return 1;
-		}
-	    } else if (random < 0.175) {
-		return 3; // weapon shop
-	    } else if (random < 0.35) {
-		return 5; // wizard shop
-	    } else if (random < 0.5) {
-		return 2; // upgrade shop
-	    } else {
-		return 1; // fight
+	    if (random < 0.025 && roadMap.mysteriousArtifact == 0) { // 2.5%
+			if (roadMap.mysteriousArtifact == 0) {
+			    roadMap.mysteriousArtifact = 1;
+			    return 4; // mysterious artifact
+			} else {
+			    return 1;
+			}
+	    } else if (random < 0.175) { // 15%
+			return 3; // weapon shop
+	    } else if (random < 0.325) { // 15%
+			return 5; // wizard shop
+	    } else if (random < 0.6) { // 27.5%
+			return 2; // upgrade shop
+	    } else { // 40%
+			return 1; // fight
 	    }
 	}
 
@@ -3439,6 +3439,7 @@
 			if (player.animationFrame == 6) {
 				platforms.push({ x: player.x - 75, y: player.y + 25, width: 150, height: 25, type: 'cloud' });
 				cloudDuration = 600;
+				player.casting = 'none';
 			}
 	    }
 	}
