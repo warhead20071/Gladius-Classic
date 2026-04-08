@@ -1714,7 +1714,6 @@
 						enemy.delay++;
 						if (enemy.delay == 30) {
 							enemy.yVel = -175;
-							enemy.grounded = false;
 						}
 						if (enemy.delay < 90) {
 							enemy.jumpTarget = player.x;
@@ -1726,7 +1725,7 @@
 						if (enemy.delay = 120) {
 							enemy.yVel = 100;
 						}
-						if (enemy.delay < 120) {
+						if (enemy.delay > 120) {
 							if (enemy.yVel < 1) {
 								enemy.yVel = 0;
 								enemy.grounded = true;
