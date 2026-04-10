@@ -688,6 +688,17 @@
 		const announcement = document.getElementById("announcement");
 		const countdown = document.getElementById("countdown");
 		const settingsMenu = document.getElementById("settingsMenu");
+		const controls = [ 
+			document.getElementById("upKeyBind"),
+			document.getElementById("leftKeyBind"),
+			document.getElementById("downKeyBind"),
+			document.getElementById("leftKeyBind"),
+			document.getElementById("jumpKeyBind"),
+			document.getElementById("dodgeKeyBind"),
+			document.getElementById("spellKeyBind"),
+			document.getElementById("ability1KeyBind"),
+			document.getElementById("ability2KeyBind")
+		]
 		const devCheatsMenu = document.getElementById("devCheats");
 		const hud = document.getElementById("hud");
 		const exitButton = document.getElementById("exitButton");
@@ -4884,6 +4895,11 @@
 				document.getElementById("spellKeyBind").innerText = '"' + keys.spell.key + '"';
 				document.getElementById("ability1KeyBind").innerText = '"' + keys.ability1.key + '"';
 				document.getElementById("ability2KeyBind").innerText = '"' + keys.ability2.key + '"';
+				controls.forEach(control => {
+					if (control.innerText === '" "') {
+						control.innerText = "Space";
+					}
+				});
 				break;
 	    }
 	}
