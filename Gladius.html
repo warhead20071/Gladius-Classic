@@ -1141,10 +1141,7 @@
 		case 3:
 		    return 'Weapon Shop';
 		case 4:
-		    if (chapter < 3) {
-		    	return 'Mysterious Artifact';
-		    }
-			break;
+		    return 'Mysterious Artifact';
 		case 5:
 		    return 'Wizard Shop';
 	    }
@@ -1175,7 +1172,7 @@
 	function getRandomEvent() {
 	    let random = Math.random();
 	    if (random < 0.025 && roadMap.mysteriousArtifact == 0) { // 2.5%
-			if (roadMap.mysteriousArtifact == 0) {
+			if (roadMap.mysteriousArtifact == 0 && chapter < 3) {
 			    roadMap.mysteriousArtifact = 1;
 			    return 4; // mysterious artifact
 			} else {
