@@ -2274,7 +2274,7 @@
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
 							createHitbox(enemy.x + 1, enemy.y + 1, damage * 1.5, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
-							createParticle(player.x, player.y, 'cyan', target, 4);
+							createParticle(projectile.x, projectile.y, 'cyan', target, 4);
 						}
 					}
 					if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, enemy.x, enemy.y, enemy.width, enemy.height) && projectile.id != 3 && projectile.id != 7 && !projectile.enemiesHit.includes(enemy.id)) {
