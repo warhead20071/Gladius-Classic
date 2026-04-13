@@ -2182,8 +2182,10 @@
 				}
 
 				if (hitbox.tags.explosion) {
-					for (let i = 0; i < hitbox.duration; i++) {
-						createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
+					if (hitbox.duration == 1) {
+						for (let i = 0; i < hitbox.duration; i++) {
+							createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
+						}
 					}
 					if (hitbox.id == 14) {
 						hitbox.angle = (Math.PI / 2) - (Math.PI * (player.facing / 2)) + (Math.round(Math.random()) ? 1 : -1 * (Math.PI / 8) * Math.random());
