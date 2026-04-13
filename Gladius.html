@@ -27,7 +27,7 @@
 	    display: flex;
 	    flex-direction: column;
 	    position: absolute;
-	    top: 15%;
+	    top: 20%;
 	    left: 2.5%;
 	}
 	.stats {
@@ -82,7 +82,7 @@
     #manaDisplay {
         font-size: 20px;
         position: absolute;
-        top: 14%;
+        top: 13%;
         left: 2.5%;
     }
     #chapterDisplay {
@@ -258,7 +258,7 @@
 	    flex-direction: row;
 	    flex-wrap: wrap;
 	    position: absolute;
-	    top: 20%;
+	    top: 15%;
 	    left: 50%;
         border: 1px solid #000;
 	    margin: 10px;
@@ -635,8 +635,6 @@
 				<div id="ability2KeyBind" class="keyBinds"></div>
 				<button id="resetKeyBinds" class="keyBindButtons" onclick="resetKeyBinds()">Reset Keybinds</button>
 			</div>
-
-
 		</div>
 
 		<div id="demoEnd" class="menu">
@@ -721,7 +719,7 @@
 		var selectedWeapon = 0;
 		const spells = [
 		    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
-		    { name: 'Tome of Electromancy', id: 1, level: 5, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '300% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '1000% base damage (ball), 150% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
+		    { name: 'Tome of Electromancy', id: 1, level: 5, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '250% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '1000% base damage (ball), 150% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
 		];
 		var selectedSpellTome = 0;
 	    var stage = 1;
@@ -878,7 +876,7 @@
     function gameLoop() {
 		if (gameStarted == true) {
 			setTimeout(() => {
-				if (currentMenu === 'none' && gamePaused == 0 && player.hp > 0 ) {
+				if (currentMenu === 'none' && gamePaused == 0 && player.hp > 0) {
 					requestAnimationFrame(gameLoop);
 				}
 				// player health check
@@ -895,17 +893,17 @@
 					timer = 120;
 					if (director.type == 1) {
 						player.gold += 25 + (stage * 10);
-						spawnText(player.x - 13, player.y - (player.height / 2), (25 + (stage * 10)) + ' Gold', 'gold', 60, 20);
+						spawnText(player.x - 13, player.y - (player.height / 2), (25 + (stage * 7)) + ' Gold', 'gold', 60, 20);
 					} else {
 						player.gold += 75 + (stage * 10);
-						spawnText(player.x - 13, player.y - (player.height / 2), (50 + (stage * 10)) + ' Gold', 'gold', 60, 20);
+						spawnText(player.x - 13, player.y - (player.height / 2), (50 + (stage * 7)) + ' Gold', 'gold', 60, 20);
 					}
 				}
 				announcement.innerText = 'Victory';
 				if (timer == 0) {
 					announcement.innerText = '';
 					if (director.type == 2) {
-						director.enemyLevel += 3;
+						director.enemyLevel += 5;
 						gameCanvas.style.display = "none";
 						generateRoadMap();
 						if (chapter == 2) {
@@ -915,11 +913,7 @@
 							currentMenu = 'demoEnd';
 							return;
 						} else {
-							if (player.upgrades.mysteriousArtifact == 0) {
-								upgradeShopTier = 2;
-							} else {
-								upgradeShopTier = 3;
-							}
+							upgradeShopTier = 2 + player.upgrades.mysteriousArtifact;
 							openShop(1);
 						}
 					} else {
@@ -936,11 +930,7 @@
 
 	function showRoadMap() {
 	    if (currentMenu === 'demoEnd') {
-			if (player.upgrades.mysteriousArtifact == 0) {
-				upgradeShopTier = 2;
-			} else {
-				upgradeShopTier = 3;
-			}
+			upgradeShopTier = 2 + player.upgrades.mysteriousArtifact;
 			document.getElementById("demoEnd").style.display = "none";
 			openShop(1);
 			return;
@@ -2272,7 +2262,7 @@
 
 				enemies.forEach(enemy => {
 					let damage = damageCalculation(projectile.damage, enemy.debuffs.fear);
-					if (projectile.id == 10) {
+					if (projectile.id == 10 && projectile.duration % 15 == 0) {
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
 							createHitbox(enemy.x + 1, enemy.y + 1, damage * 1.5, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
@@ -3372,7 +3362,7 @@
 
 	    if (player.spellTome == 1) {
 			if (player.animationFrame == 3) {
-				createHitbox(mouse.x, 0, player.damage * player.magicDamage * 3, 0, 17);
+				createHitbox(mouse.x, 0, player.damage * player.magicDamage * 2.5, 0, 17);
 				player.casting = 'none';
 			}
 	    }
@@ -3785,6 +3775,7 @@
 		enemies.forEach(enemy => {
 			if (enemy.action === 'reanimating') {
 				ctx.fillStyle = "purple";
+				ctx.strokeStyle = "purple";
 				ctx.lineWidth = 5;
 				ctx.strokeRect(enemy.x - (enemy.width / 2) - 3, enemy.y - (enemy.height / 2) - 3, enemy.width + 6, enemy.height + 6);
 				ctx.lineWidth = 0;
@@ -3871,6 +3862,7 @@
 				ctx.translate(-hitbox.x, -hitbox.y);
 			} else {
 				ctx.fillStyle = hitbox.color;
+				ctx.strokeStyle = hitbox.color;
 				ctx.globalAlpha = hitbox.opacity;
 				if (hitbox.shape == 1) {
 					ctx.beginPath();
@@ -3885,6 +3877,7 @@
 
 		playerProjectiles.forEach(projectile => {
 			ctx.fillStyle = projectile.color;
+			ctx.strokeStyle = projectile.color;
 			ctx.beginPath();
 			ctx.arc(projectile.x, projectile.y, projectile.radius, 0, 2 * Math.PI);
 			ctx.fill();
@@ -3892,6 +3885,7 @@
 
 		enemyProjectiles.forEach(projectile => {
 			ctx.fillStyle = projectile.color;
+			ctx.strokeStyle = projectile.color;
 			ctx.beginPath();
 			ctx.arc(projectile.x, projectile.y, projectile.radius, 0, 2 * Math.PI);
 			ctx.fill();
@@ -3900,6 +3894,7 @@
 		enemyHitboxes.forEach(hitbox => {
 			if (hitbox.color !== 'none') {
 				ctx.fillStyle = hitbox.color;
+				ctx.strokeStyle = hitbox.color;
 				ctx.globalAlpha = hitbox.opacity;
 				ctx.beginPath();
 				ctx.arc(hitbox.x, hitbox.y, hitbox.radius, 0, 2 * Math.PI);
@@ -3911,6 +3906,7 @@
 		particles.forEach(particle => {
 			if (particle.sprite === 'none') {
 				ctx.fillStyle = particle.color;
+				ctx.strokeStyle = particle.color;
 				ctx.globalAlpha = particle.opacity;
 				if (particle.id != 4) {
 					ctx.beginPath();
