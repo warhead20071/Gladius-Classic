@@ -657,7 +657,7 @@
     <script>
 	window.onload = (event) => {
 		//default key binds
-		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'e', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		const storedKeyBinds = localStorage.getItem("keyBinds");
 		if (storedKeyBinds) { // if keybinds in local storage
 			keys = JSON.parse(storedKeyBinds); // set key binds to stored keybinds
@@ -666,7 +666,7 @@
 			localStorage.setItem("keyBinds", JSON.stringify(keys)); // store default key binds
 		}
 	};
-		const defaultKeys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'e', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		const defaultKeys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
 		var keys = JSON.parse(localStorage.getItem("keyBinds"));
 	    const gameCanvas = document.getElementById("gameCanvas");
 	    const ctx = gameCanvas.getContext("2d");
@@ -789,7 +789,7 @@
 		    { type: 'stormEssence', name: 'Storm Essence', special: true, rarity: 'Legendary', price: 100, description: 'You are surrounded by a lightning field that deals 100% base damage/sec and chains lightning to nearby enemies. 1 of the 6 arcane powers.' },
 		    { type: 'earthEssence', name: 'Earth Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
 		    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 attacks, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
-		    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'Your main attack becomes dimensional slash. Cut through time and space to slash at your mouse cursor. 1 of the 6 arcane powers.' },
+		    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
 		    { type: 'natureEssence', name: 'Nature Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
 	
 		    { type: 'mysteriousArtifact', name: 'Mysterious Artifact', special: true, rarity: 'Special', price: 0, description: 'A strange medallion that resonates with mysterious energy.' },
@@ -2026,10 +2026,10 @@
 						firePlayerProjectile(enemy.x, enemy.y, enemy.maxHp * 0.1 * player.upgrades.soulPendant, 0, 7);
 					}
 					if (enemy.rank === 'fodder') {
-						player.exp += 10;
+						player.exp += 15;
 					}
 					if (enemy.rank === 'elite') {
-						player.exp += 25;
+						player.exp += 40;
 					}
 					if (enemy.rank === 'boss') {
 						player.exp += 100;
@@ -2182,7 +2182,9 @@
 				}
 
 				if (hitbox.tags.explosion) {
-					createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
+					for (let i = 0; i < hitbox.duration; i++) {
+						createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
+					}
 					if (hitbox.id == 14) {
 						hitbox.angle = (Math.PI / 2) - (Math.PI * (player.facing / 2)) + (Math.round(Math.random()) ? 1 : -1 * (Math.PI / 8) * Math.random());
 					} else {
