@@ -5049,7 +5049,6 @@
 			} else if (keys.up.pressed && keys.down.pressed) {
 				if (player.mana >= spells[player.spellTome].ultimate.cost && spells[player.spellTome].level >= 5) {
 					player.animationFrame = 1;
-					player.animationLength = 5;
 					player.ignoreGravity = true;
 					player.ignoreDecel = true;
 					player.xVel = 0;
