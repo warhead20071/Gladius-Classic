@@ -27,7 +27,7 @@
 	    display: flex;
 	    flex-direction: column;
 	    position: absolute;
-	    top: 10%;
+	    top: 15%;
 	    left: 2.5%;
 	}
 	.stats {
@@ -70,19 +70,19 @@
     #lvlDisplay {
         font-size: 20px;
         position: absolute;
-        top: 3%;
+        top: 5%;
         left: 2.5%;
     }
     #goldDisplay {
         font-size: 20px;
         position: absolute;
-        top: 5%;
+        top: 10%;
         left: 2.5%;
     }
     #manaDisplay {
         font-size: 20px;
         position: absolute;
-        top: 7%;
+        top: 15%;
         left: 2.5%;
     }
     #chapterDisplay {
@@ -94,13 +94,13 @@
     #stageDisplay {
         font-size: 20px;
         position: absolute;
-        top: 3%;
+        top: 5%;
         left: 85%;
     }
     #enemyLevelDisplay {
         font-size: 20px;
         position: absolute;
-        top: 5%;
+        top: 10%;
         left: 85%;
     }
 	#weaponDisplay {
@@ -702,7 +702,7 @@
 		const devCheatsMenu = document.getElementById("devCheats");
 		const hud = document.getElementById("hud");
 		const exitButton = document.getElementById("exitButton");
-		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
+		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, canMove: true, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
 		//const sprites = {
 		    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
 		    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
@@ -1384,58 +1384,60 @@
 				player.isDodging = false;
 			}
 
-			if (!player.isDodging) {
-				if (!player.ignoreGravity) {
-					player.yVel += gravity;
-				}
-				if (!player.ignoreDecel) {
-					if (player.grounded) {
+			if (player.canMove) {
+				if (!player.isDodging) {
+					if (!player.ignoreGravity) {
+						player.yVel += gravity;
+					}
+					if (!player.ignoreDecel) {
+						if (player.grounded) {
+							player.xVel *= groundDecel;
+						} else {
+							player.xVel *= airDecel;
+						}
+					}
+					if (keys.left.pressed) {
+						if (Math.abs(player.xVel) <= player.speed) {
+							player.xVel = -player.speed;
+						} else {
+							player.xVel -= player.speed;
+						}
+						player.xDir = -1;
+						player.facing = -1;
+					}
+					if (keys.right.pressed) {
+						if (Math.abs(player.xVel) <= player.speed) {
+							player.xVel = player.speed;
+						} else {
+							player.xVel += player.speed;
+						}
+						player.xDir = 1;
+						player.facing = 1;
+					}
+					if (keys.up.pressed) {
+						player.yDir = -1;
+					}
+					if (keys.down.pressed) {
+						player.yDir = 1;
+					}
+					if (!keys.left.pressed && !keys.right.pressed && !player.grounded) {
+						player.xDir = 0;
+					}
+					if (!keys.up.pressed && !keys.down.pressed) {
+						player.yDir = 0;
+					}
+				} else {
+					if (player.iFrames > 15) {
+						player.xVel += 2 * player.xDir;
+						player.yVel += 2 * player.yDir * player.upgrades.airDodge;
+					}
+					if (player.iFrames < 10) {
 						player.xVel *= groundDecel;
-					} else {
-						player.xVel *= airDecel;
+						player.yVel *= groundDecel * player.upgrades.airDodge;
 					}
-				}
-				if (keys.left.pressed) {
-					if (Math.abs(player.xVel) <= player.speed) {
-						player.xVel = -player.speed;
-					} else {
-						player.xVel -= player.speed;
+					if (player.iFrames < 2) {
+						player.isDodging = false;
 					}
-					player.xDir = -1;
-					player.facing = -1;
-				}
-				if (keys.right.pressed) {
-					if (Math.abs(player.xVel) <= player.speed) {
-						player.xVel = player.speed;
-					} else {
-						player.xVel += player.speed;
-					}
-					player.xDir = 1;
-					player.facing = 1;
-				}
-				if (keys.up.pressed) {
-					player.yDir = -1;
-				}
-				if (keys.down.pressed) {
-					player.yDir = 1;
-				}
-				if (!keys.left.pressed && !keys.right.pressed && !player.grounded) {
-					player.xDir = 0;
-				}
-				if (!keys.up.pressed && !keys.down.pressed) {
-					player.yDir = 0;
-				}
-			} else {
-				if (player.iFrames > 15) {
-					player.xVel += 2 * player.xDir;
-					player.yVel += 2 * player.yDir * player.upgrades.airDodge;
-				}
-				if (player.iFrames < 10) {
-					player.xVel *= groundDecel;
-					player.yVel *= groundDecel * player.upgrades.airDodge;
-				}
-				if (player.iFrames < 2) {
-					player.isDodging = false;
 				}
 			}
 			player.iFrames--;
@@ -3286,7 +3288,7 @@
 		    vy: Math.sin(angle) * 14,
 		    damage: dmg,
 		    speed: 7,
-		    accel: dmg,
+		    accel: 0,
 		    radius: 40,
 		    width: 80,
 		    height: 80,
@@ -3479,6 +3481,8 @@
 				player.casting = 'none';
 				player.ignoreGravity = false;
 				player.ignoreDecel = false;
+				player.invincible = false;
+				player.canMove = true;
 			}
 	    }
 	}
@@ -5055,6 +5059,7 @@
 					player.yVel = 0;
 					player.swings = 0;
 					player.invincible = true;
+					player.canMove = false;
 					player.casting = 'ultimateSpell';
 					player.mana -= spells[player.spellTome].ultimate.cost;
 				}
