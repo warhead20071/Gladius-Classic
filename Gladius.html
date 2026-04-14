@@ -3337,10 +3337,10 @@
 
 	    currentWeapon.angle = Math.atan2(dy, dx);
 
-	    if (currentWeapon.id != 5 && currentWeapon.id != 6) {
+	    if (currentWeapon.id != 4 && currentWeapon.id != 6) {
 			createHitbox(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 6 + currentWeapon.id);
 	    }
-	    if (currentWeapon.id == 5) {
+	    if (currentWeapon.id == 4) {
 			firePlayerProjectile(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 5);
 	    }
 	    if (currentWeapon.id == 6) {
