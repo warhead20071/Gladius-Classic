@@ -712,8 +712,8 @@
 		    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
 		    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
 		    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
-		    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
-		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
+		    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 5 },
+		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effect.', id: 4 },
 		    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 750, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
 		];
 		var selectedWeapon = 0;
@@ -3336,10 +3336,10 @@
 
 	    currentWeapon.angle = Math.atan2(dy, dx);
 
-	    if (currentWeapon.id != 4 && currentWeapon.id != 6) {
+	    if (currentWeapon.id != 5 && currentWeapon.id != 6) {
 			createHitbox(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 6 + currentWeapon.id);
 	    }
-	    if (currentWeapon.id == 4) {
+	    if (currentWeapon.id == 5) {
 			firePlayerProjectile(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 5);
 	    }
 	    if (currentWeapon.id == 6) {
