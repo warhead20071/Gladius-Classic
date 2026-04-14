@@ -713,7 +713,7 @@
 		    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
 		    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
 		    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
-		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
+		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effect.', id: 5 },
 		    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 750, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
 		];
 		var selectedWeapon = 0;
@@ -2728,7 +2728,7 @@
 				};
 				playerHitboxes.push(sickleAtk);
 	    }
-	    if (id == 10) {
+		if (id == 10) {
 			const spearAtk = {
 				x: x + Math.cos(angle) * currentWeapon.length,
 				y: y + Math.sin(angle) * currentWeapon.length,
@@ -2738,7 +2738,7 @@
 				damage: dmg,
 				radius: currentWeapon.length,
 				width: currentWeapon.length * 2,
-				height: currentWeapon.length / 2,
+				height: currentWeapon.length * 2,
 				shape: 2,
 				knockbackX: player.knockback * Math.cos(angle),
 				knockbackY: player.knockback * Math.sin(angle),
@@ -2748,18 +2748,18 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'fixed',
-				xOffset: Math.cos(angle) * currentWeapon.length,
-				yOffset: Math.sin(angle) * currentWeapon.length,
-				weapon: true,
-				explosion: false,
-				multiHit: false
+					position: 'fixed',
+					xOffset: Math.cos(angle) * currentWeapon.length,
+					yOffset: Math.sin(angle) * currentWeapon.length,
+					weapon: true,
+					explosion: false,
+					multiHit: false
 				},
 				enemiesHit: []
-				};
-				playerHitboxes.push(spearAtk);
-	    }
-	    if (id == 11) {
+			};
+			playerHitboxes.push(spearAtk);
+		}
+		if (id == 11) {
 			const chaos = {
 				x: gameCanvas.width / 2,
 				y: gameCanvas.height / 2,
@@ -2779,16 +2779,16 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: false,
-				multiHit: false
+					position: 'free',
+					weapon: false,
+					explosion: false,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(chaos);
-	    }
-	    if (id == 12) {
+		}
+		if (id == 12) {
 			const ogresGaze = {
 				x: x,
 				y: y,
@@ -2808,18 +2808,18 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'fixed',
-				xOffset: 0,
-				yOffset: 0,
-				weapon: false,
-				explosion: false,
-				multiHit: false
+					position: 'fixed',
+					xOffset: 0,
+					yOffset: 0,
+					weapon: false,
+					explosion: false,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(ogresGaze);
-	    }
-	    if (id == 13) {
+		}
+		if (id == 13) {
 			const fireballExplosion = {
 				x: x,
 				y: y,
@@ -2839,17 +2839,17 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: true,
-				multiHit: true,
-				multiHitRate: 10
+					position: 'free',
+					weapon: false,
+					explosion: true,
+					multiHit: true,
+					multiHitRate: 10
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(fireballExplosion);
-	    }
-	    if (id == 14) {
+		}
+		if (id == 14) {
 			const flameBurst = {
 				x: x + 30 * angle,
 				y: y,
@@ -2869,18 +2869,18 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'fixed',
-				xOffset: 30 * angle,
-				yOffset: 0,
-				weapon: false,
-				explosion: true,
-				multiHit: false
+					position: 'fixed',
+					xOffset: 30 * angle,
+					yOffset: 0,
+					weapon: false,
+					explosion: true,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(flameBurst);
-	    }
-	    if (id == 15) {
+		}
+		if (id == 15) {
 			const flarenado = {
 				x: x,
 				y: y - 185,
@@ -2900,17 +2900,17 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: true,
-				multiHit: true,
-				multiHitRate: 12
+					position: 'free',
+					weapon: false,
+					explosion: true,
+					multiHit: true,
+					multiHitRate: 12
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(flarenado);
-	    }
-	    if (id == 16) {
+		}
+		if (id == 16) {
 			const infernoExplosion = {
 				x: x,
 				y: y,
@@ -2930,16 +2930,16 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: true,
-				multiHit: false
+					position: 'free',
+					weapon: false,
+					explosion: true,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(infernoExplosion);
-	    }
-	    if (id == 17) {
+		}
+		if (id == 17) {
 			const lightningBolt = {
 				x: x,
 				y: y + ((480 - y) / 2),
@@ -2959,16 +2959,16 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: false,
-				multiHit: false
+					position: 'free',
+					weapon: false,
+					explosion: false,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(lightningBolt);
-	    }
-	    if (id == 18) {
+		}
+		if (id == 18) {
 			const chargeStun = {
 				x: x + (150 * player.xDir),
 				y: y,
@@ -2988,16 +2988,16 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: false,
-				multiHit: false
+					position: 'free',
+					weapon: false,
+					explosion: false,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(chargeStun);
-	    }
-	    if (id == 19) {
+		}
+		if (id == 19) {
 			const chargeZap = {
 				x: x,
 				y: y,
@@ -3017,16 +3017,16 @@
 				pierce: 999,
 				id: id,
 				tags: {
-				position: 'free',
-				weapon: false,
-				explosion: false,
-				multiHit: false
+					position: 'free',
+					weapon: false,
+					explosion: false,
+					multiHit: false
 				},
 				enemiesHit: []
 			};
 			playerHitboxes.push(chargeZap);
-	    }
-	    if (id == 20) {
+		}
+		if (id == 20) {
 			const infernoDrop = {
 				x: x,
 				y: y,
@@ -3336,8 +3336,11 @@
 
 	    currentWeapon.angle = Math.atan2(dy, dx);
 
-	    if (currentWeapon.id != 4 && currentWeapon.id != 6) {
+	    if (currentWeapon.id != 4 && currentWeapon.id != 6 && currentWeapon.id != 5) {
 			createHitbox(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 6 + currentWeapon.id);
+	    }
+		if (currentWeapon.id == 5) {
+			createHitbox(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 10);
 	    }
 	    if (currentWeapon.id == 4) {
 			firePlayerProjectile(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 5);
@@ -3885,7 +3888,11 @@
 					ctx.arc(hitbox.x, hitbox.y, hitbox.radius, 0, 2 * Math.PI);
 					ctx.fill();
 				} else {
-					ctx.fillRect(hitbox.x - (hitbox.width / 2), hitbox.y - (hitbox.height / 2), hitbox.width, hitbox.height);
+					ctx.translate(hitbox.x, hitbox.y);
+					ctx.rotate(hitbox.angle);
+					ctx.fillRect(0 - (hitbox.width / 2), 0 - (hitbox.height / 6), hitbox.width, hitbox.height / 3);
+					ctx.rotate(-hitbox.angle);
+					ctx.translate(-hitbox.x, -hitbox.y);
 				}
 				ctx.globalAlpha = 1;
 			}
@@ -4651,6 +4658,8 @@
 					currentWeapon.id = selectedWeapon.id;
 					currentWeapon.name = selectedWeapon.name;
 					updateStats();
+					selectedWeapon.owned = true;
+					showWeaponDescription(selectedWeapon.id);
 				}
 			}
 	    }
