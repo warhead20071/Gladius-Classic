@@ -5014,10 +5014,12 @@
 		    document.getElementById("upgradesList").style.display = "flex";
 		    for (let i = 0; i < upgrades.length; i++) {
 				let upgradeType = upgrades[i].type;
-				const newUpgradeDisplay = document.createElement('li');
-				newUpgradeDisplay.style.display = "block";
-				newUpgradeDisplay.innerText = upgradeType;
-				document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
+				if (upgradesList.getElementById(upgradeType) == null) {
+					const newUpgradeDisplay = document.createElement('li');
+					newUpgradeDisplay.style.display = "block";
+					newUpgradeDisplay.innerText = upgradeType;
+					document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
+				}
 			}
 		}
 	}
