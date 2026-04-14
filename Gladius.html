@@ -814,6 +814,9 @@
 	    generateRoadMap();
 	    runTimer();
 	    startFight(1);
+		if (devCheats) {
+			generateUpgradesList();
+		}
     }
 
 	function runTimer() {
@@ -5010,18 +5013,15 @@
 	}
 
 	function upgradesList() {
-		if (document.getElementById("upgradesList").style.display !== "flex") {
-		    document.getElementById("upgradesList").style.display = "flex";
-		    for (let i = 0; i < upgrades.length; i++) {
-				let upgradeType = upgrades[i].type;
-				if (document.getElementById("list" + upgradeType) == null) {
-					const newUpgradeDisplay = document.createElement('li');
-					newUpgradeDisplay.setAttribute('id', "list" + upgradeType);
-					newUpgradeDisplay.style.display = "block";
-					newUpgradeDisplay.innerText = upgradeType;
-					document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
-				}
-			}
+		document.getElementById("upgradesList").style.display = "flex";
+	}
+	function generateUpgradesList() {
+	    for (let i = 0; i < upgrades.length; i++) {
+			let upgradeType = upgrades[i].type;
+			const newUpgradeDisplay = document.createElement('li');
+			newUpgradeDisplay.style.display = "block";
+			newUpgradeDisplay.innerText = upgradeType;
+			document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
 		}
 	}
 
@@ -5196,6 +5196,7 @@
 						announcement.innerText = '';
 					}, 1500);
 					devCheats = true;
+					generateUpgradesList();
 				}
 			}
 	    }
