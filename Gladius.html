@@ -714,12 +714,12 @@
 		    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
 		    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
 		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
-		    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
+		    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 750, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
 		];
 		var selectedWeapon = 0;
 		const spells = [
 		    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
-		    { name: 'Tome of Electromancy', id: 1, level: 5, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '250% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '1000% base damage (ball), 150% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
+		    { name: 'Tome of Electromancy', id: 1, level: 5, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '250% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '750% base damage (ball), 100% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
 		];
 		var selectedSpellTome = 0;
 	    var stage = 1;
@@ -1755,7 +1755,7 @@
 					if (enemy.action === 'none') {
 						let randomAction = Math.random();
 						if (enemy.attackCooldown < 1) {
-							if (randomAction < 0.25) {
+							if (randomAction < 0.1) {
 								enemy.action = 'reanimating';
 							} else if (randomAction < 0.5) {
 								enemy.action = 'screamingSouls';
@@ -2178,7 +2178,7 @@
 
 				if (hitbox.tags.explosion) {
 					if (hitbox.duration == 1) {
-						for (let i = 0; i < hitbox.duration; i++) {
+						for (let i = 0; i < 30; i++) {
 							createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
 						}
 					}
@@ -2266,10 +2266,9 @@
 				projectile.duration--;
 
 				enemies.forEach(enemy => {
-					let damage = damageCalculation(projectile.damage, enemy.debuffs.fear);
 					if (projectile.id == 10 && projectile.duration % 15 == 0) {
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
-							createHitbox(enemy.x + 1, enemy.y + 1, damage * 1.5, 0, 5);
+							createHitbox(enemy.x + 1, enemy.y + 1, player.damage, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
 							createParticle(projectile.x, projectile.y, 'cyan', target, 4);
 						}
@@ -3475,7 +3474,7 @@
 
 	    if (player.spellTome == 1) {
 			if (player.animationFrame == 15) {
-				firePlayerProjectile(player.x, player.y, player.damage * player.magicDamage * 10, (-Math.PI / 2) + ((Math.PI / 2) * player.facing), 10);
+				firePlayerProjectile(player.x, player.y, player.damage * player.magicDamage * 7.5, (-Math.PI / 2) + ((Math.PI / 2) * player.facing), 10);
 				player.casting = 'none';
 				player.ignoreGravity = false;
 				player.ignoreDecel = false;
@@ -4616,6 +4615,7 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.05 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
+				currentWeapon.type = selectedWeapon.name;
 				showWeaponDescription(selectedWeapon.id);
 				updateStats();
 			}
@@ -4627,6 +4627,7 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
+				currentWeapon.type = selectedWeapon.name;
 				updateStats();
 			} else {
 				if (player.gold >= 100) {
@@ -4637,6 +4638,7 @@
 					currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 					currentWeapon.level = selectedWeapon.level;
 					currentWeapon.id = selectedWeapon.id;
+					currentWeapon.type = selectedWeapon.name;
 					updateStats();
 				}
 			}
