@@ -2300,7 +2300,7 @@
 							createHitbox(projectile.x, projectile.y, damage, 0, 3);
 						}
 						if (projectile.id == 4) {
-							enemy.x += 20 * (projectile.vx / Math.abs(projectile.vx));
+							enemy.x += 20 * Math.sign(projectile.vx));
 						}
 						if (projectile.id == 8) {
 							if (enemies.length > 1) {
@@ -3344,7 +3344,7 @@
 	    }
 	    if (player.swings % 5 == 0) {
 			if (player.upgrades.aquaticEssence > 0) {
-			    firePlayerProjectile(player.x, player.y, 0, (Math.PI / 180) * (90 + (90 * Math.sign(mouse.x - player.x))), 4);
+			    firePlayerProjectile(player.x, player.y, 0, (Math.PI / 180) * (90 + (90 * Math.sign(player.x - mouse.x))), 4);
 			}
 	    }
 	    chargeTime = 0;
