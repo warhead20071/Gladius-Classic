@@ -2271,7 +2271,7 @@
 				projectile.duration--;
 
 				enemies.forEach(enemy => {
-					if (projectile.id == 10 && projectile.duration % 15 == 0) {
+					if (projectile.id == 10 && projectile.duration % 10 == 0) {
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
 							createHitbox(enemy.x + 1, enemy.y + 1, player.damage, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
