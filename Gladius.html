@@ -3888,7 +3888,7 @@
 				} else {
 					ctx.translate(hitbox.x, hitbox.y);
 					ctx.rotate(hitbox.angle);
-					ctx.fillRect(0, 0, hitbox.width * 3, hitbox.height);
+					ctx.fillRect(0, 0, hitbox.width, hitbox.height / 2);
 					ctx.rotate(-hitbox.angle);
 					ctx.translate(-hitbox.x, -hitbox.y);
 				}
