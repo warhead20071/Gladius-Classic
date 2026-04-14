@@ -598,7 +598,7 @@
 			<button id="runCommand" onclick="runCommand()">Run Command</button>
 			<div id="commandsList" align="center">
 				<div>Commands:</div>
-				<div>stats that can be modified: player.hp, player.lvl, player.mana, player.gold, player.speed (default = 4), player.invincible (true or false), player.jumpSpeed (default = 15), player.spellTome (spell tome id), player.upgrades, spells[id].level (first spell tome id = 0), stage, chapter, director.enemiesPerWave (default = 8)</div>
+				<div>stats that can be modified: player.hp, player.lvl, player.mana, player.gold, player.speed (default = 4), player.invincible (true or false), player.jumpSpeed (default = 15), player.spellTome (spell tome id), player.upgrades, spells[id].level (first spell tome id = 0), stage, chapter, director.enemiesPerWave (default = 5)</div>
 				<div>(ex. stage += 5;) (ex.2 player.invincible = true;) (ex.3 player.upgrades.magicMissile++;) (ex.4 spells[0].level = 5;)</div>
 				<div>type "upgradesList();" to see all upgrade names</div>
 				<div id="upgradesList" class="upgradesList"></div>
@@ -700,13 +700,13 @@
 		const devCheatsMenu = document.getElementById("devCheats");
 		const hud = document.getElementById("hud");
 		const exitButton = document.getElementById("exitButton");
-		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, canMove: true, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: 1, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
+		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, canMove: true, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
 		//const sprites = {
 		    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
 		    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
 		    //stunStars: { sprite: document.getElementById("stunStars"), animations: [ { y: 0, width: 125, height: 90, frames: 2 } ] },
 		//};
-	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
+	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, name: 'Sword' };
 		const weapons = [
 		    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: true, description: 'A well rounded weapon. Great for all situations.', id: 0 },
 		    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
@@ -719,7 +719,7 @@
 		var selectedWeapon = 0;
 		const spells = [
 		    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
-		    { name: 'Tome of Electromancy', id: 1, level: 5, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '250% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '750% base damage (ball), 100% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
+		    { name: 'Tome of Electromancy', id: 1, level: 1, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '250% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '750% base damage (ball), 100% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
 		];
 		var selectedSpellTome = 0;
 	    var stage = 1;
@@ -814,6 +814,9 @@
 	    generateRoadMap();
 	    runTimer();
 	    startFight(1);
+		if (devCheats) {
+			generateUpgradesList();
+		}
     }
 
 	function runTimer() {
@@ -1670,7 +1673,7 @@
 							enemy.xVel += (dx / Math.abs(dx)) * enemy.speed * (1 - (0.5 * enemy.debuffs.fear)) * (1 + (1 * player.upgrades.mysteriousArtifact));
 						}
 						if (enemy.attackCooldown < 1) {
-							if (dist < enemy.width) {
+							if (dist < enemy.width && Math.random() < 0.8) {
 								enemy.action = 'clubHit';
 							} else if (Math.random() < 0.75) {
 								enemy.action = 'clubSlam';
@@ -1718,14 +1721,16 @@
 							enemy.yVel = -175;
 						}
 						if (enemy.delay > 30 && enemy.delay < 90) {
+							enemy.y = -100;
 							enemy.jumpTarget = player.x;
 							spawnText(player.x, 450, '!!!', 'orange', 1, 60);
-						} else if (enemy.delay < 120) {
+						} else if (enemy.delay >= 90 && enemy.delay < 120) {
+							enemy.y = -100
 							enemy.x = enemy.jumpTarget;
 							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 1, 60);
 						}
 						if (enemy.delay == 120) {
-							enemy.yVel = 100;
+							enemy.yVel = 150;
 						}
 						if (enemy.delay > 120) {
 							if (enemy.yVel < 1) {
@@ -2275,7 +2280,7 @@
 				enemies.forEach(enemy => {
 					if (projectile.id == 10 && projectile.duration % 10 == 0) {
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
-							createHitbox(enemy.x + 1, enemy.y + 1, player.damage, 0, 5);
+							createHitbox(enemy.x + 1, enemy.y + 1, player.damage * player.magicDamage * 1.5, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
 							createParticle(projectile.x, projectile.y, 'cyan', target, 4);
 						}
@@ -3944,7 +3949,6 @@
     }
 
 	function setWave() {
-	    director.enemiesPerWave = 5;
 	    if (director.type == 2) {
 			if (chapter == 1) {
 				queueEnemy('ogre');
@@ -4335,7 +4339,7 @@
 	    if (player.upgrades.totemOfNecromancy) {
 	    	document.getElementById("totemCd").innerText = 'Totem of Necromancy: ' + Math.ceil(totemCd / 60);
 	    }
-	    document.getElementById("weaponDisplay").innerText = 'Weapon: ' + currentWeapon.type + ' Lvl ' + currentWeapon.level;
+	    document.getElementById("weaponDisplay").innerText = 'Weapon: ' + currentWeapon.name + ' Lvl ' + currentWeapon.level;
 	}
 
 	function openShop(shopId) {
@@ -4598,7 +4602,7 @@
 	    document.getElementById("weaponLength").innerText = 'Base Size: ' + (selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level));
 	    document.getElementById("weaponDescription").innerText = selectedWeapon.description;
 	    buyButton.style.display = "block";
-	    if (currentWeapon.type === selectedWeapon.name) {
+	    if (currentWeapon.name === selectedWeapon.name) {
 			if (selectedWeapon.level < 3) {
 				buyButton.innerText = 'Upgrade';
 			} else {
@@ -4623,8 +4627,7 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.05 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
-				currentWeapon.type = selectedWeapon.name;
-				showWeaponDescription(selectedWeapon.id);
+				currentWeapon.name = selectedWeapon.name;
 				updateStats();
 			}
 	    } else {
@@ -4635,7 +4638,7 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
-				currentWeapon.type = selectedWeapon.name;
+				currentWeapon.name = selectedWeapon.name;
 				updateStats();
 			} else {
 				if (player.gold >= 100) {
@@ -4646,11 +4649,12 @@
 					currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 					currentWeapon.level = selectedWeapon.level;
 					currentWeapon.id = selectedWeapon.id;
-					currentWeapon.type = selectedWeapon.name;
+					currentWeapon.name = selectedWeapon.name;
 					updateStats();
 				}
 			}
 	    }
+		showWeaponDescription(selectedWeapon.id);
 	}
 
 	function showSpellShop() {
@@ -5008,7 +5012,16 @@
 	}
 
 	function upgradesList() {
-	    document.getElementById("upgradesList").style.display = "flex";
+		document.getElementById("upgradesList").style.display = "flex";
+	}
+	function generateUpgradesList() {
+	    for (let i = 0; i < upgrades.length; i++) {
+			let upgradeType = upgrades[i].type;
+			const newUpgradeDisplay = document.createElement('li');
+			newUpgradeDisplay.style.display = "block";
+			newUpgradeDisplay.innerText = upgradeType;
+			document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
+		}
 	}
 
     document.addEventListener("keydown", (e) => {
@@ -5182,6 +5195,7 @@
 						announcement.innerText = '';
 					}, 1500);
 					devCheats = true;
+					generateUpgradesList();
 				}
 			}
 	    }
