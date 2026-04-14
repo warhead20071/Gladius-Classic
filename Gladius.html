@@ -1721,7 +1721,7 @@
 							enemy.y = -100;
 							enemy.jumpTarget = player.x;
 							spawnText(player.x, 450, '!!!', 'orange', 1, 60);
-						} else if (enemy.delay < 120) {
+						} else if (enemy.delay >= 90 && enemy.delay < 120) {
 							enemy.y = -100
 							enemy.x = enemy.jumpTarget;
 							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 1, 60);
