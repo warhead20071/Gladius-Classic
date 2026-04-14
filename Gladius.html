@@ -2728,8 +2728,7 @@
 				};
 				playerHitboxes.push(sickleAtk);
 	    }
-		//id 10 not found cringe this was the easiest solution im tired
-		if (id == 11) {
+		if (id == 10) {
 			const spearAtk = {
 				x: x + Math.cos(angle) * currentWeapon.length,
 				y: y + Math.sin(angle) * currentWeapon.length,
@@ -2760,7 +2759,7 @@
 			};
 			playerHitboxes.push(spearAtk);
 		}
-		if (id == 12) {
+		if (id == 11) {
 			const chaos = {
 				x: gameCanvas.width / 2,
 				y: gameCanvas.height / 2,
@@ -2789,7 +2788,7 @@
 			};
 			playerHitboxes.push(chaos);
 		}
-		if (id == 13) {
+		if (id == 12) {
 			const ogresGaze = {
 				x: x,
 				y: y,
@@ -2820,7 +2819,7 @@
 			};
 			playerHitboxes.push(ogresGaze);
 		}
-		if (id == 14) {
+		if (id == 13) {
 			const fireballExplosion = {
 				x: x,
 				y: y,
@@ -2850,7 +2849,7 @@
 			};
 			playerHitboxes.push(fireballExplosion);
 		}
-		if (id == 15) {
+		if (id == 14) {
 			const flameBurst = {
 				x: x + 30 * angle,
 				y: y,
@@ -2881,7 +2880,7 @@
 			};
 			playerHitboxes.push(flameBurst);
 		}
-		if (id == 16) {
+		if (id == 15) {
 			const flarenado = {
 				x: x,
 				y: y - 185,
@@ -2911,7 +2910,7 @@
 			};
 			playerHitboxes.push(flarenado);
 		}
-		if (id == 17) {
+		if (id == 16) {
 			const infernoExplosion = {
 				x: x,
 				y: y,
@@ -2940,7 +2939,7 @@
 			};
 			playerHitboxes.push(infernoExplosion);
 		}
-		if (id == 18) {
+		if (id == 17) {
 			const lightningBolt = {
 				x: x,
 				y: y + ((480 - y) / 2),
@@ -2969,7 +2968,7 @@
 			};
 			playerHitboxes.push(lightningBolt);
 		}
-		if (id == 19) {
+		if (id == 18) {
 			const chargeStun = {
 				x: x + (150 * player.xDir),
 				y: y,
@@ -2998,7 +2997,7 @@
 			};
 			playerHitboxes.push(chargeStun);
 		}
-		if (id == 20) {
+		if (id == 19) {
 			const chargeZap = {
 				x: x,
 				y: y,
@@ -3027,7 +3026,7 @@
 			};
 			playerHitboxes.push(chargeZap);
 		}
-		if (id == 21) {
+		if (id == 20) {
 			const infernoDrop = {
 				x: x,
 				y: y,
@@ -3337,8 +3336,11 @@
 
 	    currentWeapon.angle = Math.atan2(dy, dx);
 
-	    if (currentWeapon.id != 4 && currentWeapon.id != 6) {
+	    if (currentWeapon.id != 4 && currentWeapon.id != 6 && currentWeapon.id != 5) {
 			createHitbox(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 6 + currentWeapon.id);
+	    }
+		if (currentWeapon.id == 5) {
+			createHitbox(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 10);
 	    }
 	    if (currentWeapon.id == 4) {
 			firePlayerProjectile(player.x, player.y, player.damage * player.weaponDamage * currentWeapon.chargeMult, currentWeapon.angle, 5);
@@ -3888,7 +3890,7 @@
 				} else {
 					ctx.translate(hitbox.x, hitbox.y);
 					ctx.rotate(hitbox.angle);
-					ctx.fillRect(0, 0, hitbox.width, hitbox.height / 2);
+					ctx.fillRect(0 - (hitbox.width / 2), 0 - (hitbox.height / 2), hitbox.width, hitbox.height / 2);
 					ctx.rotate(-hitbox.angle);
 					ctx.translate(-hitbox.x, -hitbox.y);
 				}
