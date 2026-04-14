@@ -725,7 +725,7 @@
 	    var stage = 1;
 		const director = { enemyLevel: 1, waves: 1, currentWave: 1, enemiesPerWave: 6, waveTimer: 0, eliteLimit: 0, type: 1 };
 		const enemyQueue = [];
-		const roadMap =  { leftPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, middlePath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, rightPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, mysteriousArtifact: 0 };
+		const roadMap =  { leftPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, middlePath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, rightPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, mysteriousArtifact: 0, firstShop: true };
 	    const enemies = [];
 		const playerHitboxes = [];
 		const playerProjectiles = [];
@@ -1150,6 +1150,7 @@
 
 	function generateRoadMap() {
 	    roadMap.mysteriousArtifact = 0;
+		roadMap.firstShop = true;
 
 	    roadMap.leftPath.e1 = getRandomEvent();
 	    roadMap.leftPath.e2 = getRandomEvent();
@@ -1299,12 +1300,13 @@
 			startFight(1);
 	    }
 	    if (event == 2) {
-			if (Math.random() <= 0.2) {
+			if (Math.random() <= 0.2 && !roadMap.firstShop) {
 				upgradeShopTier = 2;
 			} else {
 				upgradeShopTier = 1;
 			}
 			openShop(1);
+			roadMap.firstShop = false;
 	    }
 	    if (event == 3) {
 			openShop(2);
