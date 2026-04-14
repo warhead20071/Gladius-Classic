@@ -706,7 +706,7 @@
 		    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
 		    //stunStars: { sprite: document.getElementById("stunStars"), animations: [ { y: 0, width: 125, height: 90, frames: 2 } ] },
 		//};
-	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
+	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, name: 'Sword' };
 		const weapons = [
 		    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: true, description: 'A well rounded weapon. Great for all situations.', id: 0 },
 		    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
@@ -1718,14 +1718,16 @@
 							enemy.yVel = -175;
 						}
 						if (enemy.delay > 30 && enemy.delay < 90) {
+							enemy.y = -100;
 							enemy.jumpTarget = player.x;
 							spawnText(player.x, 450, '!!!', 'orange', 1, 60);
 						} else if (enemy.delay < 120) {
+							enemy.y = -100
 							enemy.x = enemy.jumpTarget;
 							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 1, 60);
 						}
 						if (enemy.delay == 120) {
-							enemy.yVel = 100;
+							enemy.yVel = 150;
 						}
 						if (enemy.delay > 120) {
 							if (enemy.yVel < 1) {
@@ -4335,7 +4337,7 @@
 	    if (player.upgrades.totemOfNecromancy) {
 	    	document.getElementById("totemCd").innerText = 'Totem of Necromancy: ' + Math.ceil(totemCd / 60);
 	    }
-	    document.getElementById("weaponDisplay").innerText = 'Weapon: ' + currentWeapon.type + ' Lvl ' + currentWeapon.level;
+	    document.getElementById("weaponDisplay").innerText = 'Weapon: ' + currentWeapon.name + ' Lvl ' + currentWeapon.level;
 	}
 
 	function openShop(shopId) {
@@ -4598,7 +4600,7 @@
 	    document.getElementById("weaponLength").innerText = 'Base Size: ' + (selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level));
 	    document.getElementById("weaponDescription").innerText = selectedWeapon.description;
 	    buyButton.style.display = "block";
-	    if (currentWeapon.type === selectedWeapon.name) {
+	    if (currentWeapon.name === selectedWeapon.name) {
 			if (selectedWeapon.level < 3) {
 				buyButton.innerText = 'Upgrade';
 			} else {
@@ -4623,7 +4625,7 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.05 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
-				currentWeapon.type = selectedWeapon.name;
+				currentWeapon.name = selectedWeapon.name;
 				updateStats();
 			}
 	    } else {
@@ -4634,7 +4636,7 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
-				currentWeapon.type = selectedWeapon.name;
+				currentWeapon.name = selectedWeapon.name;
 				updateStats();
 			} else {
 				if (player.gold >= 100) {
@@ -4645,7 +4647,7 @@
 					currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 					currentWeapon.level = selectedWeapon.level;
 					currentWeapon.id = selectedWeapon.id;
-					currentWeapon.type = selectedWeapon.name;
+					currentWeapon.name = selectedWeapon.name;
 					updateStats();
 				}
 			}
