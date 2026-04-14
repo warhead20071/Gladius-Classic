@@ -803,7 +803,7 @@
 		var refreshes = 0;
 		var currentMenu = 'none';
 		var secretCodeInput = [];
-		var devCheats = true;
+		var devCheats = false;
 		var choosingKeyBind = 0;
 		var canSetKeyBind = true;
 
