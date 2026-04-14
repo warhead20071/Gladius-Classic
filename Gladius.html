@@ -2174,12 +2174,17 @@
 
 				if (hitbox.tags.multiHit && hitbox.duration % hitbox.tags.multiHitRate == 0) {
 					hitbox.enemiesHit.length = 0;
+					if (hitbox.tags.explosion) {
+						for (let i = 0; i < 30; i++) {
+							createParticle(hitbox.x, hitbox.y, hitbox.color, hitbox.angle, 3);
+						}
+					}
 				}
 
 				if (hitbox.tags.explosion) {
 					if (hitbox.duration == 1) {
 						for (let i = 0; i < 30; i++) {
-							createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
+							createParticle(hitbox.x, hitbox.y, hitbox.color, hitbox.angle, 3);
 						}
 					}
 					if (hitbox.id == 14) {
@@ -2460,7 +2465,7 @@
 				knockbackX: 2.5,
 				knockbackY: -2.5,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.5,
 				pierce: 999,
 				id: id,
@@ -2489,7 +2494,7 @@
 				knockbackX: 5,
 				knockbackY: -5,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.75,
 				pierce: 999,
 				id: id,
@@ -2520,7 +2525,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0,
 				pierce: 999,
 				id: id,
@@ -2549,7 +2554,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0,
 				pierce: 999,
 				id: id,
@@ -2578,7 +2583,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.45,
 				pierce: 3,
 				id: id,
@@ -2762,7 +2767,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: 0,
-				duration: 10,
+				duration: 6,
 				procCoef: 0,
 				pierce: 999,
 				id: id,
@@ -2852,7 +2857,7 @@
 				knockbackX: 150 * player.xDir,
 				knockbackY: -5,
 				angle: (Math.PI / 2) - (Math.PI * (player.xDir / 2)) + Math.round(Math.random()) ? 1 : -1 * (Math.PI / 4) * Math.random(),
-				duration: 10,
+				duration: 6,
 				procCoef: 0.5,
 				pierce: 999,
 				id: id,
@@ -2913,7 +2918,7 @@
 				knockbackX: 2,
 				knockbackY: -15,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.5,
 				pierce: 999,
 				id: id,
