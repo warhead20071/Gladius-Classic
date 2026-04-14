@@ -2739,7 +2739,7 @@
 				damage: dmg,
 				radius: currentWeapon.length,
 				width: currentWeapon.length * 2,
-				height: currentWeapon.length / 2,
+				height: currentWeapon.length * 2,
 				shape: 2,
 				knockbackX: player.knockback * Math.cos(angle),
 				knockbackY: player.knockback * Math.sin(angle),
@@ -3888,7 +3888,7 @@
 				} else {
 					ctx.translate(hitbox.x, hitbox.y);
 					ctx.rotate(hitbox.angle);
-					ctx.fillRect(hitbox.x - (hitbox.width / 2), hitbox.y - (hitbox.height / 2), hitbox.width, hitbox.height);
+					ctx.fillRect(0, 0, hitbox.width * 3, hitbox.height);
 					ctx.rotate(-hitbox.angle);
 					ctx.translate(-hitbox.x, -hitbox.y);
 				}
