@@ -2176,7 +2176,7 @@
 					hitbox.enemiesHit.length = 0;
 					if (hitbox.tags.explosion) {
 						for (let i = 0; i < 30; i++) {
-							createParticle(hitbox.x, hitbox.y, hitbox.color, hitbox.angle, 3);
+							createParticle(hitbox.x, hitbox.y, hitbox.color, Math.random * 2 * Math.PI, 3);
 						}
 					}
 				}
@@ -2184,7 +2184,7 @@
 				if (hitbox.tags.explosion) {
 					if (hitbox.duration == 1) {
 						for (let i = 0; i < 30; i++) {
-							createParticle(hitbox.x, hitbox.y, hitbox.color, hitbox.angle, 3);
+							createParticle(hitbox.x, hitbox.y, hitbox.color, Math.random * 2 * Math.PI, 3);
 						}
 					}
 					if (hitbox.id == 14) {
