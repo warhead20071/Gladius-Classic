@@ -3,7 +3,7 @@
 <head>
     <title>Gladius Classic</title>
     <style>
-        html, body { 
+    html, body { 
 	    margin: 0;
 	    width: 100%;
 	    height: 100%;
@@ -27,24 +27,24 @@
 	    display: flex;
 	    flex-direction: column;
 	    position: absolute;
-	    top: 10%;
+	    top: 25%;
 	    left: 2.5%;
 	}
 	.stats {
 	    margin-left: 20px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
 	    font-size: 20px;
 	}
 	.gameStatsDisplay {
 	    display: flex;
 	    flex-direction: column;
 	    position: absolute;
-	    top: 10%;
+	    top: 25%;
 	    left: 2.5%;
 	}
 	#gameStats {
 	    margin-left: 20px;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
 	    font-size: 20px;
 	}
 	.upgradesDisplay {
@@ -70,19 +70,19 @@
     #lvlDisplay {
         font-size: 20px;
         position: absolute;
-        top: 3%;
+        top: 5%;
         left: 2.5%;
     }
     #goldDisplay {
         font-size: 20px;
         position: absolute;
-        top: 5%;
+        top: 9%;
         left: 2.5%;
     }
     #manaDisplay {
         font-size: 20px;
         position: absolute;
-        top: 7%;
+        top: 13%;
         left: 2.5%;
     }
     #chapterDisplay {
@@ -94,13 +94,13 @@
     #stageDisplay {
         font-size: 20px;
         position: absolute;
-        top: 3%;
+        top: 5%;
         left: 85%;
     }
     #enemyLevelDisplay {
         font-size: 20px;
         position: absolute;
-        top: 5%;
+        top: 9%;
         left: 85%;
     }
 	#weaponDisplay {
@@ -114,7 +114,7 @@
 	    flex-direction: column-reverse;
 	    align-content: flex-end;
         position: absolute;
-        top: 60%;
+        bottom: 10%;
         left: 2.5%;
     }
     .menu {
@@ -163,13 +163,14 @@
         font-size: 30px;
         position: absolute;
         top: 50%;
-        left: 35%;
+        left: 50%;
+		text-align: center;
 	}
 	#announcement {
         font-size: 40px;
         position: absolute;
         top: 50%;
-        left: 35%;
+        left: 50%;
 	    text-align: center;
 	}
 	.leftPath {
@@ -257,7 +258,7 @@
 	    flex-direction: row;
 	    flex-wrap: wrap;
 	    position: absolute;
-	    top: 20%;
+	    top: 15%;
 	    left: 50%;
         border: 1px solid #000;
 	    margin: 10px;
@@ -449,8 +450,8 @@
 			<div id="enemyLevelDisplay"></div>
 			<div id="weaponDisplay">Game by Warhead</div>
 			<div id="abilityCooldowns" class="abilityCooldowns">
-			<div id="ogreGazeCd"></div>
-			<div id="totemCd"></div>
+				<div id="ogreGazeCd"></div>
+				<div id="totemCd"></div>
 			</div>
 		</div>
         <div id="countdown"></div>
@@ -462,7 +463,10 @@
             <button id="start" onclick="startGame()">Play</button>
             <button id="settings" onclick="showSettingsMenu(0)">Settings</button>
 	    	<div id="tips" align="center">WASD to move. Left click to attack. Space to jump. Shift to dodge. P to pause.</div>
-	    	<a id="feedbackForm" href="https://forms.gle/Mris31ch8vPY6LW87" align="center" target="_blank">Feedback Form</a>
+	    	<div align="center"> 
+				<a href="https://www.youtube.com/@warhead20071" target="_blank">Youtube</a> 
+				<a href="https://github.com/warhead20071" target="_blank">Github</a>
+			</div>
         </div>
 
 		<div id="shop" class="menu">
@@ -584,7 +588,7 @@
 				</div>
 			</div>
 			<div id="spellTomeRightPage" class="spellTomeRightPage">
-				<div id="spellPicture"></div>
+				<div id="spellPicture">Picture not found</div>
 				<div id="howToCast"></div>
 			</div>
 		</div>
@@ -607,6 +611,7 @@
 			<div class="settingsOptions">
 				<h2>Settings</h2>
 				<button id="controls" class="settingsOption" onclick="showSettingsMenu(1)">Controls</button>
+				<button class="settingsOption" onclick="saveSettings()">Save Settings</button>
 			</div>
 
 			<div id="controlsMenu" class="controlsMenu">
@@ -628,13 +633,13 @@
 				<div id="ability1KeyBind" class="keyBinds"></div>
 				<button id="ability2BindButton" class="keyBindButtons" onclick="setKeyBind(9)">Ability 2</button>
 				<div id="ability2KeyBind" class="keyBinds"></div>
+				<button id="resetKeyBinds" class="keyBindButtons" onclick="resetKeyBinds()">Reset Keybinds</button>
 			</div>
 		</div>
 
 		<div id="demoEnd" class="menu">
 			<h2>End of Demo</h2>
 			<div id="endScreenTip">Reload the page to play again, or click exit to continue the run. There are no bosses past chapter 2</div>
-			<a href="https://forms.gle/Mris31ch8vPY6LW87" target="_blank">Click here to provide feedback</a>
 		</div>
 
 		<div id="gameOver" class="menu">
@@ -645,140 +650,162 @@
 		    	<div id="upgradesPurchased" class="gameStats"></div>
 			</div>
 		</div>
-
     </div>
 
     <script>
-    const gameCanvas = document.getElementById("gameCanvas");
-    const ctx = gameCanvas.getContext("2d");
-	const shop = document.getElementById("shop");
-	const buyButton = document.getElementById("buyButton");
-	const upgradeShopOptions = [ document.getElementById("upgradeOption1"), document.getElementById("upgradeOption2"), document.getElementById("upgradeOption3"), document.getElementById("refreshButton") ];
-	const upgradeShopDescriptions = [ document.getElementById("upgradeName"), document.getElementById("upgradeRarity"), document.getElementById("upgradeType"), document.getElementById("upgradeDescription") ];
-	const weaponShopOptions = [ document.getElementById("sword"), document.getElementById("axe"), document.getElementById("hammer"), document.getElementById("sickle"), document.getElementById("bow"), document.getElementById("spear"), document.getElementById("daggers") ];
-	const weaponShopDescriptions = [ document.getElementById("weaponName"), document.getElementById("weaponPrice"), document.getElementById("weaponDamage"), document.getElementById("weaponAtkCol"), document.getElementById("weaponLength"), document.getElementById("weaponDescription") ];
-	const spellShopOptions = [ document.getElementById("tomeOfPyromancy"), document.getElementById("tomeOfElectromancy"), document.getElementById("tomeOfGeomancy"), document.getElementById("tomeOfAquamancy"), document.getElementById("tomeOfCosmomancy"), document.getElementById("tomeOfPlant") ];
-	const spellShopDescriptions = [ document.getElementById("bookName"), document.getElementById("bookLevel"), document.getElementById("bookCost"), document.getElementById("bookDescription") ];
-	const roadMapMenu = document.getElementById("roadMap");
-	const pauseMenu = document.getElementById("pauseMenu");
-	const spellMenu = document.getElementById("spellMenu");
-	var spellMenuPage = 1;
-	const storyEvent = document.getElementById("storyEvent");
-	const eventStory = document.getElementById("eventStory");
-	var storyEventType = 1;
-	const announcement = document.getElementById("announcement");
-	const countdown = document.getElementById("countdown");
-	const settingsMenu = document.getElementById("settingsMenu");
-	const devCheatsMenu = document.getElementById("devCheats");
-	const hud = document.getElementById("hud");
-	const exitButton = document.getElementById("exitButton");
-	const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, exacerbate: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
-	//const sprites = {
-	    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
-	    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
-	    //stunStars: { sprite: document.getElementById("stunStars"), animations: [ { y: 0, width: 125, height: 90, frames: 2 } ] },
-	//};
-    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
-	const weapons = [
-	    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: false, description: 'A well rounded weapon. Great for all situations.', id: 0 },
-	    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
-	    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
-	    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
-	    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
-	    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
-	    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
-	];
-	var selectedWeapon = 0;
-	const spells = [
-	    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
-	    { name: 'Tome of Electromancy', id: 1, level: 1, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '300% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '1000% base damage (ball), 150% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
-	];
-	selectedSpellTome = 0;
-    var stage = 1;
-	const director = { enemyLevel: 1, waves: 1, currentWave: 1, enemiesPerWave: 6, waveTimer: 0, eliteLimit: 0, type: 1 };
-	const enemyQueue = [];
-	const roadMap =  { leftPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, middlePath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, rightPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, mysteriousArtifact: 0 };
-    const enemies = [];
-	const playerHitboxes = [];
-	const playerProjectiles = [];
-	const enemyProjectiles = [];
-	const enemyHitboxes = [];
-	const particles = [];
-	const inGameText = [];
-	const platforms = [
-	    { x: 100, y: 300, width: 150, height: 25, type: 'normal' },
-	    { x: 562, y: 300, width: 150, height: 25, type: 'normal' },
-	    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
-	    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
-	];
-    const keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
-	var chapter = 1;
-    var mouse = { x: 0, y: 0 };
-    var gameStarted = false;
-	var gamePaused = 0;
-	var timer = 120;
-	const gravity = 0.5;
-	const airDecel = 0.7;
-	const groundDecel = 0.4;
-	var countdownRunning = false;
-	var mouseDown = false;
-	var chargeTime = 0;
-	var regenTick = 0;
-	var stormTick = 0;
-	var ogreGazeCd  = 0;
-	var totemCd = 0;
-	var cloudDuration = 0;
-	// template { type: '', name: '', special: false, rarity: '', price: , description: '' },
-    const upgrades = [
-        { type: 'sharpness', name: 'Sharpness', special: false, rarity: 'Common', price: 25, description: '+20% Weapon Damage/stack.' },
-	    { type: 'arcaneCrystal', name: 'Arcane Crystal', special: false, rarity: 'Common', price: 25, description: '+20% Magic Damage/stack.' },
-	    { type: 'sigilOfPower', name: 'Sigil of Power', special: false, rarity: 'Common', price: 25, description: '+10% Total Damage/stack.' },
-        { type: 'vitality', name: 'Vitality', special: false, rarity: 'Common', price: 25, description: '+25 HP/stack.' },
-        { type: 'reforge', name: 'Reforge', special: false, rarity: 'Common', price: 25, description: '+10% Weapon Size/stack.' },
-        { type: 'quickSlash', name: 'Quick Slash', special: false, rarity: 'Common', price: 25, description: '-10% Attack Cooldown/stack.' },
-        { type: 'recovery', name: 'Recovery', special: false, rarity: 'Common', price: 25, description: '+20% Regen/stack.' },
-	    { type: 'strength', name: 'Strength', special: false, rarity: 'Common', price: 25, description: '+10% Knockback/stack.' },
-	    { type: 'burningBlade', name: 'Burning Blade', special: false, rarity: 'Common', price: 25, description: '10% chance (+10%/stack) on hit to apply burn to an enemy. Each burn stack deals 50% base damage/sec for 5 seconds. Duration refreshes when applying new burn stacks.' },
-	    { type: 'heartOfGold', name: 'Heart of Gold', special: true, rarity: 'Common', price: 25, description: 'Gain +5% HP regen for every 10 gold you have.' },
-	    { type: 'starInAJar', name: 'Star in a Jar', special: false, rarity: 'Common', price: 25, description: '+20 Max Mana/stack.' },
-
-	    { type: 'deathNova', name: 'Death Nova', special: false, rarity: 'Rare', price: 50, description: 'Enemies explode on death dealing 125% base damage (+25%/stack) in a 60 unit radius (+10m/stack).' },
-	    { type: 'magicMissile', name: 'Magic Missile', special: false, rarity: 'Rare', price: 50, description: '10% chance on hit to fire a magic missile that deals 300% total damage (+300%/stack).' },
-	    { type: 'chargedStrike', name: 'Charged Strike', special: true, rarity: 'Rare', price: 50, description: 'Hold left click to charge your next attack.' },
-	    { type: 'outrage', name: 'Outrage', special: false, rarity: 'Rare', price: 50, description: 'Release a 300% base damage (+150%/stack) blast whenever you take damage.' },
-	    { type: 'soulPendant', name: 'Soul Pendant', special: false, rarity: 'Rare', price: 50, description: 'When killing an enemy, steal their life force to heal yourself for 10% (+10%/stack) of their max HP.' },
-	    { type: 'airDodge', name: 'Air Dodge', special: true, rarity: 'Rare', price: 50, description: 'Allows you to dodge in any direction while in the air.' },
-
-	    { type: 'fragileStrength', name: 'Fragile Strength', special: false, rarity: 'Cursed', price: 50, description: 'Double your base damage, but halve your HP.' },
-	    { type: 'bravado', name: 'Bravado', special: false, rarity: 'Cursed', price: 50, description: 'Increase all stats by 25%. Enemies gain +3 levels.' },
-	    { type: 'chaos', name: 'Chaos', special: true, rarity: 'Cursed', price: 50, description: 'All damage dealt is distributed evenly amongst all enemies on screen.' },
-
-	    { type: 'bulwark', name: 'Bulwark', special: false, rarity: 'Legendary', price: 100, description: 'Limits the amount of damage you can take in one hit to 50 (-10%/stack).' },
-	    { type: 'luckyArrow', name: 'Lucky Arrow', special: false, rarity: 'Legendary', price: 100, description: 'Every 3 swings, fire a lucky arrow that deals 125% base damage (+25%/stack) and is 3x as likely to activate on-hit effects.' },
-	    { type: 'exacerbate', name: 'Exacerbate', special: false, rarity: 'Legendary', price: 100, description: 'When applying a debuff to an enemy, increase the number of stacks applied by 2 (+2/stack).' },
-	    { type: 'flameEssence', name: 'Flame Essence', special: true, rarity: 'Legendary', price: 100, description: 'Burn effects are 4x stronger. Burning enemies explode on death, applying 5 burn stacks to each enemy caught in the blast. 1 of the 6 arcane powers.' },
-	    { type: 'stormEssence', name: 'Storm Essence', special: true, rarity: 'Legendary', price: 100, description: 'You are surrounded by a lightning field that deals 100% base damage/sec and chains lightning to nearby enemies. 1 of the 6 arcane powers.' },
-	    { type: 'earthEssence', name: 'Earth Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
-	    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 swings, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
-	    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'Your main attack becomes dimensional slash. Cut through time and space to slash at your mouse cursor. 1 of the 6 arcane powers.' },
-	    { type: 'natureEssence', name: 'Nature Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
-
-	    { type: 'mysteriousArtifact', name: 'Mysterious Artifact', special: true, rarity: 'Special', price: 0, description: 'A strange medallion that resonates with mysterious energy.' },
-
-	    { type: 'ogreEye', name: 'Ogre Eye', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Ogre Gaze. Press ${keys.ability1.key} to gaze with the ogre eye causing affected enemies to slow down and take 25% (+25%/stack) more damage from all sources. Ability has a 10 second cooldown.` },
-	    { type: 'totemOfNecromancy', name: 'Totem of Necromancy', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Totem of Necromancy. Press ${keys.ability2.key} to drop a totem that periodically activates on-kill effects. The totem lasts for 10 seconds (+5/stack) and has a 30 second cooldown.` },
-	    // { type: 'assassinCloak', name: 'Assassin Cloak', special: false, rarity: 'Boss', price: 0, description: 'TBD' },
-	    // { type: 'dreamStone', name: 'Dream Stone', special: 'true', rarity: 'Boss', price: 0, description: 'Your dreams become reality. Unlocks a new game mode.' }
-    ];
-    var currentUpgrades = [];
-	var selectedUpgrade = 0;
-	var upgradeShopTier = 1;
-	var refreshes = 0;
-	var currentMenu = 'none';
-	var secretCodeInput = [];
-	var devCheats = false;
-	var choosingKeyBind = 0;
-	var hasVisitedWizard = false;
+	window.onload = (event) => {
+		//default key binds
+		var keys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		const storedKeyBinds = localStorage.getItem("keyBinds");
+		if (storedKeyBinds) { // if keybinds in local storage
+			keys = JSON.parse(storedKeyBinds); // set key binds to stored keybinds
+			console.log(keys);
+		} else { // if no keybinds in storage
+			localStorage.setItem("keyBinds", JSON.stringify(keys)); // store default key binds
+		}
+	};
+		const defaultKeys = { up: { key: 'w', pressed: false }, left: { key: 'a', pressed: false }, down: { key: 's', pressed: false }, right: { key: 'd', pressed: false }, jump: { key: ' ', pressed: false }, dodge: { key: 'Shift', pressed: false }, spell: { key: 'x', pressed: false }, ability1: { key: '1', pressed: false }, ability2: { key: '2', pressed: false } };
+		var keys = JSON.parse(localStorage.getItem("keyBinds"));
+	    const gameCanvas = document.getElementById("gameCanvas");
+	    const ctx = gameCanvas.getContext("2d");
+		const shop = document.getElementById("shop");
+		const buyButton = document.getElementById("buyButton");
+		const upgradeShopOptions = [ document.getElementById("upgradeOption1"), document.getElementById("upgradeOption2"), document.getElementById("upgradeOption3"), document.getElementById("refreshButton") ];
+		const upgradeShopDescriptions = [ document.getElementById("upgradeName"), document.getElementById("upgradeRarity"), document.getElementById("upgradeType"), document.getElementById("upgradeDescription") ];
+		const weaponShopOptions = [ document.getElementById("sword"), document.getElementById("axe"), document.getElementById("hammer"), document.getElementById("sickle"), document.getElementById("bow"), document.getElementById("spear"), document.getElementById("daggers") ];
+		const weaponShopDescriptions = [ document.getElementById("weaponName"), document.getElementById("weaponPrice"), document.getElementById("weaponDamage"), document.getElementById("weaponAtkCol"), document.getElementById("weaponLength"), document.getElementById("weaponDescription") ];
+		const spellShopOptions = [ document.getElementById("tomeOfPyromancy"), document.getElementById("tomeOfElectromancy"), document.getElementById("tomeOfGeomancy"), document.getElementById("tomeOfAquamancy"), document.getElementById("tomeOfCosmomancy"), document.getElementById("tomeOfPlant") ];
+		const spellShopDescriptions = [ document.getElementById("bookName"), document.getElementById("bookLevel"), document.getElementById("bookCost"), document.getElementById("bookDescription") ];
+		const roadMapMenu = document.getElementById("roadMap");
+		const pauseMenu = document.getElementById("pauseMenu");
+		const spellMenu = document.getElementById("spellMenu");
+		var spellMenuPage = 1;
+		const storyEvent = document.getElementById("storyEvent");
+		const eventStory = document.getElementById("eventStory");
+		var storyEventType = 1;
+		const announcement = document.getElementById("announcement");
+		const countdown = document.getElementById("countdown");
+		const settingsMenu = document.getElementById("settingsMenu");
+		const controls = [ 
+			document.getElementById("upKeyBind"),
+			document.getElementById("leftKeyBind"),
+			document.getElementById("downKeyBind"),
+			document.getElementById("leftKeyBind"),
+			document.getElementById("jumpKeyBind"),
+			document.getElementById("dodgeKeyBind"),
+			document.getElementById("spellKeyBind"),
+			document.getElementById("ability1KeyBind"),
+			document.getElementById("ability2KeyBind")
+		]
+		const devCheatsMenu = document.getElementById("devCheats");
+		const hud = document.getElementById("hud");
+		const exitButton = document.getElementById("exitButton");
+		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, canMove: true, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: 1, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
+		//const sprites = {
+		    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
+		    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
+		    //stunStars: { sprite: document.getElementById("stunStars"), animations: [ { y: 0, width: 125, height: 90, frames: 2 } ] },
+		//};
+	    const currentWeapon = { baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, id: 0, angle: 0, length: 40, chargeMult: 1, type: 'Sword' };
+		const weapons = [
+		    { name: 'Sword', baseDamage: 1, baseAttackCooldown: 500, baseLength: 40, level: 0, owned: true, description: 'A well rounded weapon. Great for all situations.', id: 0 },
+		    { name: 'Axe', baseDamage: 2, baseAttackCooldown: 900, baseLength: 50, level: 0, owned: false, description: 'A powerful heavy weapon. Can execute enemies below 20% hp.', id: 1 },
+		    { name: 'Hammer', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 50, level: 0, owned: false, description: 'A very heavy weapon. Has a 20% chance to stun enemies.', id: 2 },
+		    { name: 'Sickle', baseDamage: 0.7, baseAttackCooldown: 300, baseLength: 35, level: 0, owned: false, description: 'A short, agile weapon. Causes enemies to bleed on hit, draining 2% of their hp/sec.', id: 3 },
+		    { name: 'Bow', baseDamage: 2, baseAttackCooldown: 1000, baseLength: 10, level: 0, owned: false, description: 'A long ranged weapon. Great if you want to keep your distance.', id: 4 },
+		    { name: 'Spear', baseDamage: 1.5, baseAttackCooldown: 700, baseLength: 60, level: 0, owned: false, description: 'A long, precise weapon. Has a higher chance to activate on-hit effects.', id: 5 },
+		    { name: 'Daggers', baseDamage: 0.7, baseAttackCooldown: 750, baseLength: 10, level: 0, owned: false, description: 'Quick, throwable knives. Can bounce between enemies.', id: 6 }
+		];
+		var selectedWeapon = 0;
+		const spells = [
+		    { name: 'Tome of Pyromancy', id: 0, level: 1, sprite: 'red', owned: false, description: 'Lets you conjure and manipulate fire at will. These spells specialize in dealing high damage. All fire spells burn enemies, dealing damage over time.', neutral: { spell: 'Fireball', damage: '150% base damage x 3', cost: 25, description: 'Throw a fireball that explodes multiple times on impact.' }, side: { spell: 'Flame Burst', damage: '300% base damage', cost: 40, description: 'Create an explosion in front of you that blows enemies away.' }, up: { spell: 'Flarenado', damage: '90% base damage x 10', cost: 45, description: 'Create a large flame tornado that lifts enemies into the air.' }, down: { spell: 'Inferno', damage: '20% base damage (falling), 400% base damage (explosion)', cost: 45, description: 'Slam down into the ground, creating a large explosion on impact.' }, ultimate: { spell: 'Fire Storm', damage: '150% base damage x 50', cost: 100, description: 'Rain fireballs from the sky.' } },
+		    { name: 'Tome of Electromancy', id: 1, level: 5, sprite: 'cyan', owned: false, description: 'Lets you use storm magic to summon lightning. These spells specialize in crowd control. Lightning excels at activating on-hit effects due to its ability to arc between nearby enemies.', neutral: { spell: 'Lightning Bolt', damage: '250% base damage (bolt), 30% total damage (chain lightning)', cost: 25, description: 'Summon a bolt of lightning at your mouse cursor.' }, side: { spell: 'Charge', damage: '300% base damage (zap), 30% total damage (chain lightning)', cost: 35, description: 'Quickly dash forward, leaving a lightning trail in your wake that stuns enemies. After a short delay, the lightning trail zaps the affected enemies.' }, up: { spell: 'Thunder Blade', damage: '30% total damage', cost: 60, description: 'Enchant your weapon with lightning, causing it to create chain lightning on hit.' }, down: { spell: 'Storm Cloud', damage: '100% base damage (bolt), 30% total damage (chain lightning)', cost: 45, description: 'Summon a storm cloud that zaps enemies below it. The cloud can be used as a platform. Only one cloud can exist at a time.' }, ultimate: { spell: 'Ball Lightning', damage: '750% base damage (ball), 100% base damage (zap), 30% total damage (chain lightning)', cost: 100, description: 'Hurl a great ball of lightning that moves slowly and zaps enemies as it passes by.' } },
+		];
+		var selectedSpellTome = 0;
+	    var stage = 1;
+		const director = { enemyLevel: 1, waves: 1, currentWave: 1, enemiesPerWave: 6, waveTimer: 0, eliteLimit: 0, type: 1 };
+		const enemyQueue = [];
+		const roadMap =  { leftPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, middlePath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, rightPath: { e1: 0, e2: 0, e3: 0, e4: 0, e5: 0 }, mysteriousArtifact: 0, firstShop: true };
+	    const enemies = [];
+		const playerHitboxes = [];
+		const playerProjectiles = [];
+		const enemyProjectiles = [];
+		const enemyHitboxes = [];
+		const particles = [];
+		const inGameText = [];
+		var platforms = [
+		    { x: 100, y: 300, width: 150, height: 25, type: 'normal' },
+		    { x: 562, y: 300, width: 150, height: 25, type: 'normal' },
+		    { x: 1025, y: 300, width: 150, height: 25, type: 'normal' },
+		    { x: 0, y: 480, width: gameCanvas.width, height: 500, type: 'normal' }
+		];
+		var chapter = 1;
+	    var mouse = { x: 0, y: 0 };
+	    var gameStarted = false;
+		var gamePaused = 0;
+		var timer = 120;
+		const gravity = 0.5;
+		const airDecel = 0.7;
+		const groundDecel = 0.4;
+		var countdownRunning = false;
+		var mouseDown = false;
+		var chargeTime = 0;
+		var regenTick = 0;
+		var stormTick = 0;
+		var ogreGazeCd  = 0;
+		var totemCd = 0;
+		var cloudDuration = 0;
+		// template { type: '', name: '', special: false, rarity: '', price: , description: '' },
+	    const upgrades = [
+	        { type: 'sharpness', name: 'Sharpness', special: false, rarity: 'Common', price: 20, description: '+20% Weapon Damage/stack.' },
+		    { type: 'arcaneCrystal', name: 'Arcane Crystal', special: false, rarity: 'Common', price: 20, description: '+20% Magic Damage/stack.' },
+		    { type: 'sigilOfPower', name: 'Sigil of Power', special: false, rarity: 'Common', price: 20, description: '+10% Total Damage/stack.' },
+	        { type: 'vitality', name: 'Vitality', special: false, rarity: 'Common', price: 20, description: '+25 HP/stack.' },
+	        { type: 'reforge', name: 'Reforge', special: false, rarity: 'Common', price: 20, description: '+10% Weapon Size/stack.' },
+	        { type: 'quickSlash', name: 'Quick Slash', special: false, rarity: 'Common', price: 20, description: '-10% Attack Cooldown/stack.' },
+	        { type: 'recovery', name: 'Recovery', special: false, rarity: 'Common', price: 20, description: '+20% Regen/stack.' },
+		    { type: 'strength', name: 'Strength', special: false, rarity: 'Common', price: 20, description: '+10% Knockback/stack.' },
+		    { type: 'burningBlade', name: 'Burning Blade', special: false, rarity: 'Common', price: 20, description: '10% chance (+10%/stack) on hit to apply burn to an enemy. Each burn stack deals 50% base damage/sec for 5 seconds. Duration refreshes when applying new burn stacks.' },
+		    { type: 'heartOfGold', name: 'Heart of Gold', special: true, rarity: 'Common', price: 20, description: 'Gain +5% HP regen for every 10 gold you have.' },
+		    { type: 'starInAJar', name: 'Star in a Jar', special: false, rarity: 'Common', price: 20, description: '+20 Max Mana/stack.' },
+	
+		    { type: 'deathNova', name: 'Death Nova', special: false, rarity: 'Rare', price: 50, description: 'Enemies explode on death dealing 125% base damage (+25%/stack) in a 60 unit radius (+10u/stack).' },
+		    { type: 'magicMissile', name: 'Magic Missile', special: false, rarity: 'Rare', price: 50, description: '10% chance on hit to fire a magic missile that deals 300% total damage (+300%/stack).' },
+		    { type: 'chargedStrike', name: 'Charged Strike', special: true, rarity: 'Rare', price: 50, description: 'Hold left click to charge your next attack.' },
+		    { type: 'outrage', name: 'Outrage', special: false, rarity: 'Rare', price: 50, description: 'Release a 300% base damage (+150%/stack) blast whenever you take damage.' },
+		    { type: 'soulPendant', name: 'Soul Pendant', special: false, rarity: 'Rare', price: 50, description: 'When killing an enemy, steal their life force to heal yourself for 10% (+10%/stack) of their max HP.' },
+		    { type: 'airDodge', name: 'Air Dodge', special: true, rarity: 'Rare', price: 50, description: 'Allows you to dodge in any direction while in the air.' },
+	
+		    { type: 'fragileStrength', name: 'Fragile Strength', special: false, rarity: 'Cursed', price: 50, description: 'Double your base damage, but halve your HP.' },
+		    { type: 'bravado', name: 'Bravado', special: false, rarity: 'Cursed', price: 50, description: 'Increase all stats by 25%. Enemies gain +3 levels.' },
+		    { type: 'chaos', name: 'Chaos', special: true, rarity: 'Cursed', price: 50, description: 'All damage dealt is distributed evenly amongst all enemies on screen.' },
+	
+		    { type: 'bulwark', name: 'Bulwark', special: false, rarity: 'Legendary', price: 100, description: 'Limits the amount of damage you can take in one hit to 50 (-10%/stack).' },
+		    { type: 'luckyArrow', name: 'Lucky Arrow', special: false, rarity: 'Legendary', price: 100, description: 'Every 3 attacks, fire a lucky arrow that deals 125% base damage (+25%/stack) and is 3x as likely to activate on-hit effects.' },
+		    { type: 'rustyDagger', name: 'Rusty Dagger', special: false, rarity: 'Legendary', price: 100, description: 'When applying a debuff to an enemy, increase the number of stacks applied by 2 (+2/stack).' },
+		    { type: 'flameEssence', name: 'Flame Essence', special: true, rarity: 'Legendary', price: 100, description: 'Burn effects are 4x stronger. Burning enemies explode on death, applying 5 burn stacks to each enemy caught in the blast. 1 of the 6 arcane powers.' },
+		    { type: 'stormEssence', name: 'Storm Essence', special: true, rarity: 'Legendary', price: 100, description: 'You are surrounded by a lightning field that deals 100% base damage/sec and chains lightning to nearby enemies. 1 of the 6 arcane powers.' },
+		    { type: 'earthEssence', name: 'Earth Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
+		    { type: 'aquaticEssence', name: 'Aquatic Essence', special: true, rarity: 'Legendary', price: 100, description: 'On hit, deal 60% total splash damage to nearby enemies. Every 5 attacks, summon a large wave that pushes enemies back. The wave ignores knockback immunity. 1 of the 6 arcane powers.' },
+		    { type: 'cosmicEssence', name: 'Cosmic Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
+		    { type: 'natureEssence', name: 'Nature Essence', special: true, rarity: 'Legendary', price: 100, description: 'TBD. This upgrade does nothing. 1 of the 6 arcane powers.' },
+	
+		    { type: 'mysteriousArtifact', name: 'Mysterious Artifact', special: true, rarity: 'Special', price: 0, description: 'A strange medallion that resonates with mysterious energy.' },
+	
+		    { type: 'ogreEye', name: 'Ogre Eye', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Ogre Gaze. Press ${keys.ability1.key} to gaze with the ogre eye causing affected enemies to slow down and take 25% (+25%/stack) more damage from all sources. Ability has a 10 second cooldown.` },
+		    { type: 'totemOfNecromancy', name: 'Totem of Necromancy', special: false, rarity: 'Boss', price: 0, description: `Gain an active ability: Totem of Necromancy. Press ${keys.ability2.key} to drop a totem that periodically activates on-kill effects. The totem lasts for 10 seconds (+5/stack) and has a 30 second cooldown.` },
+		    // { type: 'assassinCloak', name: 'Assassin Cloak', special: false, rarity: 'Boss', price: 0, description: 'TBD. probably invisibility' },
+		    // { type: 'dreamStone', name: 'Dream Stone', special: 'true', rarity: 'Boss', price: 0, description: 'Your dreams become reality. Unlocks a new game mode.' }
+	    ];
+	    var currentUpgrades = [];
+		var selectedUpgrade = 0;
+		var upgradeShopTier = 1;
+		var refreshes = 0;
+		var currentMenu = 'none';
+		var secretCodeInput = [];
+		var devCheats = true;
+		var choosingKeyBind = 0;
+		var canSetKeyBind = true;
 
     function startGame() {
         document.getElementById("mainMenu").style.display = "none";
@@ -794,7 +821,7 @@
 	    	timer--;
 	    }
 	    setTimeout(() => {
-		requestAnimationFrame(runTimer);
+			requestAnimationFrame(runTimer);
 	    }, 14);
 	}
 
@@ -849,7 +876,7 @@
     function gameLoop() {
 		if (gameStarted == true) {
 			setTimeout(() => {
-				if (currentMenu === 'none' && gamePaused == 0 && player.hp > 0 ) {
+				if (currentMenu === 'none' && gamePaused == 0 && player.hp > 0) {
 					requestAnimationFrame(gameLoop);
 				}
 				// player health check
@@ -865,18 +892,18 @@
 				if (timer < 0) {
 					timer = 120;
 					if (director.type == 1) {
-						player.gold += 25 + (stage * 10);
-						spawnText(player.x - 13, player.y - (player.height / 2), (25 + (stage * 10)) + ' Gold', 'gold', 60);
+						player.gold += 25 + (stage * 7);
+						spawnText(player.x - 13, player.y - (player.height / 2), (25 + (stage * 7)) + ' Gold', 'gold', 60, 20);
 					} else {
-						player.gold += 75 + (stage * 10);
-						spawnText(player.x - 13, player.y - (player.height / 2), (50 + (stage * 10)) + ' Gold', 'gold', 60);
+						player.gold += 75 + (stage * 7);
+						spawnText(player.x - 13, player.y - (player.height / 2), (50 + (stage * 7)) + ' Gold', 'gold', 60, 20);
 					}
 				}
 				announcement.innerText = 'Victory';
 				if (timer == 0) {
 					announcement.innerText = '';
 					if (director.type == 2) {
-						director.enemyLevel += 3;
+						director.enemyLevel += 5;
 						gameCanvas.style.display = "none";
 						generateRoadMap();
 						if (chapter == 2) {
@@ -886,11 +913,7 @@
 							currentMenu = 'demoEnd';
 							return;
 						} else {
-							if (player.upgrades.mysteriousArtifact == 0) {
-								upgradeShopTier = 2;
-							} else {
-								upgradeShopTier = 3;
-							}
+							upgradeShopTier = 2 + player.upgrades.mysteriousArtifact;
 							openShop(1);
 						}
 					} else {
@@ -907,13 +930,9 @@
 
 	function showRoadMap() {
 	    if (currentMenu === 'demoEnd') {
-			if (player.upgrades.mysteriousArtifact == 0) {
-				upgradeShopTier = 2;
-			} else {
-				upgradeShopTier = 3;
-			}
+			upgradeShopTier = 2 + player.upgrades.mysteriousArtifact;
 			document.getElementById("demoEnd").style.display = "none";
-			showUpgradeMenu();
+			openShop(1);
 			return;
 	    }
 	    if (director.type == 2) {
@@ -1123,10 +1142,7 @@
 		case 3:
 		    return 'Weapon Shop';
 		case 4:
-		    if (chapter < 3) {
-		    	return 'Mysterious Artifact';
-		    }
-			break;
+		    return 'Mysterious Artifact';
 		case 5:
 		    return 'Wizard Shop';
 	    }
@@ -1134,6 +1150,7 @@
 
 	function generateRoadMap() {
 	    roadMap.mysteriousArtifact = 0;
+		roadMap.firstShop = true;
 
 	    roadMap.leftPath.e1 = getRandomEvent();
 	    roadMap.leftPath.e2 = getRandomEvent();
@@ -1156,21 +1173,21 @@
 
 	function getRandomEvent() {
 	    let random = Math.random();
-	    if (random < 0.025 && roadMap.mysteriousArtifact == 0) {
-		if (roadMap.mysteriousArtifact == 0) {
-		    roadMap.mysteriousArtifact = 1;
-		    return 4; // mysterious artifact
-		} else {
-		    return 1;
-		}
-	    } else if (random < 0.175) {
-		return 3; // weapon shop
-	    } else if (random < 0.35) {
-		return 5; // wizard shop
-	    } else if (random < 0.650) {
-		return 2; // upgrade shop
-	    } else {
-		return 1; // fight
+	    if (random < 0.025 && roadMap.mysteriousArtifact == 0) { // 2.5%
+			if (roadMap.mysteriousArtifact == 0 && chapter < 3) {
+			    roadMap.mysteriousArtifact = 1;
+			    return 4; // mysterious artifact
+			} else {
+			    return 1;
+			}
+	    } else if (random < 0.175) { // 15%
+			return 3; // weapon shop
+	    } else if (random < 0.325) { // 15%
+			return 5; // wizard shop
+	    } else if (random < 0.6) { // 27.5%
+			return 2; // upgrade shop
+	    } else { // 40%
+			return 1; // fight
 	    }
 	}
 
@@ -1283,12 +1300,13 @@
 			startFight(1);
 	    }
 	    if (event == 2) {
-			if (Math.random() <= 0.2) {
+			if (Math.random() <= 0.2 && !roadMap.firstShop) {
 				upgradeShopTier = 2;
 			} else {
 				upgradeShopTier = 1;
 			}
 			openShop(1);
+			roadMap.firstShop = false;
 	    }
 	    if (event == 3) {
 			openShop(2);
@@ -1305,7 +1323,7 @@
 	function resume() {
 	    gamePaused = 0;
 	    if (currentMenu === 'upgradeMenu' || currentMenu === 'weaponMenu' || currentMenu === 'spellShop') {
-			shop.style.display = "block";
+			shop.style.display = "flex";
 			exitButton.style.display = "block";
 	    } else if (currentMenu === 'roadMap') {
 			roadMapMenu.style.display = "block";
@@ -1323,8 +1341,8 @@
 	}
 
         function update() {
-			console.log(`Mouse position: ${mouse.x}, ${mouse.y}`);
-			console.log(`player position: ${player.x}, ${player.y}`);
+			//console.log(`Mouse position: ${mouse.x}, ${mouse.y}`);
+			//console.log(`player position: ${player.x}, ${player.y}`);
             // Player movement and collision with edges and platforms
 			player.y += player.yVel;
 			platforms.forEach((platform, index) => {
@@ -1339,7 +1357,7 @@
 				if (platform.type === 'cloud') {
 					cloudDuration--;
 					if (cloudDuration % 120 == 0) {
-						createHitbox(platform.x + (platform.width / 2), platform.y + playform.height, player.damage * player.magicDamage, 0, 17);
+						createHitbox(platform.x + (platform.width / 2), platform.y + platform.height, player.damage * player.magicDamage, 0, 17);
 					}
 					if (cloudDuration == 0) {
 						platforms.splice(index, 1);
@@ -1358,58 +1376,60 @@
 				player.isDodging = false;
 			}
 
-			if (!player.isDodging) {
-				if (!player.ignoreGravity) {
-					player.yVel += gravity;
-				}
-				if (!player.ignoreDecel) {
-					if (player.grounded) {
+			if (player.canMove) {
+				if (!player.isDodging) {
+					if (!player.ignoreGravity) {
+						player.yVel += gravity;
+					}
+					if (!player.ignoreDecel) {
+						if (player.grounded) {
+							player.xVel *= groundDecel;
+						} else {
+							player.xVel *= airDecel;
+						}
+					}
+					if (keys.left.pressed) {
+						if (Math.abs(player.xVel) <= player.speed) {
+							player.xVel = -player.speed;
+						} else {
+							player.xVel -= player.speed;
+						}
+						player.xDir = -1;
+						player.facing = -1;
+					}
+					if (keys.right.pressed) {
+						if (Math.abs(player.xVel) <= player.speed) {
+							player.xVel = player.speed;
+						} else {
+							player.xVel += player.speed;
+						}
+						player.xDir = 1;
+						player.facing = 1;
+					}
+					if (keys.up.pressed) {
+						player.yDir = -1;
+					}
+					if (keys.down.pressed) {
+						player.yDir = 1;
+					}
+					if (!keys.left.pressed && !keys.right.pressed && !player.grounded) {
+						player.xDir = 0;
+					}
+					if (!keys.up.pressed && !keys.down.pressed) {
+						player.yDir = 0;
+					}
+				} else {
+					if (player.iFrames > 15) {
+						player.xVel += 2 * player.xDir;
+						player.yVel += 2 * player.yDir * player.upgrades.airDodge;
+					}
+					if (player.iFrames < 10) {
 						player.xVel *= groundDecel;
-					} else {
-						player.xVel *= airDecel;
+						player.yVel *= groundDecel * player.upgrades.airDodge;
 					}
-				}
-				if (keys.left.pressed) {
-					if (Math.abs(player.xVel) <= player.speed) {
-						player.xVel = -player.speed;
-					} else {
-						player.xVel -= player.speed;
+					if (player.iFrames < 2) {
+						player.isDodging = false;
 					}
-					player.xDir = -1;
-					player.facing = -1;
-				}
-				if (keys.right.pressed) {
-					if (Math.abs(player.xVel) <= player.speed) {
-						player.xVel = player.speed;
-					} else {
-						player.xVel += player.speed;
-					}
-					player.xDir = 1;
-					player.facing = 1;
-				}
-				if (keys.up.pressed) {
-					player.yDir = -1;
-				}
-				if (keys.down.pressed) {
-					player.yDir = 1;
-				}
-				if (!keys.left.pressed && !keys.right.pressed && !player.grounded) {
-					player.xDir = 0;
-				}
-				if (!keys.up.pressed && !keys.down.pressed) {
-					player.yDir = 0;
-				}
-			} else {
-				if (player.iFrames > 15) {
-					player.xVel += 2 * player.xDir;
-					player.yVel += 2 * player.yDir * player.upgrades.airDodge;
-				}
-				if (player.iFrames < 10) {
-					player.xVel *= groundDecel;
-					player.yVel *= groundDecel * player.upgrades.airDodge;
-				}
-				if (player.iFrames < 2) {
-					player.isDodging = false;
 				}
 			}
 			player.iFrames--;
@@ -1468,7 +1488,7 @@
 			if (director.waveTimer == 1680 && enemies.length > 0) {
 				announcement.innerText = '';
 			}
-			console.log(enemies);
+			//console.log(enemies);
 
 			enemies.forEach((enemy, index) => {
 				const dx = player.x - enemy.x;
@@ -1696,17 +1716,22 @@
 						enemy.delay++;
 						if (enemy.delay == 30) {
 							enemy.yVel = -175;
-							enemy.grounded = false;
 						}
-						if (enemy.delay < 90) {
+						if (enemy.delay > 30 && enemy.delay < 90) {
 							enemy.jumpTarget = player.x;
-							spawnText(player.x, 1155, '!!!', 'orange', 5);
+							spawnText(player.x, 450, '!!!', 'orange', 1, 60);
 						} else if (enemy.delay < 120) {
 							enemy.x = enemy.jumpTarget;
-							spawnText(enemy.jumpTarget, 1155, '!!!', 'red', 5);
+							spawnText(enemy.jumpTarget, 450, '!!!', 'red', 1, 60);
 						}
-						if (enemy.delay >= 120) {
-							enemy.yVel = 150;
+						if (enemy.delay == 120) {
+							enemy.yVel = 100;
+						}
+						if (enemy.delay > 120) {
+							if (enemy.yVel < 1) {
+								enemy.yVel = 0;
+								enemy.grounded = true;
+							}
 							if (enemy.grounded) {
 								createEnemyHitbox(enemy.x, enemy.y + (enemy.height / 2), enemy.damage, 3);
 								for (let i = -Math.PI / 8; i >= -7 * Math.PI / 8; i -= Math.PI / 16) {
@@ -1717,7 +1742,6 @@
 								enemy.delay = 0;
 							}
 						}
-					
 					}
 
 					if (enemy.action === 'frenzy' && enemy.attackCooldown < 1) {
@@ -1733,7 +1757,7 @@
 					if (enemy.action === 'none') {
 						let randomAction = Math.random();
 						if (enemy.attackCooldown < 1) {
-							if (randomAction < 0.25) {
+							if (randomAction < 0.1) {
 								enemy.action = 'reanimating';
 							} else if (randomAction < 0.5) {
 								enemy.action = 'screamingSouls';
@@ -1750,8 +1774,10 @@
 					if (enemy.action === 'screamingSouls') {
 						enemy.delay++;
 						if (enemy.delay == 10) {
+							let lastPos = { x: enemy.x, y: enemy.y };
 							enemy.x = player.x; 
 							enemy.y = player.y + 100;
+							createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 						}
 						if (enemy.delay == 60) {
 							createEnemyHitbox(enemy.x, enemy.y - 80, enemy.damage * 2, 5);
@@ -1767,11 +1793,11 @@
 							enemy.x = gameCanvas.width / 2;
 							enemy.y = gameCanvas.height / 3;
 						}
-						if (enemy.delay % 10 == 0) {
+						if (enemy.delay % 15 == 0) {
 							fireEnemyProjectile(enemy.x, enemy.y, Math.random() * Math.PI * 2, enemy.damage, 4);
 						}
 						if (enemy.delay == 600) {
-							for (let i = 0; i < 2 + player.upgrades.mysteriousArtifact; i++) {
+							for (let i = 0; i < 1 + player.upgrades.mysteriousArtifact; i++) {
 								const lych = {
 									type: 'Lych',
 									rank: 'elite',
@@ -1834,9 +1860,11 @@
 						let angle = Math.atan2(dy, dx);
 						if (enemy.shots < 3 + player.upgrades.mysteriousArtifact) {
 							enemy.delay++;
-							if (enemy.delay == 10) {
+							if (enemy.delay == 30) {
+								let lastPos = { x: enemy.x, y: enemy.y };
 								enemy.x = Math.random() * gameCanvas.width;
 								enemy.y = 225 + (Math.random() * 250);
+								createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 								fireEnemyProjectile(enemy.x, enemy.y, angle, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle + Math.PI / 6, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle - Math.PI / 6, enemy.damage, 2);
@@ -1844,7 +1872,7 @@
 								enemy.shots++;
 							}
 						} else {
-							enemy.attackCooldown = 90 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
+							enemy.attackCooldown = 120 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
 							enemy.action = 'none';
 							enemy.shots = 0;
 							enemy.delay = 0;
@@ -1853,6 +1881,7 @@
 
 					if (enemy.action === 'undead') {
 						enemy.delay++;
+						spawnText(player.x, 450, '!!!', 'red', 1, 60);
 						if (enemy.delay == 30) {
 							const undead = {
 								type: 'Undead',
@@ -1927,7 +1956,7 @@
 							createHitbox(enemy.x, enemy.y, damage, 0, 11);
 						} else {
 							enemy.hp -= damage;
-							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'orange', 15);
+							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'orange', 15, 20);
 						}
 						player.damageDealt += Math.round(damage);
 						enemy.debuffs.burnDuration--;
@@ -1938,7 +1967,7 @@
 							createHitbox(enemy.x, enemy.y, damage, 0, 11);
 						} else {
 							enemy.hp -= damage;
-							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'red', 15);
+							spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'red', 15, 20);
 						}
 						player.damageDealt += Math.round(damage);
 						enemy.debuffs.bleedDuration--;
@@ -1994,10 +2023,10 @@
 						firePlayerProjectile(enemy.x, enemy.y, enemy.maxHp * 0.1 * player.upgrades.soulPendant, 0, 7);
 					}
 					if (enemy.rank === 'fodder') {
-						player.exp += 10;
+						player.exp += 15;
 					}
 					if (enemy.rank === 'elite') {
-						player.exp += 25;
+						player.exp += 40;
 					}
 					if (enemy.rank === 'boss') {
 						player.exp += 100;
@@ -2069,7 +2098,7 @@
 						} else {
 							enemy.hp -= damage;
 							if (damage != 0 && enemy.type !== 'Undead') {
-								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15);
+								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15, 20);
 							}
 						}
 						player.damageDealt += Math.round(damage);
@@ -2088,15 +2117,15 @@
 						}
 						if (!enemy.debuffs.immune.burn) {
 							if (hitbox.id == 13 || hitbox.id == 15) {
-								enemy.debuffs.burn += 1 + (player.upgrades.exacerbate * 2);
+								enemy.debuffs.burn += 1 + (player.upgrades.rustyDagger * 2);
 								enemy.debuffs.burnDuration = 10;
 							}
 							if (hitbox.id == 4) {
-								enemy.debuffs.burn += 5 + (player.upgrades.exacerbate * 2);
+								enemy.debuffs.burn += 5 + (player.upgrades.rustyDagger * 2);
 								enemy.debuffs.burnDuration = 10;
 							}
 							if (Math.random() < 0.1 * player.upgrades.burningBlade * hitbox.procCoef && !enemy.debuffs.immune.burn) {
-								enemy.debuffs.burn += 1 + (player.upgrades.exacerbate * 2);
+								enemy.debuffs.burn += 1 + (player.upgrades.rustyDagger * 2);
 								enemy.debuffs.burnDuration = 10;
 							}
 						}
@@ -2119,7 +2148,7 @@
 							enemy.debuffs.bleedDuration = 20;
 						}
 						if (hitbox.id == 12 && !enemy.debuffs.immune.fear) {
-							enemy.debuffs.fear = 1 * player.upgrades.ogreEye + (2 * player.upgrades.exacerbate);
+							enemy.debuffs.fear = 1 * player.upgrades.ogreEye + (2 * player.upgrades.rustyDagger);
 							enemy.debuffs.fearDuration = 20;
 						}
 						if (hitbox.id == 17 || hitbox.id == 19) {
@@ -2147,10 +2176,19 @@
 
 				if (hitbox.tags.multiHit && hitbox.duration % hitbox.tags.multiHitRate == 0) {
 					hitbox.enemiesHit.length = 0;
+					if (hitbox.tags.explosion) {
+						for (let i = 0; i < 30; i++) {
+							createParticle(hitbox.x, hitbox.y, hitbox.color, Math.random() * 2 * Math.PI, 3);
+						}
+					}
 				}
 
 				if (hitbox.tags.explosion) {
-					createParticle((hitbox.x - (hitbox.width / 2)) + Math.random() * hitbox.width, (hitbox.y - (hitbox.height / 2)) + Math.random() * hitbox.height, hitbox.color, hitbox.angle, 3);
+					if (hitbox.duration == 1) {
+						for (let i = 0; i < 30; i++) {
+							createParticle(hitbox.x, hitbox.y, hitbox.color, Math.random() * 2 * Math.PI, 3);
+						}
+					}
 					if (hitbox.id == 14) {
 						hitbox.angle = (Math.PI / 2) - (Math.PI * (player.facing / 2)) + (Math.round(Math.random()) ? 1 : -1 * (Math.PI / 8) * Math.random());
 					} else {
@@ -2206,7 +2244,7 @@
 					projectile.vy = (player.y - projectile.y) * projectile.speed / dist;
 					if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, player.x, player.y, player.width, player.height)) {
 						player.hp += projectile.damage;
-						spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'green', 15);
+						spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'green', 15, 20);
 						playerProjectiles.splice(index, 1);
 					}
 				}
@@ -2214,37 +2252,42 @@
 				if (projectile.id == 6 && projectile.duration % 60 == 0) {
 					if (player.upgrades.deathNova > 0) {
 						setTimeout(() => {
-								createHitbox(projectile.x, projectile.y, player.damage, 0, 1);
+							createHitbox(projectile.x, projectile.y, player.damage, 0, 1);
 						}, 250);
 					}
 					if (player.upgrades.flameEssence > 0) {
 						setTimeout(() => {
-								createHitbox(projectile.x, projectile.y, 0, 0, 4);
+							createHitbox(projectile.x, projectile.y, 0, 0, 4);
 						}, 250);
 					}
 					if (player.upgrades.soulPendant > 0) {
 						firePlayerProjectile(projectile.x, projectile.y, 10 * (0.1 + (0.1 * player.upgrades.soulPendant)), 0, 7);
 					}
 				}
+				if (projectile.id == 8) {
+					if (projectile.tags.homing) {
+						projectile.tags.homing = false;
+					}
+				}
 
 				projectile.duration--;
 
 				enemies.forEach(enemy => {
-					let damage = damageCalculation(projectile.damage, enemy.debuffs.fear);
-					if (projectile.id == 10) {
+					if (projectile.id == 10 && projectile.duration % 10 == 0) {
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
-							createHitbox(enemy.x + 1, enemy.y + 1, damage * 1.5, 0, 5);
+							createHitbox(enemy.x + 1, enemy.y + 1, player.damage, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
-							createParticle(player.x, player.y, 'cyan', target, 4);
+							createParticle(projectile.x, projectile.y, 'cyan', target, 4);
 						}
 					}
+					let damage = damageCalculation(projectile.damage, enemy.debuffs.fear);
 					if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, enemy.x, enemy.y, enemy.width, enemy.height) && projectile.id != 3 && projectile.id != 7 && !projectile.enemiesHit.includes(enemy.id)) {
 						if (player.upgrades.chaos > 0) {
 							createHitbox(enemy.x, enemy.y, damage, 0, 11);
 						} else {
 							enemy.hp -= damage;
 							if (damage !=  0) {
-								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15);
+								spawnText((enemy.x - 15) + (Math.random() * 30), enemy.y - (enemy.height / 2), Math.round(damage), 'black', 15, 20);
 							}
 						}
 						player.damageDealt += Math.round(damage);
@@ -2258,15 +2301,14 @@
 							firePlayerProjectile(player.x, player.y, damage, 0, 1);
 						}
 						if (Math.random() < 0.1 * player.upgrades.burningBlade * projectile.procCoef && !enemy.debuffs.immune.burn) {
-							enemy.debuffs.burn += 1 + (player.upgrades.exacerbate * 2);
+							enemy.debuffs.burn += 1 + (player.upgrades.rustyDagger * 2);
 							enemy.debuffs.burnDuration = 10;
 						}
 						if (player.upgrades.aquaticEssence > 0 && projectile.procCoef > 0) {
 							createHitbox(projectile.x, projectile.y, damage, 0, 3);
 						}
 						if (projectile.id == 4) {
-							enemy.x += 20 * (projectile.vx / Math.abs(projectile.vx));
-							enemy.y += 20 * (projectile.vy / Math.abs(projectile.vy));
+							enemy.x += 20 * Math.sign(projectile.vx);
 						}
 						if (projectile.id == 8) {
 							if (enemies.length > 1) {
@@ -2305,9 +2347,9 @@
 
 				if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, player.x, player.y, player.width, player.height) && player.iFrames < 1 && !player.invincible) {
 					player.hp -= projectile.damage;
-					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'red', 15);
+					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(projectile.damage), 'red', 15, 20);
 					if (player.upgrades.outrage > 0) {
-						createHitbox(player.x, player.y, 0, 0, 2);
+						createHitbox(player.x, player.y, player.damage, 0, 2);
 					}
 					enemyProjectiles.splice(index, 1);
 				}
@@ -2324,7 +2366,7 @@
 
 				if (collisionDetection(hitbox.x, hitbox.y, hitbox.width, hitbox.height, player.x, player.y, player.width, player.height) && player.iFrames < 1 && !player.invincible && !hitbox.hitPlayer) {
 					player.hp -= hitbox.damage;
-					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(hitbox.damage), 'red', 15);
+					spawnText((player.x - 15) + (Math.random() * 30), player.y - (player.height / 2), Math.round(hitbox.damage), 'red', 15, 20);
 					hitbox.hitPlayer = true;
 					if (player.upgrades.outrage > 0) {
 						createHitbox(player.x, player.y, 0, 0, 2);
@@ -2425,7 +2467,7 @@
 				knockbackX: 2.5,
 				knockbackY: -2.5,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.5,
 				pierce: 999,
 				id: id,
@@ -2454,7 +2496,7 @@
 				knockbackX: 5,
 				knockbackY: -5,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.75,
 				pierce: 999,
 				id: id,
@@ -2485,7 +2527,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0,
 				pierce: 999,
 				id: id,
@@ -2514,7 +2556,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0,
 				pierce: 999,
 				id: id,
@@ -2536,14 +2578,14 @@
 				opacity: 0.01,
 				sprite: 'none',
 				damage: dmg,
-				radius: 60,
-				width: 120,
-				height: 120,
+				radius: 90,
+				width: 180,
+				height: 180,
 				shape: 1,
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.45,
 				pierce: 3,
 				id: id,
@@ -2727,7 +2769,7 @@
 				knockbackX: 0,
 				knockbackY: 0,
 				angle: 0,
-				duration: 10,
+				duration: 6,
 				procCoef: 0,
 				pierce: 999,
 				id: id,
@@ -2817,7 +2859,7 @@
 				knockbackX: 150 * player.xDir,
 				knockbackY: -5,
 				angle: (Math.PI / 2) - (Math.PI * (player.xDir / 2)) + Math.round(Math.random()) ? 1 : -1 * (Math.PI / 4) * Math.random(),
-				duration: 10,
+				duration: 6,
 				procCoef: 0.5,
 				pierce: 999,
 				id: id,
@@ -2878,7 +2920,7 @@
 				knockbackX: 2,
 				knockbackY: -15,
 				angle: Math.random() * 2 * Math.PI,
-				duration: 10,
+				duration: 6,
 				procCoef: 0.5,
 				pierce: 999,
 				id: id,
@@ -2907,7 +2949,7 @@
 				knockbackX: 5,
 				knockbackY: 10,
 				angle: 0,
-				duration: 5,
+				duration: 6,
 				procCoef: 1,
 				pierce: 999,
 				id: id,
@@ -3200,7 +3242,7 @@
 		    vy: Math.sin(angle) * 14,
 		    damage: dmg,
 		    speed: 14,
-		    accel: 999,
+		    accel: 9999,
 		    radius: currentWeapon.length,
 		    width: currentWeapon.length * 2,
 		    height: currentWeapon.length * 2,
@@ -3210,7 +3252,7 @@
 		    id: id,
 		    tags: {
 			homing: false,
-			homingRange: 250,
+			homingRange: 500,
 			weapon: true
 		    },
 		    enemiesHit: []
@@ -3250,8 +3292,8 @@
 		    vx: Math.cos(angle) * 14,
 		    vy: Math.sin(angle) * 14,
 		    damage: dmg,
-		    speed: 7,
-		    accel: dmg,
+		    speed: 2,
+		    accel: 0,
 		    radius: 40,
 		    width: 80,
 		    height: 80,
@@ -3310,7 +3352,7 @@
 	    }
 	    if (player.swings % 5 == 0) {
 			if (player.upgrades.aquaticEssence > 0) {
-			    firePlayerProjectile(player.x, player.y, 0, (Math.PI / 2) - (Math.PI * (player.xDir / 2)), 4);
+			    firePlayerProjectile(player.x, player.y, 0, (Math.PI / 180) * (90 + (90 * Math.sign(player.x - mouse.x))), 4);
 			}
 	    }
 	    chargeTime = 0;
@@ -3331,7 +3373,7 @@
 
 	    if (player.spellTome == 1) {
 			if (player.animationFrame == 3) {
-				createHitbox(mouse.x, 0, player.damage * player.magicDamage * 3, 0, 17);
+				createHitbox(mouse.x, 0, player.damage * player.magicDamage * 2.5, 0, 17);
 				player.casting = 'none';
 			}
 	    }
@@ -3377,7 +3419,7 @@
 
 	    if (player.spellTome == 1) {
 			player.delay++;
-			if (player.delay == 180) {
+			if (player.delay == 60) {
 				player.statusEffects.thunderBlade.stacks = 1;
 				player.statusEffects.thunderBlade.duration = 600;
 				player.casting = 'none';
@@ -3406,12 +3448,18 @@
 	    }
 
 	    if (player.spellTome == 1) {
-			if (player.animationFrame == 2) {
-				player.yVel = -4;
-			}
-			if (player.animationFrame == 6) {
-				platforms.push({ x: player.x - 75, y: player.y + 25, width: 150, height: 25, type: 'cloud' });
-				cloudDuration = 600;
+			if (platforms.filter(platform => platform.type === 'cloud').length == 0) {
+				if (player.animationFrame == 2) {
+					player.yVel = -4;
+				}
+				if (player.animationFrame == 6) {
+					platforms.push({ x: player.x - 75, y: player.y + 25, width: 150, height: 25, type: 'cloud' });
+					cloudDuration = 600;
+					player.casting = 'none';
+				}
+			} else {
+				player.casting = 'none';
+				player.mana += spells[player.spellTome].down.cost;
 			}
 	    }
 	}
@@ -3434,10 +3482,12 @@
 
 	    if (player.spellTome == 1) {
 			if (player.animationFrame == 15) {
-				firePlayerProjectile(player.x, player.y, player.damage * player.magicDamage * 10, (-Math.PI / 2) + ((Math.PI / 2) * player.facing), 10);
+				firePlayerProjectile(player.x, player.y, player.damage * player.magicDamage * 7.5, (-Math.PI / 2) + ((Math.PI / 2) * player.facing), 10);
 				player.casting = 'none';
 				player.ignoreGravity = false;
 				player.ignoreDecel = false;
+				player.invincible = false;
+				player.canMove = true;
 			}
 	    }
 	}
@@ -3686,13 +3736,14 @@
 	    }
 	}
 
-	function spawnText(x, y, txt, color, dur) {
+	function spawnText(x, y, txt, color, dur, size) {
 	    const text = {
 			x: x,
 			y: y,
 			text: txt,
 			color: color,
-			duration: dur
+			duration: dur,
+			size: size
 	    };
 	    inGameText.push(text);
 	}
@@ -3727,10 +3778,15 @@
 		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		//ctx.drawImage(sprites.player.sprite, player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		ctx.globalAlpha = 1;
+		if (player.statusEffects.thunderBlade.stacks > 0) {
+			ctx.fillStyle = 'cyan';
+			ctx.fillRect(player.x - 4, player.y - player.height, 8, 10);
+		}
 
 		enemies.forEach(enemy => {
 			if (enemy.action === 'reanimating') {
 				ctx.fillStyle = "purple";
+				ctx.strokeStyle = "purple";
 				ctx.lineWidth = 5;
 				ctx.strokeRect(enemy.x - (enemy.width / 2) - 3, enemy.y - (enemy.height / 2) - 3, enemy.width + 6, enemy.height + 6);
 				ctx.lineWidth = 0;
@@ -3817,6 +3873,7 @@
 				ctx.translate(-hitbox.x, -hitbox.y);
 			} else {
 				ctx.fillStyle = hitbox.color;
+				ctx.strokeStyle = hitbox.color;
 				ctx.globalAlpha = hitbox.opacity;
 				if (hitbox.shape == 1) {
 					ctx.beginPath();
@@ -3831,6 +3888,7 @@
 
 		playerProjectiles.forEach(projectile => {
 			ctx.fillStyle = projectile.color;
+			ctx.strokeStyle = projectile.color;
 			ctx.beginPath();
 			ctx.arc(projectile.x, projectile.y, projectile.radius, 0, 2 * Math.PI);
 			ctx.fill();
@@ -3838,6 +3896,7 @@
 
 		enemyProjectiles.forEach(projectile => {
 			ctx.fillStyle = projectile.color;
+			ctx.strokeStyle = projectile.color;
 			ctx.beginPath();
 			ctx.arc(projectile.x, projectile.y, projectile.radius, 0, 2 * Math.PI);
 			ctx.fill();
@@ -3846,6 +3905,7 @@
 		enemyHitboxes.forEach(hitbox => {
 			if (hitbox.color !== 'none') {
 				ctx.fillStyle = hitbox.color;
+				ctx.strokeStyle = hitbox.color;
 				ctx.globalAlpha = hitbox.opacity;
 				ctx.beginPath();
 				ctx.arc(hitbox.x, hitbox.y, hitbox.radius, 0, 2 * Math.PI);
@@ -3857,6 +3917,7 @@
 		particles.forEach(particle => {
 			if (particle.sprite === 'none') {
 				ctx.fillStyle = particle.color;
+				ctx.strokeStyle = particle.color;
 				ctx.globalAlpha = particle.opacity;
 				if (particle.id != 4) {
 					ctx.beginPath();
@@ -3877,13 +3938,13 @@
 
 		inGameText.forEach(text => {
 			ctx.fillStyle = text.color;
-			ctx.font = "20px serif";
+			ctx.font = text.size + "px serif";
 			ctx.fillText(text.text, text.x, text.y);
 		});
     }
 
 	function setWave() {
-	    director.enemiesPerWave = 4;
+	    director.enemiesPerWave = 5;
 	    if (director.type == 2) {
 			if (chapter == 1) {
 				queueEnemy('ogre');
@@ -3893,7 +3954,7 @@
 					queueEnemy('undead');
 				}
 			}	
-			director.waves = 0;
+			director.waves = 1;
 	    } else {
 	    	for (let i = 0; i < 5 + (stage * 2); i++) {
 	    	    if (Math.random() < 0.1 && enemyQueue.filter(enemy => enemy.rank === 'elite').length < director.eliteLimit) {
@@ -3904,7 +3965,7 @@
 		    		queueEnemy('goblin');
 	    	    }
 	    	}
-		director.waves = Math.ceil(enemyQueue.length / director.enemiesPerWave);
+			director.waves = Math.ceil(enemyQueue.length / director.enemiesPerWave);
 	    }
 	}
 
@@ -3956,16 +4017,16 @@
 				shots: 0,
 				stagger: 0,
 				debuffs: {
-				activeDebuffs: 0,
-				DOTTick: 0,
-				burn: 0,
-				burnDuration: 0,
-				bleed: 0,
-				bleedDuration: 0,
-				fear: 0,
-				fearDuration: 0,
-				stun: 0,
-				stunDuration: 0,
+					activeDebuffs: 0,
+					DOTTick: 0,
+					burn: 0,
+					burnDuration: 0,
+					bleed: 0,
+					bleedDuration: 0,
+					fear: 0,
+					fearDuration: 0,
+					stun: 0,
+					stunDuration: 0,
 				immune: {
 					burn: false,
 					bleed: false,
@@ -4004,6 +4065,7 @@
 				action: 'none',
 				delay: 0,
 				shots: 0,
+				stagger: 0,
 				debuffs: {
 				activeDebuffs: 0,
 				DOTTick: 0,
@@ -4051,6 +4113,7 @@
 		    knockbackVulnerability: 1,
 		    action: 'none',
 		    delay: 0,
+			stagger: 0,
 		    shots: 0,
 		    debuffs: {
 			activeDebuffs: 0,
@@ -4099,6 +4162,7 @@
 		    knockbackVulnerability: 0,
 		    action: 'none',
 		    delay: 0,
+			stagger: 0,
 		    shots: 0,
 		    debuffs: {
 			activeDebuffs: 0,
@@ -4148,6 +4212,7 @@
 		    knockbackVulnerability: 0,
 		    action: 'none',
 		    delay: 0,
+			stagger: 0,
 		    shots: 0,
 		    jumpTarget: 0,
 		    debuffs: {
@@ -4227,8 +4292,8 @@
 	    if (player.exp >= player.expReq) {
 			player.lvl++;
 			player.exp -= player.expReq;
-			player.expReq = Math.round(player.expReq * 1.5);
-			spawnText(player.x, player.y - (player.height / 2), 'Level Up', 'blue', 30);
+			player.expReq = Math.round(player.expReq * 1.25);
+			spawnText(player.x, player.y - (player.height / 2), 'Level Up', 'blue', 30, 20);
 	    }
 
 	    player.weaponDamage = currentWeapon.baseDamage * (1 + (0.2 * player.upgrades.sharpness)) * (1 + (0.25 * player.upgrades.bravado));
@@ -4247,6 +4312,7 @@
 
         if (player.hp > player.maxHp) player.hp = player.maxHp;
         if (player.mana > player.maxMana) player.mana = player.maxMana;
+		player.mana = Math.round(player.mana);
 
         document.getElementById("hpDisplay").innerText = `HP: ${Math.round(player.hp) + '/' + Math.round(player.maxHp)}`;
 	    document.getElementById("lvlDisplay").innerText = 'LVL: ' + player.lvl;
@@ -4355,6 +4421,7 @@
             document.getElementById("upgradeOption2").style.display = "none";
             document.getElementById("upgradeOption3").style.display = "none";
 	    	document.getElementById("refreshButton").style.display = "none";
+			document.getElementById("upgradeOption1").style.display = "block";
 			document.getElementById("upgradeOption1").innerText = currentUpgrades[0].name;
 	    	setButtonColor(document.getElementById("upgradeOption1"), currentUpgrades[0].rarity);
 	    }
@@ -4427,6 +4494,9 @@
 	    }
 
 		player.upgrades[upgrade.type]++;
+		if (upgrade.type === 'bravado') {
+			director.enemyLevel += 3;
+		}
 	    if (upgrade.special) {
 			upgrades.splice(upgrades.indexOf(upgrade), 1);
 	    }
@@ -4443,8 +4513,8 @@
     }
 
 	function refreshUpgrades() {
-	    if (player.gold >= 25 * (refreshes + 1) && refreshes < 5) {
-			player.gold -= 25 * (refreshes + 1);
+	    if (player.gold >= 20 * (refreshes + 1) && refreshes < 5) {
+			player.gold -= 20 * (refreshes + 1);
 			refreshes++;
 			updateStats();
 
@@ -4478,7 +4548,7 @@
 	    });
 	    if (refreshes < 5) {
 	    	document.getElementById("upgradeName").innerText = 'Reroll Shop';
-			document.getElementById("upgradeRarity").innerText = (25 * (refreshes + 1)) + ' gold';
+			document.getElementById("upgradeRarity").innerText = (20 * (refreshes + 1)) + ' gold';
 			document.getElementById("upgradeType").style.display = "none";
 			document.getElementById("upgradeDescription").innerText = 'Reroll any unpurchased upgrades up to 5 times.';
 			buyButton.style.display = "block";
@@ -4522,7 +4592,7 @@
 	    });
 	    selectedWeapon = weapons[index];
 	    document.getElementById("weaponName").innerText = selectedWeapon.name + ' Lvl ' + selectedWeapon.level;
-	    document.getElementById("weaponPrice").innerText = 'Price: ' + (150 * (1 + selectedWeapon.level)) + ' Gold';
+	    document.getElementById("weaponPrice").innerText = 'Price: ' + (50 + (50 * (1 + selectedWeapon.level))) + ' Gold';
 	    document.getElementById("weaponDamage").innerText = 'Base DMG: ' + ((selectedWeapon.baseDamage + (selectedWeapon.baseDamage * 0.2 * selectedWeapon.level)) * 100) + '%';
 	    document.getElementById("weaponAtkCol").innerText = 'Base Cooldown: ' + ((selectedWeapon.baseAttackCooldown * Math.pow(0.9, selectedWeapon.level)) / 1000) + ' sec';
 	    document.getElementById("weaponLength").innerText = 'Base Size: ' + (selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level));
@@ -4545,14 +4615,15 @@
 
 	function buyWeapon() {
 	    if (currentWeapon.name === selectedWeapon.name) {
-			if (player.gold >= (selectedWeapon.level + 1) * 150 && selectedWeapon.level < 3) {
-				player.gold -= 150 * (selectedWeapon.level + 1);
+			if (player.gold >= 50 + ((50 * selectedWeapon.level + 1)) && selectedWeapon.level < 3) {
+				player.gold -= 50 + (50 * (selectedWeapon.level + 1));
 				selectedWeapon.level++;
 				currentWeapon.baseDamage = selectedWeapon.baseDamage + (selectedWeapon.baseDamage * 0.2 * (selectedWeapon.level + 1));
 				currentWeapon.baseAttackCooldown = selectedWeapon.baseAttackCooldown * Math.pow(0.9, (selectedWeapon.level + 1));
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.05 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
+				currentWeapon.type = selectedWeapon.name;
 				showWeaponDescription(selectedWeapon.id);
 				updateStats();
 			}
@@ -4564,16 +4635,18 @@
 				currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 				currentWeapon.level = selectedWeapon.level;
 				currentWeapon.id = selectedWeapon.id;
+				currentWeapon.type = selectedWeapon.name;
 				updateStats();
 			} else {
-				if (player.gold >= 150) {
-					player.gold -= 150;
+				if (player.gold >= 100) {
+					player.gold -= 100;
 					currentWeapon.name = selectedWeapon.name;
 					currentWeapon.baseDamage = selectedWeapon.baseDamage + (selectedWeapon.baseDamage * 0.2 * (selectedWeapon.level + 1));
 					currentWeapon.baseAttackCooldown = selectedWeapon.baseAttackCooldown * Math.pow(0.9, (selectedWeapon.level + 1));
 					currentWeapon.baseLength = selectedWeapon.baseLength + (selectedWeapon.baseLength * 0.1 * selectedWeapon.level);
 					currentWeapon.level = selectedWeapon.level;
 					currentWeapon.id = selectedWeapon.id;
+					currentWeapon.type = selectedWeapon.name;
 					updateStats();
 				}
 			}
@@ -4601,7 +4674,7 @@
 	    });
 	    document.getElementById("bookName").innerText = selectedSpellTome.name;
 	    document.getElementById("bookLevel").innerText = 'Level ' + selectedSpellTome.level;
-	    document.getElementById("bookCost").innerText = 'Cost: ' + (100 + (50 * selectedSpellTome.level)) + ' Gold';
+	    document.getElementById("bookCost").innerText = 'Cost: ' + (50 + (50 * selectedSpellTome.level)) + ' Gold';
 	    document.getElementById("bookDescription").innerText = selectedSpellTome.description;
 	    if (player.spellTome == selectedSpellTome.id) {
 			if (selectedSpellTome.level < 5) {
@@ -4620,8 +4693,8 @@
 
 	function buySpellTome() {
 	    if (player.spellTome == selectedSpellTome.id) {
-			if (player.gold >= 100 + (50 * selectedSpellTome.level) && selectedSpellTome.level < 5) {
-				player.gold -= 100 + (50 * selectedSpellTome.level);
+			if (player.gold >= 50 + (50 * selectedSpellTome.level) && selectedSpellTome.level < 5) {
+				player.gold -= 50 + (50 * selectedSpellTome.level);
 				selectedSpellTome.level++;
 				showSpellDescription(selectedSpellTome.id);
 				updateStats();
@@ -4632,8 +4705,8 @@
 				showSpellDescription(selectedSpellTome.id);
 				updateStats();
 			} else {
-				if (player.gold >= 150) {
-					player.gold -= 150;
+				if (player.gold >= 100) {
+					player.gold -= 100;
 					player.spellTome = selectedSpellTome.id;
 					selectedSpellTome.owned = true;
 					showSpellDescription(selectedSpellTome.id);
@@ -4710,10 +4783,14 @@
 	}
 
 	function showSpellMenu(page) {
+		if (page == 0 || page == spells[player.spellTome].level + 2) {
+			return;
+		}
 	    pauseMenu.style.display = "none";
 	    hud.style.display = "none";
 	    exitButton.style.display = "block";
 	    spellMenu.style.display = "flex";
+		hideUpgradesDisplay();
 	    spellMenuPage = page;
 	    if (spellMenuPage == 1) {
 			spellMenuPage = 1;
@@ -4728,28 +4805,28 @@
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].neutral.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].neutral.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].neutral.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].neutral.description;
 	    }
 	    if (spellMenuPage == 3 && spells[player.spellTome].level >= 2) {
 			document.getElementById("spellName").innerText = spells[player.spellTome].side.spell;
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].side.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].side.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.left.key} or ${keys.right.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].side.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].side.description;
 	    }
 	    if (spellMenuPage == 4 && spells[player.spellTome].level >= 3) {
 			document.getElementById("spellName").innerText = spells[player.spellTome].up.spell;
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].up.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].up.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.up.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].up.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].up.description;
 	    }
 	    if (spellMenuPage == 5 && spells[player.spellTome].level >= 4) {
 			document.getElementById("spellName").innerText = spells[player.spellTome].down.spell;
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].down.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].side.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.down.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].down.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].down.description;
 	    }
 	    if (spellMenuPage == 6 && spells[player.spellTome].level >= 5 || spellMenuPage == 7 && spells[player.spellTome].level >= 5) {
 			spellMenuPage = 6;
@@ -4757,7 +4834,7 @@
 			document.getElementById("spellDamage").innerText = "Damage: " + spells[player.spellTome].ultimate.damage;
 			document.getElementById("spellCost").innerText = "Mana Cost: " + spells[player.spellTome].ultimate.cost;
 			document.getElementById("howToCast").innerText = `How to cast: Press ${keys.up.key} + ${keys.down.key} + ${keys.spell.key}`;
-			document.getElementById("spellDescription").innerText = "Description: " + spells[player.spellTome].ultimate.description;
+			document.getElementById("spellDescription").innerText = spells[player.spellTome].ultimate.description;
 	    }
 	}
 
@@ -4840,12 +4917,17 @@
 				document.getElementById("spellKeyBind").innerText = '"' + keys.spell.key + '"';
 				document.getElementById("ability1KeyBind").innerText = '"' + keys.ability1.key + '"';
 				document.getElementById("ability2KeyBind").innerText = '"' + keys.ability2.key + '"';
+				controls.forEach(control => {
+					if (control.innerText === '" "') {
+						control.innerText = "Space";
+					}
+				});
 				break;
 	    }
 	}
 
 	function setKeyBind(control) {
-	    if (choosingKeyBind > 0) {
+	    if (choosingKeyBind > 0 || !canSetKeyBind) {
 			return;
 	    }
 	    choosingKeyBind = control;
@@ -4878,6 +4960,16 @@
 				document.getElementById("ability2KeyBind").innerText = '...';
 				break;
 	    }
+	}
+
+	function resetKeyBinds() {
+		keys = defaultKeys;
+		showSettingsMenu(1);
+	}
+
+	function saveSettings() {
+		localStorage.setItem("keyBinds", JSON.stringify(keys));
+		alert("Settings saved to local storage");
 	}
 
 	function exit() {
@@ -4979,13 +5071,13 @@
 			} else if (keys.up.pressed && keys.down.pressed) {
 				if (player.mana >= spells[player.spellTome].ultimate.cost && spells[player.spellTome].level >= 5) {
 					player.animationFrame = 1;
-					player.animationLength = 5;
 					player.ignoreGravity = true;
 					player.ignoreDecel = true;
 					player.xVel = 0;
 					player.yVel = 0;
 					player.swings = 0;
 					player.invincible = true;
+					player.canMove = false;
 					player.casting = 'ultimateSpell';
 					player.mana -= spells[player.spellTome].ultimate.cost;
 				}
@@ -5011,53 +5103,70 @@
 			}
 	    }
 
+		
+		
 	    switch (choosingKeyBind) {
 			case 1:
 				keys.up.key = e.key;
 				document.getElementById("upKeyBind").innerText = '"' + keys.up.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 2:
 				keys.left.key = e.key;
 				document.getElementById("leftKeyBind").innerText = '"' + keys.left.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 3:
 				keys.down.key = e.key;
 				document.getElementById("downKeyBind").innerText = '"' + keys.down.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 4:
 				keys.right.key = e.key;
 				document.getElementById("rightKeyBind").innerText = '"' + keys.right.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 5:
 				keys.jump.key = e.key;
 				document.getElementById("jumpKeyBind").innerText = '"' + keys.jump.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 6:
 				keys.dodge.key = e.key;
 				document.getElementById("dodgeKeyBind").innerText = '"' + keys.dodge.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 7:
 				keys.spell.key = e.key;
 				document.getElementById("spellKeyBind").innerText = '"' + keys.spell.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 8:
 				keys.ability1.key = e.key;
 				document.getElementById("ability1KeyBind").innerText = '"' + keys.ability1.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 			case 9:
 				keys.ability2.key = e.key;
 				document.getElementById("ability2KeyBind").innerText = '"' + keys.ability2.key + '"';
 				choosingKeyBind = 0;
+				showSettingsMenu(1);
 				break;
 	    }
+		if (e.key === ' ') {
+			canSetKeyBind = false;
+			setTimeout(() => {
+				canSetKeyBind = true;
+			}, 250);
+		}
 
 	    let konamiCode = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a' ];
 	    secretCodeInput.push(e.key);
