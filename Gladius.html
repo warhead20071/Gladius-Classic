@@ -2273,6 +2273,7 @@
 							createParticle(projectile.x, projectile.y, 'cyan', target, 4);
 						}
 					}
+					let damage = damageCalculation(projectile.damage, enemy.debuffs.fear);
 					if (collisionDetection(projectile.x, projectile.y, projectile.width, projectile.height, enemy.x, enemy.y, enemy.width, enemy.height) && projectile.id != 3 && projectile.id != 7 && !projectile.enemiesHit.includes(enemy.id)) {
 						if (player.upgrades.chaos > 0) {
 							createHitbox(enemy.x, enemy.y, damage, 0, 11);
@@ -2300,7 +2301,7 @@
 							createHitbox(projectile.x, projectile.y, damage, 0, 3);
 						}
 						if (projectile.id == 4) {
-							enemy.x += 20;
+							enemy.x += 20 * Math.sign(projectile.vx);
 						}
 						if (projectile.id == 8) {
 							if (enemies.length > 1) {
