@@ -1670,7 +1670,7 @@
 							enemy.xVel += (dx / Math.abs(dx)) * enemy.speed * (1 - (0.5 * enemy.debuffs.fear)) * (1 + (1 * player.upgrades.mysteriousArtifact));
 						}
 						if (enemy.attackCooldown < 1) {
-							if (dist < enemy.width) {
+							if (dist < enemy.width && Math.random() < 0.8) {
 								enemy.action = 'clubHit';
 							} else if (Math.random() < 0.75) {
 								enemy.action = 'clubSlam';
@@ -2277,7 +2277,7 @@
 				enemies.forEach(enemy => {
 					if (projectile.id == 10 && projectile.duration % 10 == 0) {
 						if (collisionDetection(projectile.x, projectile.y, 640, 640, enemy.x, enemy.y, enemy.width, enemy.height)) {
-							createHitbox(enemy.x + 1, enemy.y + 1, player.damage, 0, 5);
+							createHitbox(enemy.x + 1, enemy.y + 1, player.damage * player.magicDamage * 1.5, 0, 5);
 							let target = { x: enemy.x, y: enemy.y };
 							createParticle(projectile.x, projectile.y, 'cyan', target, 4);
 						}
