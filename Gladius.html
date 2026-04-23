@@ -857,6 +857,11 @@
 	    if (timer > 0) {
 	    	countdown.innerText = Math.ceil(timer / 60);
 	    	countdownRunning = true;
+			if (chapter == 2 && director.type = 2 && player.upgrades.mysteriousArtifact) {
+				for (let i = 0; i < 10; i++) {
+					spawnText(i * gameCanvas.width * 10, 450, '!!!', 'red', 1, 60);
+				}
+			}
 	    }
 	    if (timer == 0) {
 	    	countdown.innerText = '';
