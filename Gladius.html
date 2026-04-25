@@ -1815,34 +1815,82 @@
 							fireEnemyProjectile(enemy.x, enemy.y, Math.random() * Math.PI * 2, enemy.damage, 4);
 						}
 						if (enemy.delay == 600) {
-							for (let i = 0; i < 1 + player.upgrades.mysteriousArtifact; i++) {
-								const lych = {
-									type: 'Lych',
-									rank: 'elite',
-									color: 'black',
-									size: 1.25,
-									width: 60,
-									height: 80,
-									x: Math.random() * gameCanvas.width,
-									y: 480,
+							for (let i = 0; i < 5 * (1 + player.upgrades.mysteriousArtifact); i++) {
+								const wisp = {
+									type: 'Wisp',
+									rank: 'fodder',
+									color: 'orange',
+									size: 0.75,
+									width: 35,
+									height: 35,
+									x: Math.random() * gameCanvas.width, 
+									y: Math.random() * gameCanvas.height - 100,
 									xVel: 0,
 									yVel: 0,
-									jumpSpeed: 15,
+									jumpSpeed: 0,
 									jumps: 1,
-									jumpCd: 180,
+									jumpCd: 0,
 									isJumping: false,
 									grounded: false,
-									hp: 100 + (45 * (director.enemyLevel - 1)),
-									maxHp: 100 + (45 * (director.enemyLevel - 1)),
-									damage: 15 + (5 * (director.enemyLevel - 1)),
-									speed: 0,
-									attackCooldown: 100,
+									hp: 30 + (13.5 * (director.enemyLevel - 1)),
+									maxHp: 30 + (13.5 * (director.enemyLevel - 1)),
+									damage: 10 + (2 * (director.enemyLevel - 1)),
+									speed: 0.5,
+									attackCooldown: 100 + (120 * Math.random()),
 									hit: false,
-									knockbackVulnerability: 0.5,
+									knockbackVulnerability: 1,
 									action: 'none',
 									delay: 0,
 									shots: 0,
 									stagger: 0,
+									debuffs: {
+									activeDebuffs: 0,
+									DOTTick: 0,
+									burn: 0,
+									burnDuration: 0,
+									bleed: 0,
+									bleedDuration: 0,
+									fear: 0,
+									fearDuration: 0,
+									stun: 0,
+									stunDuration: 0,
+									immune: {
+										burn: false,
+										bleed: false,
+										fear: false,
+										stun: false
+									}
+									},
+									id: id
+								};
+								enemies.push(wisp);
+							}
+							for (let i = 0; i < 5; i++) {
+								const undead = {
+									type: 'Undead',
+									rank: 'fodder',
+									color: 'green',
+									size: 1,
+									width: 75,
+									height: 80,
+									x: i * (gameCanvas.width / 5),
+									y: 480,
+									xVel: 0,
+									yVel: 0,
+									jumpSpeed: 0,
+									jumps: 0,
+									jumpCd: 0,
+									grounded: false,
+									hp: 0,
+									maxHp: 0,
+									damage: enemy.damage + (2 * (director.enemyLevel - 1)),
+									speed: 0,
+									attackCooldown: 60,
+									hit: false,
+									knockbackVulnerability: 0,
+									action: 'none',
+									delay: 0,
+									shots: 0,
 									debuffs: {
 										activeDebuffs: 0,
 										DOTTick: 0,
@@ -1855,18 +1903,17 @@
 										stun: 0,
 										stunDuration: 0,
 										immune: {
-											burn: false,
-											bleed: false,
-											fear: false,
-											stun: false
+											burn: true,
+											bleed: true,
+											fear: true,
+											stun: true
 										}
 									},
 									id: Math.random() * 999
 								};
-								enemies.push(lych);
 							}
 						}
-						if (enemy.delay == 600 || enemy.stagger >= 15) {
+						if (enemy.delay == 600 || enemy.stagger >= 10 + (10 * player.upgrades.mysteriousArtifact)) {
 							enemy.attackCooldown = 90 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
 							enemy.action = 'none';
 							enemy.delay = 0;
