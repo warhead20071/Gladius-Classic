@@ -1826,9 +1826,9 @@
 									jumpCd: 180,
 									isJumping: false,
 									grounded: false,
-									hp: 200 + (90 * (director.enemyLevel - 1)),
-									maxHp: 200 + (90 * (director.enemyLevel - 1)),
-									damage: 25 + (5 * (director.enemyLevel - 1)),
+									hp: 100 + (45 * (director.enemyLevel - 1)),
+									maxHp: 100 + (45 * (director.enemyLevel - 1)),
+									damage: 15 + (5 * (director.enemyLevel - 1)),
 									speed: 0,
 									attackCooldown: 100,
 									hit: false,
@@ -1860,7 +1860,7 @@
 								enemies.push(lych);
 							}
 						}
-						if (enemy.delay == 600 || enemy.stagger >= 20) {
+						if (enemy.delay == 600 || enemy.stagger >= 15) {
 							enemy.attackCooldown = 90 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
 							enemy.action = 'none';
 							enemy.delay = 0;
@@ -1869,13 +1869,15 @@
 					}
 
 					if (enemy.action === 'darkMagicBlasts') {
-						let angle = Math.atan2(dy, dx);
 						if (enemy.shots < 3 + player.upgrades.mysteriousArtifact) {
 							enemy.delay++;
 							if (enemy.delay == 40) {
+								let angle = Math.atan2(dy, dx);
 								let lastPos = { x: enemy.x, y: enemy.y };
-								enemy.x = Math.random() * gameCanvas.width;
-								enemy.y = 225 + (Math.random() * 250);
+								do {
+									enemy.x = Math.random() * gameCanvas.width;
+									enemy.y = 225 + (Math.random() * 250);
+								} while (dist < 150);
 								createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 								fireEnemyProjectile(enemy.x, enemy.y, angle, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle + Math.PI / 6, enemy.damage, 2);
@@ -1884,7 +1886,7 @@
 								enemy.shots++;
 							}
 						} else {
-							enemy.attackCooldown = 120 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
+							enemy.attackCooldown = 90 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
 							enemy.action = 'none';
 							enemy.shots = 0;
 							enemy.delay = 0;
@@ -1893,8 +1895,12 @@
 
 					if (enemy.action === 'undead') {
 						enemy.delay++;
-						spawnText(player.x, 450, '!!!', 'red', 1, 60);
-						if (enemy.delay == 30) {
+						if (delay < 25) {
+							spawnText(player.x, 450, '!!!', 'orange', 1, 60);
+						} else {
+							spawnText(player.x, 450, '!!!', 'red', 1, 60);
+						}
+						if (enemy.delay == 60) {
 							const undead = {
 								type: 'Undead',
 								rank: 'fodder',
