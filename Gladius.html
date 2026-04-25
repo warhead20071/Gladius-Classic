@@ -1878,9 +1878,10 @@
 									enemy.x = Math.random() * gameCanvas.width;
 									enemy.y = 225 + (Math.random() * 250);
 								//} while (dist < 150);
+								createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 							}
 							if (enemy.delay == 45) {
-								createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
+	
 								fireEnemyProjectile(enemy.x, enemy.y, angle, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle + Math.PI / 6, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle - Math.PI / 6, enemy.damage, 2);
