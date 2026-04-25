@@ -1800,8 +1800,10 @@
 					if (enemy.action === 'reanimating') {
 						enemy.delay++;
 						if (enemy.delay == 1) {
+							let lastPos = { x: enemy.x, y: enemy.y };
 							enemy.x = gameCanvas.width / 2;
-							enemy.y = gameCanvas.height / 3;
+							enemy.y = gameCanvas.height / 4;
+							createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 						}
 						if (enemy.delay % 15 == 0) {
 							fireEnemyProjectile(enemy.x, enemy.y, Math.random() * Math.PI * 2, enemy.damage, 4);
@@ -1870,7 +1872,7 @@
 						let angle = Math.atan2(dy, dx);
 						if (enemy.shots < 3 + player.upgrades.mysteriousArtifact) {
 							enemy.delay++;
-							if (enemy.delay == 30) {
+							if (enemy.delay == 40) {
 								let lastPos = { x: enemy.x, y: enemy.y };
 								enemy.x = Math.random() * gameCanvas.width;
 								enemy.y = 225 + (Math.random() * 250);
