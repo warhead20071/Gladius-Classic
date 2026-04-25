@@ -1791,11 +1791,11 @@
 						enemy.delay++;
 						if (enemy.delay == 10) {
 							let lastPos = { x: enemy.x, y: enemy.y };
-							enemy.x = player.x; 
+							//enemy.x = player.x; 
 							enemy.y = player.y + 100;
 							createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 						}
-						if (enemy.delay == 70) {
+						if (enemy.delay == 50) {
 							createEnemyHitbox(enemy.x, enemy.y - 80, enemy.damage * 2, 5);
 							enemy.attackCooldown = 60 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
 							enemy.delay = 0;
