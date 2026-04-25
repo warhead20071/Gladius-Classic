@@ -1872,7 +1872,6 @@
 						if (enemy.shots < 3 + player.upgrades.mysteriousArtifact) {
 							enemy.delay++;
 							if (enemy.delay == 30) {
-								let angle = Math.atan2(dy, dx);
 								let lastPos = { x: enemy.x, y: enemy.y };
 								//do {
 									enemy.x = Math.random() * gameCanvas.width;
@@ -1881,7 +1880,7 @@
 								createParticle(lastPos.x, lastPos.y, 'purple', { x: enemy.x, y: enemy.y }, 4);
 							}
 							if (enemy.delay == 45) {
-	
+								let angle = Math.atan2(dy, dx);
 								fireEnemyProjectile(enemy.x, enemy.y, angle, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle + Math.PI / 6, enemy.damage, 2);
 								fireEnemyProjectile(enemy.x, enemy.y, angle - Math.PI / 6, enemy.damage, 2);
