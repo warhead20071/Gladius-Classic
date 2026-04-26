@@ -4531,7 +4531,9 @@
             while (currentUpgrades.length < 3) {
                 const randomUpgrade = getRandomUpgrade(upgradeShopTier);
                 if (!currentUpgrades.includes(randomUpgrade)) {
-                	currentUpgrades.push(randomUpgrade);
+					if (!player.upgrades[randomUpgrade.type] && !randomUpgrade.special) {
+                		currentUpgrades.push(randomUpgrade);
+					}
                 }
             }
             document.getElementById("upgradeOption1").innerText = currentUpgrades[0].name;
@@ -4630,9 +4632,6 @@
 		if (upgrade.type === 'bravado') {
 			director.enemyLevel += 3;
 		}
-	    if (upgrade.special) {
-			upgrades.splice(upgrades.indexOf(upgrade), 1);
-	    }
 
 	    if (index == 0) {
             document.getElementById("upgradeOption1").innerText = 'Purchased';
