@@ -1,10 +1,11 @@
-﻿v0.4.0 4/5/2026
+v0.4.0 4/5/2026
 * General Changes:
    * Made the game playable
    * Had to remove sprites due to file path issue that happens on some computers
    * Settings can now be saved to local storage
    * You now gain gold at the end of battles instead of from killing enemies. That was changed sometime after v0.1.1, but the patch notes are somewhere in the void
    * You can no longer get a tier 2 upgrade shop as your first shop in a chapter
+   * Various Necromancer ai changes
 * Balance changes:
    * Gold earned per battle buffed: 25 + (stage# * 5) → 25 + (stage# * 7)
    * Enemies per wave decreased: 8 → 5
@@ -27,10 +28,16 @@
    * Lightning bolt spell damage nerfed: 300% → 250%
    * Ball lightning spell zap hit rate nerfed: every frame (WTF) → 0.1 sec (10 frames)
    * Ball lightning ball damage nerfed: 1000% → 750%
-   * Ball lightning zap damage nerfed: 150% → 100%
    * Daggers attack cooldown nerfed: 0.3 sec → 0.75 sec
    * Chain lightning radius buffed: 60 → 90
-   * Ball lightning speed buffed: 7 → 2 (it’s a buff trust)
+   * Ball lightning projectile speed buffed: 7 → 2 (it’s a buff trust)
+   * Necromancer undead summon time nerfed: 0.5 sec → 1 sec
+   * Necromancer reanimation stagger counter (normal form) nerfed: 20 → 10 (mysterious artifact form unchanged)
+   * Necromancer dark magic blast attack cooldown buffed: 2 sec → 1.5 sec
+   * Necromancer Hp nerfed: 1000 + (450 * level) → 750 + (250 * level)
+   * Necromancer reanimating attack summons changed: 1 lych (2 w/ mysterious artifact form) → 5 wisps (10 w/ mysterious artifact form) + 6 undead
+   * Lych reanimation summons changed: 5 skeletons → 3 skeletons + 1 wisp
+   * Skeleton move speed nerfed: 1 → 0.75
 * Bug Fixes:
    * Fixed an issue where the player attack would not properly point at the mouse cursor on different screen sizes
    * Fixed an issue where the director would spawn more enemies than intended
@@ -39,6 +46,7 @@
    * Fixed an issue where wizard shops were more common than upgrade shops. It was a mistake, there’s no way i did that on purpose
    * Fixed an issue where the Ogre would break his legs if he jumped
    * Fixed an issue where ball lightning zap would apply total damage twice
+   * Fixed an issue where the weapon shop owner pulls a nintendo on you and doesn’t let you own the weapons you buy
 
 
 
