@@ -2536,8 +2536,8 @@
 		
 			if (mouseDown && !player.attackCooldown) {
 				if (player.upgrades.chargedStrike > 0) {
-					if (chargeTime < 100) {
-						chargeTime += 1 + player.upgrades.quickSlash + (player.upgrades.bravado * 3);
+					if (chargeTime < 200) {
+						chargeTime += 2 + player.upgrades.quickSlash + (player.upgrades.bravado * 3);
 					}
 				} else {
 					playerAttack();
