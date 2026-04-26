@@ -2177,6 +2177,10 @@
 					enemy.isJumping = true;
 					enemy.grounded = false;
 				}
+				if (isNaN(enemy.xVel) || isNaN(enemy.yVel)) {
+					enemy.xVel = 0;
+					enemy.yVel = 0;
+				}
 				enemy.y += enemy.yVel;
 				enemy.x += enemy.xVel;
 				
