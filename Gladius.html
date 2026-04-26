@@ -1764,6 +1764,7 @@
 					}
 				}
 				if (enemy.type === 'Necromancer') {
+					console.log(enemy.action);
 					if (isNaN(enemy.x)) {
 						enemy.x = gameCanvas.width / 2;
 					}
@@ -1797,6 +1798,8 @@
 						}
 						if (enemy.delay == 30) {
 							createEnemyHitbox(enemy.x, enemy.y - 80, enemy.damage * 2, 5);
+						}
+						if (enemy.delay == 50) {
 							enemy.attackCooldown = 60 * (1 - (0.5 * player.upgrades.mysteriousArtifact));
 							enemy.delay = 0;
 							enemy.action = 'none';
@@ -3711,7 +3714,7 @@
 				x: x,
 				y: y,
 				color: 'black',
-				opacity: 0,
+				opacity: 1,
 				damage: dmg,
 				radius: 100,
 				width: 70,
