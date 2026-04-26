@@ -1764,11 +1764,11 @@
 					}
 				}
 				if (enemy.type === 'Necromancer') {
-					if (enemy.x == 1/0) {
+					if (number.isNaN(enemy.x)) {
 						enemy.x = gameCanvas.width / 2;
 					}
-					if (enemy.xVel == 1/0) {
-						enemy.x = 0;
+					if (number.isNaN(enemy.xVel)) {
+						enemy.xVel = 0;
 					}
 					if (enemy.action === 'none') {
 						let randomAction = Math.random();
