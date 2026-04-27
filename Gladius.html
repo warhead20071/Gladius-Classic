@@ -815,9 +815,7 @@
 	    generateRoadMap();
 	    runTimer();
 	    startFight(1);
-		if (devCheats) {
-			generateUpgradesList();
-		}
+
     }
 
 	function runTimer() {
@@ -5149,6 +5147,7 @@
 	function upgradesList() {
 		document.getElementById("upgradesList").style.display = "flex";
 	}
+		
 	function generateUpgradesList() {
 	    for (let i = 0; i < upgrades.length; i++) {
 			let upgradeType = upgrades[i].type;
