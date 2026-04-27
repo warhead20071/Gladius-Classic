@@ -5315,24 +5315,26 @@
 			}, 250);
 		}
 
-	    let konamiCode = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a' ];
-	    secretCodeInput.push(e.key);
-	    for (let i = 0; i < secretCodeInput.length; i++) {
-			if (secretCodeInput[i] !== konamiCode[i]) {
-				secretCodeInput.length = 0;
-				break;
-			} else {
-				if (secretCodeInput.length == 10) {
-					announcement.style.display = "block";
-					announcement.innerText = 'Dev Cheats Enabled';
-					setTimeout(() => {
-						announcement.innerText = '';
-					}, 1500);
-					devCheats = true;
-					//generateUpgradesList();
+		if (!devCheats) {
+		    let konamiCode = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a' ];
+		    secretCodeInput.push(e.key);
+		    for (let i = 0; i < secretCodeInput.length; i++) {
+				if (secretCodeInput[i] !== konamiCode[i]) {
+					secretCodeInput.length = 0;
+					break;
+				} else {
+					if (secretCodeInput.length == 10) {
+						announcement.style.display = "block";
+						announcement.innerText = 'Dev Cheats Enabled';
+						setTimeout(() => {
+							announcement.innerText = '';
+						}, 1500);
+						devCheats = true;
+						generateUpgradesList();
+					}
 				}
-			}
-	    }
+		    }
+		}
     });
 
     document.addEventListener("keyup", (e) => {
