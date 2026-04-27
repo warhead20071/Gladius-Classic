@@ -5150,10 +5150,9 @@
 		
 	function generateUpgradesList() {
 	    for (let i = 0; i < upgrades.length; i++) {
-			let upgradeType = upgrades[i].type;
-			const newUpgradeDisplay = document.createElement('li');
+			let newUpgradeDisplay = document.createElement('li');
 			newUpgradeDisplay.style.display = "block";
-			newUpgradeDisplay.innerText = upgradeType;
+			newUpgradeDisplay.innerText = upgrades[i].type;
 			document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
 		}
 	}
