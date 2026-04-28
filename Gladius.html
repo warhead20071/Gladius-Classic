@@ -2869,8 +2869,8 @@
 				id: id,
 				tags: {
 					position: 'fixed',
-					xOffset: Math.cos(angle) * currentWeapon.length,
-					yOffset: Math.sin(angle) * currentWeapon.length,
+					xOffset: Math.cos(angle) * currentWeapon.length * (3/2),
+					yOffset: Math.sin(angle) * (currentWeapon.length / 2),
 					weapon: true,
 					explosion: false,
 					multiHit: false
@@ -4008,7 +4008,7 @@
 				} else {
 					ctx.translate(hitbox.x, hitbox.y);
 					ctx.rotate(hitbox.angle);
-					ctx.fillRect(0, 0, hitbox.width, hitbox.height);
+					ctx.fillRect(0 - (hitbox.width / 2), 0 - (hitbox.height / 2), hitbox.width, hitbox.height);
 					ctx.rotate(-hitbox.angle);
 					ctx.translate(-hitbox.x, -hitbox.y);
 				}
