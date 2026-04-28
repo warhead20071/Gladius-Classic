@@ -2857,8 +2857,8 @@
 				sprite: 'none',
 				damage: dmg,
 				radius: currentWeapon.length,
-				width: currentWeapon.length * 2,
-				height: currentWeapon.length * 2,
+				width: currentWeapon.length * 3,
+				height: currentWeapon.length,
 				shape: 2,
 				knockbackX: player.knockback * Math.cos(angle),
 				knockbackY: player.knockback * Math.sin(angle),
@@ -4008,7 +4008,7 @@
 				} else {
 					ctx.translate(hitbox.x, hitbox.y);
 					ctx.rotate(hitbox.angle);
-					ctx.fillRect(0 - (hitbox.width / 2), 0 - (hitbox.height / 6), hitbox.width, hitbox.height / 3);
+					ctx.fillRect(0, 0, hitbox.width, hitbox.height);
 					ctx.rotate(-hitbox.angle);
 					ctx.translate(-hitbox.x, -hitbox.y);
 				}
