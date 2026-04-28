@@ -3546,13 +3546,10 @@
 	    }
 
 	    if (player.spellTome == 1) {
-			player.delay++;
-			if (player.delay == 60) {
-				player.statusEffects.thunderBlade.stacks = 1;
-				player.statusEffects.thunderBlade.duration = 600;
-				player.casting = 'none';
-			}
-	    }
+			player.statusEffects.thunderBlade.stacks = 1;
+			player.statusEffects.thunderBlade.duration = 600;
+			player.casting = 'none';
+		}
 	}
 
 	function downSpell() {
