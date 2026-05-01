@@ -3901,8 +3901,19 @@
 		} else {
 			ctx.globalAlpha = 1;
 		}
+		ctx.fillStyle = "red";
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2) - 5, 45, Math.PI, 0);
+		ctx.fill();
+		ctx.fillStyle = "white";
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2) , 45, Math.PI, 0);
+		ctx.fill();
+		
 		ctx.fillStyle = "yellow";
 		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
+
+
 		//ctx.drawImage(sprites.player.sprite, player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		ctx.globalAlpha = 1;
 		
