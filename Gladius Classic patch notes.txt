@@ -8,7 +8,7 @@ v0.4.0 4/5/2026
    * Various Necromancer ai changes
 * Balance changes:
    * Gold earned per battle buffed: 25 + (stage# * 5) → 25 + (stage# * 7)
-   * Enemies per wave decreased: 8 → 5
+   * Enemies per wave changed: 8 → 4 + (2 * chapter)
    * Common upgrades price buffed: 25 gold → 20 gold
    * Upgrade shop refresh price buffed: 25 gold → 20 gold
    * Player exp requirement per level scaling buffed: 1.5x → 1.25x
