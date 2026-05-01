@@ -3883,8 +3883,11 @@
 			ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
 		});
 
-		ctx.globalAlpha = 0.5 * (player.iFrames > 0);
-		
+		if (player.iFrames > 0) {
+			ctx.globalAlpha = 0.5;
+		} else {
+			ctx.globalAlpha = 1;
+		}
 		ctx.fillStyle = "red";
 		ctx.beginPath();
 		ctx.arc(player.x, player.y - (player.height / 2), 35, Math.PI, 0);
@@ -3896,7 +3899,11 @@
 		ctx.arc(player.x, player.y - (player.height / 2) + 10, 35, Math.PI, 0);
 		ctx.fill();
 
-		ctx.globalAlpha = 0.5 * (player.iFrames > 0);
+		if (player.iFrames > 0) {
+			ctx.globalAlpha = 0.5;
+		} else {
+			ctx.globalAlpha = 1;
+		}
 		ctx.fillStyle = "yellow";
 		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 
