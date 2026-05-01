@@ -3904,10 +3904,12 @@
 		ctx.fillStyle = "yellow";
 		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		ctx.fillStyle = "red";
-		ctx.arc(player.x, player.y - (player.height / 2), 50, 0, Math.PI);
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2), 50, 0, -Math.PI);
 		ctx.fill();
 		//ctx.drawImage(sprites.player.sprite, player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		ctx.globalAlpha = 1;
+		
 		if (player.statusEffects.thunderBlade.stacks > 0) {
 			ctx.fillStyle = 'cyan';
 			ctx.fillRect(player.x - 4, player.y - player.height, 8, 10);
