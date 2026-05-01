@@ -1,4 +1,4 @@
-v0.4.0 4/5/2026
+v0.4.0 5/2/2026
 * General Changes:
    * Made the game playable
    * Had to remove sprites due to file path issue that happens on some computers
@@ -6,6 +6,7 @@ v0.4.0 4/5/2026
    * You now gain gold at the end of battles instead of from killing enemies. That was changed sometime after v0.1.1, but the patch notes are somewhere in the void
    * You can no longer get a tier 2 upgrade shop as your first shop in a chapter
    * Various Necromancer ai changes
+   * Gladius now has a plume on his helmet
 * Balance changes:
    * Gold earned per battle buffed: 25 + (stage# * 5) → 25 + (stage# * 7)
    * Enemies per wave changed: 8 → 4 + (2 * chapter)
