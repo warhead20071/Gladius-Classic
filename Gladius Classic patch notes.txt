@@ -38,6 +38,7 @@ v0.4.0 4/5/2026
    * Necromancer reanimating attack summons changed: 1 lych (2 w/ mysterious artifact form) → 5 wisps (10 w/ mysterious artifact form) + 6 undead
    * Lych reanimation summons changed: 5 skeletons → 3 skeletons + 1 wisp
    * Skeleton move speed nerfed: 1 → 0.75
+   * Player base hp regen nerfed: 5 hp/s → 3 hp/s
 * Bug Fixes:
    * Fixed an issue where the player attack would not properly point at the mouse cursor on different screen sizes
    * Fixed an issue where the director would spawn more enemies than intended
