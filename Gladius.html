@@ -3883,9 +3883,27 @@
 			ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
 		});
 
+		ctx.globalAlpha = 0.5 * (player.iFrames > 0);
+		
+		ctx.fillStyle = "red";
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2), 35, Math.PI, 0);
+		ctx.fill();
+
+		ctx.globalAlpha = 1;
+		ctx.fillStyle = "white";
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2) + 10, 35, Math.PI, 0);
+		ctx.fill();
+
+		ctx.globalAlpha = 0.5 * (player.iFrames > 0);
+		ctx.fillStyle = "yellow";
+		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
+
+		
 		if (chargeTime > 0) {
 			ctx.strokeStyle = "red";
-			ctx.lineWidth = 3 * (chargeTime / 100);
+			ctx.lineWidth = 4 * (chargeTime / 100);
 			ctx.strokeRect(player.x - (player.width / 2) - 2, player.y - (player.height / 2) - 2, player.width + 4, player.height + 4);
 		}
 		if (player.upgrades.stormEssence > 0) {
@@ -3896,22 +3914,7 @@
 			ctx.stroke();
 			ctx.lineWidth = 0;
 		}
-		if (player.iFrames > 0) {
-			ctx.globalAlpha = 0.5;
-		} else {
-			ctx.globalAlpha = 1;
-		}
-		ctx.fillStyle = "red";
-		ctx.beginPath();
-		ctx.arc(player.x, player.y - (player.height / 2), 35, Math.PI, 0);
-		ctx.fill();
-		ctx.fillStyle = "white";
-		ctx.beginPath();
-		ctx.arc(player.x, player.y - (player.height / 2) + 10, 35, Math.PI, 0);
-		ctx.fill();
-		
-		ctx.fillStyle = "yellow";
-		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
+
 
 
 		//ctx.drawImage(sprites.player.sprite, player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
