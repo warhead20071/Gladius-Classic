@@ -598,8 +598,9 @@
 			<button id="runCommand" onclick="runCommand()">Run Command</button>
 			<div id="commandsList" align="center">
 				<div>Commands:</div>
-				<div>stats that can be modified: player.hp, player.lvl, player.mana, player.gold, player.speed (default = 4), player.invincible (true or false), player.jumpSpeed (default = 15), player.spellTome (spell tome id), player.upgrades, spells[id].level (first spell tome id = 0), stage, chapter, director.enemiesPerWave (default = 5)</div>
-				<div>(ex. stage += 5;) (ex.2 player.invincible = true;) (ex.3 player.upgrades.magicMissile++;) (ex.4 spells[0].level = 5;)</div>
+				<div>stats that can be modified: player.hp, player.lvl, player.mana, player.gold, player.speed (default = 4), player.invincible (true or false), player.jumpSpeed (default = 15), player.spellTome (spell tome id),	</div>
+				<div>player.upgrades, spells[id].level (first spell tome id = 0), stage, chapter, director.enemiesPerWave (default = 5)</div>
+				<div>(ex. stage += 5) (ex.2 player.invincible = true) (ex.3 player.upgrades.magicMissile++) (ex.4 spells[0].level = 5)</div>
 				<div>functions: upgradesList(), killAll()</div>
 				<div id="upgradesList" class="upgradesList"></div>
 			</div>
@@ -700,7 +701,7 @@
 		const devCheatsMenu = document.getElementById("devCheats");
 		const hud = document.getElementById("hud");
 		const exitButton = document.getElementById("exitButton");
-		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 4, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, canMove: true, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
+		const player = { x: 250, y: 250, width: 35, height: 50, animation: 0, animationFrame: 1, animationLength: 11, delay: 0, lvl: 1, exp: 0, expReq: 100, gold: 0, hp: 100, maxHp: 100, regen: 3, mana: 100, maxMana: 100, speed: 4, xVel: 0, ignoreDecel: false, canMove: true, grounded: false, jumpSpeed: 15, jumps: 1, maxJumps: 1, isJumping: false, yVel: 0, ignoreGravity: false, attackCooldown: false, attackCooldownDuration: 500, damage: 10, weaponDamage: 1, magicDamage: 1, knockback: 20, swings: 0, spellTome: null, casting: 'none', isDodging: false, dodgeCd: 0, xDir: 0, yDir: 0, facing: 1, iFrames: 0, invincible: false, upgrades: { sharpness: 0, arcaneCrystal: 0, sigilOfPower: 0, vitality: 0, reforge: 0, quickSlash: 0, recovery: 0, strength: 0, burningBlade: 0, heartOfGold: 0, starInAJar: 0, deathNova: 0, magicMissile: 0, chargedStrike: 0, outrage: 0, soulPendant: 0, airDodge: 0, fragileStrength: 0, bravado: 0, chaos: 0, bulwark: 0, luckyArrow: 0, rustyDagger: 0, flameEssence: 0, stormEssence: 0, earthEssence: 0, aquaticEssence: 0,  cosmicEssence: 0, natureEssence: 0, ogreEye: 0, totemOfNecromancy: 0, mysteriousArtifact: 0 }, statusEffects: { thunderBlade: { stacks: 0, duration: 0 } }, damageDealt: 0, enemiesKilled: 0, upgradesPurchased: 0 };
 		//const sprites = {
 		    //player: { sprite: document.getElementById("playerSprite"), animations: [] },
 		    //sword: { sprite: document.getElementById("swordSlash"), animations: [] },
@@ -814,9 +815,7 @@
 	    generateRoadMap();
 	    runTimer();
 	    startFight(1);
-		if (devCheats) {
-			generateUpgradesList();
-		}
+
     }
 
 	function runTimer() {
@@ -945,6 +944,7 @@
 	    }
 	    if (director.type == 2) {
 			chapter++;
+			director.enemiesPerWave += 2;
 			player.upgrades.mysteriousArtifact = 0;
 	    }
 	    director.type = 1;
@@ -2536,8 +2536,8 @@
 		
 			if (mouseDown && !player.attackCooldown) {
 				if (player.upgrades.chargedStrike > 0) {
-					if (chargeTime < 100) {
-						chargeTime += 1 + player.upgrades.quickSlash + (player.upgrades.bravado * 3);
+					if (chargeTime < 200) {
+						chargeTime += 2 + player.upgrades.quickSlash + (player.upgrades.bravado * 3);
 					}
 				} else {
 					playerAttack();
@@ -2858,8 +2858,8 @@
 				sprite: 'none',
 				damage: dmg,
 				radius: currentWeapon.length,
-				width: currentWeapon.length * 2,
-				height: currentWeapon.length * 2,
+				width: currentWeapon.length * 3,
+				height: currentWeapon.length,
 				shape: 2,
 				knockbackX: player.knockback * Math.cos(angle),
 				knockbackY: player.knockback * Math.sin(angle),
@@ -2870,8 +2870,8 @@
 				id: id,
 				tags: {
 					position: 'fixed',
-					xOffset: Math.cos(angle) * currentWeapon.length,
-					yOffset: Math.sin(angle) * currentWeapon.length,
+					xOffset: Math.cos(angle) * currentWeapon.length * (3/2),
+					yOffset: Math.sin(angle) * (currentWeapon.length / 2),
 					weapon: true,
 					explosion: false,
 					multiHit: false
@@ -3063,14 +3063,14 @@
 		if (id == 17) {
 			const lightningBolt = {
 				x: x,
-				y: y + ((480 - y) / 2),
+				y: 240,
 				color: 'cyan',
 				opacity: 0.5,
 				sprite: 'none',
 				damage: dmg,
 				radius: 0,
-				width: 30,
-				height: 480 - y,
+				width: 50,
+				height: 480,
 				shape: 2,
 				knockbackX: 5,
 				knockbackY: 10,
@@ -3099,7 +3099,7 @@
 				damage: dmg,
 				radius: 0,
 				width: 300,
-				height: 60,
+				height: 70,
 				shape: 2,
 				knockbackX: 0,
 				knockbackY: 0,
@@ -3128,7 +3128,7 @@
 				damage: dmg,
 				radius: 0,
 				width: 300,
-				height: 60,
+				height: 70,
 				shape: 2,
 				knockbackX: 0,
 				knockbackY: -10,
@@ -3547,13 +3547,10 @@
 	    }
 
 	    if (player.spellTome == 1) {
-			player.delay++;
-			if (player.delay == 60) {
-				player.statusEffects.thunderBlade.stacks = 1;
-				player.statusEffects.thunderBlade.duration = 600;
-				player.casting = 'none';
-			}
-	    }
+			player.statusEffects.thunderBlade.stacks = 1;
+			player.statusEffects.thunderBlade.duration = 600;
+			player.casting = 'none';
+		}
 	}
 
 	function downSpell() {
@@ -3886,9 +3883,34 @@
 			ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
 		});
 
+		if (player.iFrames > 0) {
+			ctx.globalAlpha = 0.5;
+		} else {
+			ctx.globalAlpha = 1;
+		}
+		ctx.fillStyle = "red";
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2), 35, Math.PI, 0);
+		ctx.fill();
+
+		ctx.globalAlpha = 1;
+		ctx.fillStyle = "white";
+		ctx.beginPath();
+		ctx.arc(player.x, player.y - (player.height / 2) + 10, 35, Math.PI, 0);
+		ctx.fill();
+
+		if (player.iFrames > 0) {
+			ctx.globalAlpha = 0.5;
+		} else {
+			ctx.globalAlpha = 1;
+		}
+		ctx.fillStyle = "yellow";
+		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
+
+		
 		if (chargeTime > 0) {
 			ctx.strokeStyle = "red";
-			ctx.lineWidth = 3 * (chargeTime / 100);
+			ctx.lineWidth = 4 * (chargeTime / 100);
 			ctx.strokeRect(player.x - (player.width / 2) - 2, player.y - (player.height / 2) - 2, player.width + 4, player.height + 4);
 		}
 		if (player.upgrades.stormEssence > 0) {
@@ -3899,15 +3921,12 @@
 			ctx.stroke();
 			ctx.lineWidth = 0;
 		}
-		if (player.iFrames > 0) {
-			ctx.globalAlpha = 0.5;
-		} else {
-			ctx.globalAlpha = 1;
-		}
-		ctx.fillStyle = "yellow";
-		ctx.fillRect(player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
+
+
+
 		//ctx.drawImage(sprites.player.sprite, player.x - (player.width / 2), player.y - (player.height / 2), player.width, player.height);
 		ctx.globalAlpha = 1;
+		
 		if (player.statusEffects.thunderBlade.stacks > 0) {
 			ctx.fillStyle = 'cyan';
 			ctx.fillRect(player.x - 4, player.y - player.height, 8, 10);
@@ -4012,7 +4031,7 @@
 				} else {
 					ctx.translate(hitbox.x, hitbox.y);
 					ctx.rotate(hitbox.angle);
-					ctx.fillRect(0 - (hitbox.width / 2), 0 - (hitbox.height / 6), hitbox.width, hitbox.height / 3);
+					ctx.fillRect(0 - (hitbox.width / 2), 0 - (hitbox.height / 2), hitbox.width, hitbox.height);
 					ctx.rotate(-hitbox.angle);
 					ctx.translate(-hitbox.x, -hitbox.y);
 				}
@@ -4439,7 +4458,7 @@
 	    }
 	    currentWeapon.length = Math.round(currentWeapon.baseLength * (1 + (0.1 * player.upgrades.reforge) + (0.25 * player.upgrades.bravado)));
 	    player.attackCooldownDuration = currentWeapon.baseAttackCooldown * Math.pow(0.9, player.upgrades.quickSlash) * Math.pow(0.75, player.upgrades.bravado) * (1 + (2 * player.upgrades.cosmicEssence));
-	    player.regen = 5 + (5 * 0.2 * (player.lvl - 1)) * (1 + (0.2 * player.upgrades.recovery)) * (1 + (0.25 * player.upgrades.bravado)) * (1 + (0.05 * (player.gold / 10) * player.upgrades.heartOfGold));
+	    player.regen = 3 + (3 * 0.2 * (player.lvl - 1)) * (1 + (0.2 * player.upgrades.recovery)) * (1 + (0.25 * player.upgrades.bravado)) * (1 + (0.05 * (player.gold / 10) * player.upgrades.heartOfGold));
 	    player.knockback = Math.round(10 * (1 + (0.1 * player.upgrades.strength)) * (1 + (0.25   * player.upgrades.bravado)) * (1 - (0.75 * player.upgrades.cosmicEssence)));
 	    player.maxMana = Math.round(100 + (20 * player.upgrades.starInAJar) * (1 + (0.25 * player.upgrades.bravado)));
 
@@ -4531,7 +4550,9 @@
             while (currentUpgrades.length < 3) {
                 const randomUpgrade = getRandomUpgrade(upgradeShopTier);
                 if (!currentUpgrades.includes(randomUpgrade)) {
-                	currentUpgrades.push(randomUpgrade);
+					if (!player.upgrades[randomUpgrade.type] && !randomUpgrade.special) {
+                		currentUpgrades.push(randomUpgrade);
+					}
                 }
             }
             document.getElementById("upgradeOption1").innerText = currentUpgrades[0].name;
@@ -4630,9 +4651,6 @@
 		if (upgrade.type === 'bravado') {
 			director.enemyLevel += 3;
 		}
-	    if (upgrade.special) {
-			upgrades.splice(upgrades.indexOf(upgrade), 1);
-	    }
 
 	    if (index == 0) {
             document.getElementById("upgradeOption1").innerText = 'Purchased';
@@ -5149,12 +5167,12 @@
 	function upgradesList() {
 		document.getElementById("upgradesList").style.display = "flex";
 	}
+		
 	function generateUpgradesList() {
 	    for (let i = 0; i < upgrades.length; i++) {
-			let upgradeType = upgrades[i].type;
-			const newUpgradeDisplay = document.createElement('li');
+			let newUpgradeDisplay = document.createElement('li');
 			newUpgradeDisplay.style.display = "block";
-			newUpgradeDisplay.innerText = upgradeType;
+			newUpgradeDisplay.innerText = upgrades[i].type;
 			document.getElementById("upgradesList").appendChild(newUpgradeDisplay);
 		}
 	}
@@ -5316,24 +5334,26 @@
 			}, 250);
 		}
 
-	    let konamiCode = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a' ];
-	    secretCodeInput.push(e.key);
-	    for (let i = 0; i < secretCodeInput.length; i++) {
-			if (secretCodeInput[i] !== konamiCode[i]) {
-				secretCodeInput.length = 0;
-				break;
-			} else {
-				if (secretCodeInput.length == 10) {
-					announcement.style.display = "block";
-					announcement.innerText = 'Dev Cheats Enabled';
-					setTimeout(() => {
-						announcement.innerText = '';
-					}, 1500);
-					devCheats = true;
-					generateUpgradesList();
+		if (!devCheats) {
+		    let konamiCode = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a' ];
+		    secretCodeInput.push(e.key);
+		    for (let i = 0; i < secretCodeInput.length; i++) {
+				if (secretCodeInput[i] !== konamiCode[i]) {
+					secretCodeInput.length = 0;
+					break;
 				}
+		    }
+			if (secretCodeInput.length == 10) {
+				announcement.style.display = "block";
+				announcement.innerText = 'Dev Cheats Enabled';
+				setTimeout(() => {
+					announcement.innerText = '';
+				}, 1500);
+				devCheats = true;
+				generateUpgradesList();
+				console.log("bruh");
 			}
-	    }
+		}
     });
 
     document.addEventListener("keyup", (e) => {
